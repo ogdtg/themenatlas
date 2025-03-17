@@ -1,0 +1,1974 @@
+<html lang="de" moznomarginboxes="" mozdisallowselectionprint="" class="geolocation svg supports csstransforms3d csstransitions localstorage sessionstorage noff"><head>
+    <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="main" src="js/main.js?v=4.16.0"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery" src="https://code.jquery.com/jquery-3.6.3.min.js?v=4.16.0"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="text" src="js/libs/require/text.js?v=4.16.0"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="gc_core" src="js/libs/gco5/gc_core.js?v=4.16.0"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="lgmain" src="js/libs/gco5/lang/de/lg_main.js?v=4.16.0"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="report_m" src="js/libs/report_m.js?v=4.16.0"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="lgreport" src="js/libs/gco5/lang/de/lg_report.js?v=4.16.0"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="indicator_m" src="js/libs/indicator_m.js?v=4.16.0"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="lgind" src="js/libs/gco5/lang/de/lg_indicator.js?v=4.16.0"></script><base href="//themenatlas-tg.ch/">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	
+    <script>
+        function getCookie(name) {
+            var value = '; ' + document.cookie;
+            var parts = value.split('; ' + name + '=');
+            return parts.length != 2 ?
+                undefined : parts.pop().split(';').shift();
+        }
+
+        function hasCkConsented() {
+            return window.Cookiebot !== undefined && Cookiebot.consent && Cookiebot.consent.statistics;
+        }
+
+        function hasOptedOut() {
+            if (hasCkConsented()) return false;
+            return document.cookie.indexOf('cookie_dismissed') >= 0;
+        }
+
+        function hasMAOptedOut() {
+            return getCookie('ma_accepted') == 0;
+        }
+
+        function hasATOptedOut() {
+            return getCookie('at_accepted') == 0;
+        }
+
+        function hasNotExpressedCookiePreferenceYet() {
+            if (hasCkConsented()) return false;
+            document.cookie = "testCookie=1;path=/";
+            var testCookieSupport = document.cookie.indexOf('testCookie') != -1;
+
+            return testCookieSupport &&
+                (document.cookie.indexOf('cookie_optin') == -1 && document.cookie.indexOf('cookie_dismissed') == -1);
+        }
+
+        function getCookie(name) {
+            var value = '; ' + document.cookie;
+            var parts = value.split('; ' + name + '=');
+            return parts.length != 2 ?
+                undefined : parts.pop().split(';').shift();
+        }
+
+        function setCookie(name, value, expiryDays, domain, path) {
+            var exdate = new Date();
+            exdate.setDate(exdate.getDate() + (expiryDays || 365));
+
+            var cookie = [
+                name + '=' + value,
+                'expires=' + exdate.toUTCString(),
+                'path=' + (path || '/'),
+                'SameSite=Strict',
+                'Secure'            ];
+
+            if (domain) {
+                cookie.push('domain=' + domain);
+            }
+            document.cookie = cookie.join(';');
+        }
+
+        function deleteCookie(name, path, domain) {
+            if (getCookie(name)) {
+                document.cookie = name + '=' +
+                    ((path) ? ';Path=' + path : '') +
+                    ((domain) ? ';Domain=' + domain : '') +
+                    ';expires=Thu, 01-Jan-1970 00:00:01 GMT';
+            }
+        }
+    </script>
+			    <meta charset="utf-8">
+
+    <meta content="width=device-width, minimum-scale=1, maximum-scale=1, initial-scale=1,user-scalable=no" name="viewport">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>Statistical Atlas of Thurgau - Kanton Thurgau - Indikatoren : Karten, Daten und Diagramme</title>
+    <meta name="Description" content="Erkunden und visualisieren Sie in Form von Karten, Grafiken und interaktiven Tabellen eine Vielzahl von statistischen Daten, die fein lokalisiert und im Laufe der Zeit relativiert werden.">
+    <meta name="application-name" content="Statistical Atlas of Thurgau - Kanton Thurgau">
+	        <link rel="canonical" href="//themenatlas-tg.ch/">	
+	
+
+    <link rel="shortcut icon" href="//themenatlas-tg.ch/favicon.ico">
+
+    <link rel="preconnect" href="//fonts.gstatic.com/" crossorigin="">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com/">
+
+    <script>
+        window.GCO5 = {
+            _lang: "de",
+            appModel: {}
+        };
+
+        var params_tmp = location.hash.substr(1).split('&'),
+            hash_params = {};
+
+        params_tmp.forEach(function (val) {
+            var splitter = val.split('=');
+            hash_params[splitter[0]] = splitter[1];
+        });
+
+        if (hash_params["lang"]) window.GCO5._lang = hash_params["lang"];
+
+        window.GCO5.initInfo = [];
+        var o = {
+            version: '5',
+            jsversion: "4.16.0",
+            autorisation: "1",
+            assetsDir: "assets",
+            ip_emc3:'',
+            local_emc3:'',
+            isLocalhost:'',
+            allowIframe:'1',
+            canLoadGzLayers:'',
+            prodHash: '',
+            obs: 'main',
+            app: '',
+            isMobile: 0,
+            isTablet: 0,
+            idView: '',
+            libUser: "",
+            iframe: "",
+            appTitle: "Statistical Atlas of Thurgau - Kanton Thurgau",
+            testMode: '',
+            canResetMail: "",
+            printBannerPortrait: "assets/banner500h.png",
+            printBannerLandscape: "assets/banner500h.png",
+            hasCustomPrintBanner: 1        };
+
+		
+																        for (var e in o) window.GCO5.initInfo[e] = o[e];
+    </script>
+
+            <link rel="stylesheet" type="text/css" href="//themenatlas-tg.ch/GC_loadCss.php?output=user&amp;lang=de&amp;obs=main">
+        <link rel="stylesheet" type="text/css" href="//themenatlas-tg.ch/css/gco5.min.css?v=4.16.0">
+     
+	        <script type="text/javascript">
+            var require = {
+                urlArgs: "v=4.16.0"
+            };
+
+        </script>
+	
+   <script data-main="js/main" src="js/libs/require/require.js" integrity="sha384-Z9JQUtAaWmYKd6d4DNdwKbqQjtvpcd4f/QmJSoaDxeRg4hWHtyyF6BwCsrnLcG1F" crossorigin="anonymous"></script>
+		
+	</head>
+<body class="pil-small"><script type="jsv#1_"></script>
+    <script type="jsv#2_"></script>
+    
+<script type="jsv/2_"></script>
+
+    <header role="banner" class="no-print">
+        <a href="javascript:void(0);" class="backhome" aria-label="Zurück zur Startseite Ctrl+Klick oder gedrückt halten : Zurücksetzung der Anwendung" title="Zurück zur Startseite
+Ctrl+Klick oder gedrückt halten : Zurücksetzung der Anwendung" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a>
+        <div class="skip-links"><a href="javascript:void(0)">Zum Inhalt</a></div>
+    <nav id="megamenu" class="no-print" style="position:relative" role="navigation">
+        <ul class="nav-menu small-hidden tiny-hidden">
+            
+            <li class="nav-item menug-large selected">
+                <a data-pk="indicator" class="mainComp sub-nav selected" href="javascript:void(0)" id="accessible-megamenu-1738847081574-56" role="group" aria-expanded="false" aria-hidden="true">Indikatoren</a>
+            </li>
+            <li class="nav-item menug-large">
+                <a data-pk="report" class="mainComp sub-nav" href="javascript:void(0)" id="accessible-megamenu-1738847081574-58" role="group" aria-expanded="false" aria-hidden="true">Berichte</a>
+            </li>
+            
+            <li class="nav-item menug-large">
+                <a data-pk="externaldata" class="mainComp sub-nav" href="javascript:void(0)" id="accessible-megamenu-1738847081574-60" role="group" aria-expanded="false" aria-hidden="true">Externe Daten</a>
+            </li>
+            <li class="nav-item menug-medium">
+                <a href="javascript:void(0)" class="wsnow" id="accessible-megamenu-1738847081574-61" aria-haspopup="true" aria-controls="accessible-megamenu-1738847081574-62" aria-expanded="false">Arbeitsräume</a>
+                <div class="sub-nav" id="accessible-megamenu-1738847081574-62" role="group" aria-expanded="false" aria-hidden="true" aria-labelledby="accessible-megamenu-1738847081574-61">
+                    <ul class="sub-nav-group">
+                        <li class="selected"><a data-pk="indicator" class="mainComp" href="javascript:void(0)">Indikatoren</a></li>
+                        <li><a data-pk="report" class="mainComp" href="javascript:void(0)">Berichte</a></li>
+                        
+                        <li><a data-pk="externaldata" class="mainComp" href="javascript:void(0)">Externe Daten</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a href="javascript:void(0)" class="wsnow" id="accessible-megamenu-1738847081575-63" aria-haspopup="true" aria-controls="accessible-megamenu-1738847081575-64" aria-expanded="false">Über...</a>
+                <div class="sub-nav" id="accessible-megamenu-1738847081575-64" role="group" aria-expanded="false" aria-hidden="true" aria-labelledby="accessible-megamenu-1738847081575-63">
+                    <ul class="sub-nav-group">
+                        
+                        
+                        <li><a data-pk="contact" class="mainComp" href="javascript:void(0)">Impressum</a></li>
+                        <li><a data-pk="help" class="mainComp" href="javascript:void(0)">Hilfe</a></li>
+                        <li><a data-pk="home" class="mainComp" href="javascript:void(0)">Startseite</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a href="javascript:void(0)" class="icon-login" aria-label="undefined" id="accessible-megamenu-1738847081575-65" aria-haspopup="true" aria-controls="accessible-megamenu-1738847081575-66" aria-expanded="false"></a>
+                <div class="sub-nav last-item" id="accessible-megamenu-1738847081575-66" role="group" aria-expanded="false" aria-hidden="true" aria-labelledby="accessible-megamenu-1738847081575-65">
+                    <ul class="sub-nav-group">
+                        <li><a data-pk="favs" class="panel" href="javascript:void(0)">Favoriten</a></li>
+                        
+                        <!--<li><a href="javascript:void(0)">Präferenzen</a></li>-->
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <p class="user-logged small"></p>
+    </nav>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+        <p class="pls small prvs mtn no-print menu-lang" style="padding-top:2px">
+            
+        </p>
+        <div alt="grid" class="tiny-visible small-visible no-display mls">
+            <a href="javascript:void(0);" class="grid_btn icon-button mrn mtvs">
+                <span aria-hidden="true" data-gcicon="m"></span>
+                <span class="visually-hidden">Menü</span>
+            </a>
+        </div>
+    </header>
+
+    
+
+    <script type="jsv#3_"></script>
+    <section class="cd-panel cd-mapsettings-panel from-left" style="touch-action: pan-x pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+        <header class="cd-panel-header">
+            <h1></h1>
+            <button class="cd-panel-close" aria-label="Tafel schliessen"></button>
+        </header>
+
+        <div class="cd-panel-container">
+            <div class="cd-panel-content">
+            </div> <!-- cd-panel-content -->
+        </div> <!-- cd-panel-container -->
+    </section>
+<script type="jsv/3_"></script>
+
+    <script type="jsv#4_"></script>
+    <section class="cd-panel cd-mapsettings-panel from-right">
+        <header class="cd-panel-header">
+            <h1></h1>
+            <button class="cd-panel-close" aria-label="Tafel schliessen"></button>
+        </header>
+
+        <div class="cd-panel-container">
+            <div class="cd-panel-content">
+            </div> <!-- cd-panel-content -->
+        </div> <!-- cd-panel-container -->
+    </section>
+<script type="jsv/4_"></script>
+
+    <script type="jsv#5_"></script>
+    <section class="no-display" style="background-color:lime;height:100%">
+        <header class="">
+            <h1></h1>
+            <a href="#0" class="cd-panel-close">Schliessen</a>
+        </header>
+
+
+    </section>
+<script type="jsv/5_"></script>
+
+    <div class="modalFreezeWindow2" style="visibility: hidden;">
+        <div class="modalFreezeWindow2-item big" style="display: none;"></div>
+    </div>
+<script type="jsv/1_"></script><main role="main" id="reportComponent" data-role="component" class="cu-component" style="display: none;"><script type="jsv#21_"></script>
+        <section id="rep-pilotage-sc" class="cu-pilotage" style="height: 1065px;">
+            <script type="jsv#22_"></script>
+    <div class="mobile-nav-button1">
+        <a href="javascript:void(0)" data-link="{on displayMap}" class="prs" data-jsv="#40^/40^">
+            <span class="upc">Wiedergabe anzeigen</span> <span data-gcicon="5"></span>
+        </a>
+    </div>
+    <h1 class="cu-h1">Gebiet Berichte und Porträts</h1>
+    <h2 class="upc">DIE BERICHTEN ANSEHEN</h2>
+
+    <div>
+        <script type="jsv#23_"></script>
+        <div class="man filtGroup flex-container no-display">
+                <span class="inline-flex flex-item-fluid">
+                  <input style="min-width:65px" spellcheck="false" name="search" class="input-in-row flex-item-fluid small" placeholder="Thema suchen..." type="search" data-link="searchStrReport">
+                  <button data-link="{on keySearchReport}" class="small" data-jsv="#42^/42^">OK</button>
+
+                  <button class="mls small mrvs" data-link="{on filtReportReset}" data-jsv="#43^/43^">Löschen</button></span>
+        </div>
+
+        <div class="treereports ui-tree-classic" tabindex="-1">
+            <script type="jsv#24_"></script>
+    <div data-role="collapsible-set" class="ui-collapsible-set">
+        <div class="mts">
+            <script type="jsv#1^"></script><script type="jsv#126_"></script><script type="jsv#127_"></script>
+    <div data-role="collapsible" data-pk="r01" data-level="1" class="ui-collapsible " style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading ">
+            <a href="javascript:void(0);" class="ui-collapsible-heading-toggle" title="Klicken Sie hier um die Kapitel dieses Berichtes auszurollen">
+            <span class="ui-li-label">Regionenporträt</span></a>
+        </h3>
+
+        <div class="ui-collapsible-content " aria-hidden="true" style="display: block">
+            <ul data-role="listview" data-jsv-df=""><li data-jsv="#130_#131_" attr_name="Startseite" data-report="r01" data-chapter="" data-pk="p12" data-level="1">
+                    <a href="javascript:void(0);" title="Klicken Sie hier um dieses Kapitel anzuzeigen" data-link="class{merge:c_id_chapter==~root.selectedChapter toggle='ui-selected'}" class="ui-selected">
+                    <span class="ui-li-label">Startseite</span></a>
+                </li><li data-jsv="/131_#133_" attr_name="Bevölkerung" data-report="r01" data-chapter="" data-pk="dv014" data-level="1">
+                    <a href="javascript:void(0);" title="Klicken Sie hier um dieses Kapitel anzuzeigen" data-link="class{merge:c_id_chapter==~root.selectedChapter toggle='ui-selected'}" class="">
+                    <span class="ui-li-label">Bevölkerung</span></a>
+                </li><li data-jsv="/133_#135_" attr_name="Haushalte" data-report="r01" data-chapter="" data-pk="p01" data-level="1">
+                    <a href="javascript:void(0);" title="Klicken Sie hier um dieses Kapitel anzuzeigen" data-link="class{merge:c_id_chapter==~root.selectedChapter toggle='ui-selected'}" class="">
+                    <span class="ui-li-label">Haushalte</span></a>
+                </li><li data-jsv="/135_#137_" attr_name="Soziales" data-report="r01" data-chapter="" data-pk="p13" data-level="1">
+                    <a href="javascript:void(0);" title="Klicken Sie hier um dieses Kapitel anzuzeigen" data-link="class{merge:c_id_chapter==~root.selectedChapter toggle='ui-selected'}" class="">
+                    <span class="ui-li-label">Soziales</span></a>
+                </li><li data-jsv="/137_#139_" attr_name="Wirtschaft und Arbeit" data-report="r01" data-chapter="" data-pk="p04" data-level="1">
+                    <a href="javascript:void(0);" title="Klicken Sie hier um dieses Kapitel anzuzeigen" data-link="class{merge:c_id_chapter==~root.selectedChapter toggle='ui-selected'}" class="">
+                    <span class="ui-li-label">Wirtschaft und Arbeit</span></a>
+                </li><li data-jsv="/139_#141_" attr_name="Bauen und Wohnen" data-report="r01" data-chapter="" data-pk="p05" data-level="1">
+                    <a href="javascript:void(0);" title="Klicken Sie hier um dieses Kapitel anzuzeigen" data-link="class{merge:c_id_chapter==~root.selectedChapter toggle='ui-selected'}" class="">
+                    <span class="ui-li-label">Bauen und Wohnen</span></a>
+                </li><li data-jsv="/141_#143_" attr_name="Raum" data-report="r01" data-chapter="" data-pk="p06" data-level="1">
+                    <a href="javascript:void(0);" title="Klicken Sie hier um dieses Kapitel anzuzeigen" data-link="class{merge:c_id_chapter==~root.selectedChapter toggle='ui-selected'}" class="">
+                    <span class="ui-li-label">Raum</span></a>
+                </li><li data-jsv="/143_#145_" attr_name="Öffentliche Finanzen" data-report="r01" data-chapter="" data-pk="dv015" data-level="1">
+                    <a href="javascript:void(0);" title="Klicken Sie hier um dieses Kapitel anzuzeigen" data-link="class{merge:c_id_chapter==~root.selectedChapter toggle='ui-selected'}" class="">
+                    <span class="ui-li-label">Öffentliche Finanzen</span></a>
+                </li><li data-jsv="/145_#147_" attr_name="Staat und Politik" data-report="r01" data-chapter="" data-pk="dv013" data-level="1">
+                    <a href="javascript:void(0);" title="Klicken Sie hier um dieses Kapitel anzuzeigen" data-link="class{merge:c_id_chapter==~root.selectedChapter toggle='ui-selected'}" class="">
+                    <span class="ui-li-label">Staat und Politik</span></a>
+                </li></ul>
+        </div>
+    </div>
+<script type="jsv/127_"></script><script type="jsv/126_"></script><script type="jsv/1^"></script>
+        </div>
+    </div>
+    <p class="small italic txtright" style="margin-top: 0px; display: none;" data-link="visible{:hasNoCompatibleReport &amp;&amp; !compatibleWithSelgeo}">*: Nicht kompatibel mit der derzeitigen Forschungszone</p>
+<script type="jsv/24_"></script>
+        </div>
+
+        <p class="no-display mts errMsg indics_msg small">Ihre Suche hat kein Ergebnis</p>
+<script type="jsv/23_"></script>
+    </div>
+
+    <h2 class="upc">GEBIETE FESTLEGEN</h2>
+        <div class="report-selgeo">
+            <div class="minimalist-accordion" data-accordion-id="rp2" data-accordion-prefix-classes="minimalist-accordion" data-accordion-multiselectable="none" role="tablist" aria-multiselectable="false">
+                 
+                <button class="js-accordion__header minimalist-accordion__header" aria-controls="accordionrp21_panel1" aria-expanded="true" role="tab" id="accordionrp21_tab1" aria-selected="false" title="Frauenfeld (Gemeinde: 4566)">Studienzone&nbsp;<b>Frauenfeld (Gemeinde)</b></button><div class="js-accordion__panel minimalist-accordion__panel" aria-labelledby="accordionrp21_tab1" role="tabpanel" id="accordionrp21_panel1" aria-hidden="false"><h2 class="minimalist-accordion__title" data-accordion-opened="true" tabindex="0">
+                    Studienzone&nbsp;<script type="jsv#2^"></script>Frauenfeld<script type="jsv/2^"></script>
+                 </h2>
+                    <script type="jsv#48_"></script>
+    <p>Um diese Zone zu modifizieren:</p>
+    <div class="tree_choice flex-container flex-center2 mbvs">
+        <label class="mtn flex-container flex-center2 mrs" title="Suche nach einem anderen Ort, einer anderen Seite">
+            <input type="radio" data-link="selectedGeoMethod" value="r">
+            Suchen
+        </label>
+        <label class="mtn flex-container flex-center2 mrs" data-link="visible{:selgeoTopo1=='PG'} disabled{:!isSelgeo1Extendable()}" title="Expandieren bis zu einer integrativen geografischen Ebene" style="display: flex;">
+            <input type="radio" value="e" data-link="disabled{:!isSelgeo1Extendable()} {:selectedGeoMethod:}">
+            Ausweiten
+        </label>
+        <label class="mtn flex-container flex-center2 mrs" data-link="visible{:selgeoTopo1=='PT' &amp;&amp; geoSymbsListIsShort()}" style="display: none;">
+            <input type="radio" value="l" data-link="selectedGeoMethod">
+            Liste/Auflisten
+        </label>
+        <label class="mtn flex-container flex-center2 mrs" title="Zeigen und passen Sie Ihr Gebiet auf einer Karte an">
+            <input type="radio" data-link="selectedGeoMethod" value="m">
+            Karte
+        </label>
+        <label class="mtn flex-container flex-center2 mrs" title="Laden eines zuvor gespeicherten Gebiets oder Standortes">
+            <input type="radio" data-link="selectedGeoMethod" value="t">
+            Favoriten
+        </label>
+    </div>
+
+    <div class="mts" data-link="visible{:selectedGeoMethod=='l' &amp;&amp; geoSymbsListIsShort()}" style="display: none;">
+        <select data-link="selectedCodgeo1" class="w100" data-jsv-df=""><option value="*">undefined: <script type="jsv#3^"></script>gemeinden<script type="jsv/3^"></script>...</option></select>
+    </div>
+
+    <div class="mts" data-link="visible{:selectedGeoMethod=='t'}" style="display: none;">
+        <select data-link="selectedSelgeo1" class="w100"><option value="*" class="italic">Ein vordefiniertes Gebiet auswählen...</option><option data-jsv="#5^#50_/50_/5^" value="ADD" class="italic">
+                *Bookmark the current zone*
+            </option></select>
+    </div>
+    <div class="mts" data-link="visible{:selectedGeoMethod=='r'}" style="display: block;">
+        <div class="flex-container small">
+            <input aria-label="Suche" data-link="searchStrGeo" class="input-in-row flex-item-fluid" placeholder="Einen Ort, einen Standort suchen..." autocomplete="off" spellcheck="false" autocapitalize="false" autocorrect="false" type="search">
+            <button aria-label="undefined" data-link="{on searchGeo}" data-jsv="#69^/69^">OK</button>
+            <button class="mls" data-link="{on readPosition}" data-jsv="#70^/70^">
+                <div class="flex-container" style="align-items:center">Ihr Standort<span class="selPlus">p</span></div>
+            </button>
+        </div>
+
+        <p class="no-display ptvs errMsg rechgeo_msg small">Ihre Suche hat kein Ergebnis</p>
+
+        <div class="maxw25 mts rp_rech_geo" data-link="visible{:rechgeo_a.length>0}" style="display: none;">
+            <p>Ein Gebiet auswählen</p>
+            <div data-role="collapsible-set" class="rechgeolist ui-collapsible-set no-display" data-link="visible{:collapsibleRechGeoVisible()}" style="border-top: 1px solid rgb(153, 153, 153); border-right: 1px solid rgb(153, 153, 153); border-left: 1px solid rgb(153, 153, 153); border-image: initial; border-bottom: none; display: block;">
+                <div class="man">
+                    <script type="jsv#6^"></script><script type="jsv#51_"></script><script type="jsv/51_"></script><script type="jsv/6^"></script>
+                </div>
+            </div>
+            <ul id="positionList" class="ui-listview active" data-link="visible{:!collapsibleRechGeoVisible()}" data-jsv-df="" style="display: none;"></ul>
+            <!--
+            <label class='label-checkbox mtn prs mts' data-link='visible{:rechsurround_a.length>0}'>
+                <input type="checkbox" data-link="extendedTerr">Ausweiten
+            </label>
+
+            <ul class='ui-listview extend' data-link='visible{:extendedTerr}'></ul><script type="jsv@#8^#53_/53_/8^"></script>-->
+        </div>
+    </div>
+
+    <div class="mts" data-link="visible{:selectedGeoMethod=='e'}" style="display: none;">
+        <p class="no-display ptvs errMsg rechgeosup_msg small">Ihre Ausweiterungs Suche ist ergebnislos geblieben</p>
+
+        <ul class="ui-listview extend" data-jsv-df=""></ul>
+    </div>
+
+    <div class="mts" data-link="visible{:selectedGeoMethod=='m' &amp;&amp; selgeoTopo1 != 'PT'}" style="display: none;">
+        <script type="jsv#55_"></script>
+    <script type="jsv#56_"></script>
+    <script type="jsv#57_"></script>
+        <div class="flex-container w100" data-link="visible{:extent_a.length>1}" style="display: none;">
+            <label class="labelgroup" for="rep_extent_cb1">Ausdehnung</label>
+            <script type="jsv#58_"></script>
+                <select id="rep_extent_cb1" data-link="selectedExtent" class="flex-item-fluid mlvs" data-jsv-df=""><option data-jsv="#59_#60_" value="extent0">Kanton</option></select>
+            <script type="jsv/58_"></script>
+
+        </div>
+    <script type="jsv/57_"></script>
+<script type="jsv/56_"></script>
+
+    <div class="flex-container ptvs w100">
+        <script type="jsv#61_"></script><label class="labelgroup" for="rep_view_cb1">Ebene</label><script type="jsv/61_"></script><select id="rep_view_cb1" data-link="selectedView" class="flex-item-fluid mlvs" data-jsv-df=""><option data-jsv="#10^#62_#63_#64_" value="map3">Gemeinde</option><option data-jsv="/64_/63_#65_#66_" value="map2">Bezirk</option></select>
+    </div>
+    <div class="mtm mbm flex-container medium-hidden large-hidden">
+        <button data-link="visible{:!selectedIndics_a || selectedIndics_a.length==0} {on displayMap}" class="center" data-jsv="#80^/80^" style="display: inline-block;">Karte anzeigen</button>
+    </div>
+<script type="jsv/55_"></script>
+    </div>
+<script type="jsv/48_"></script>
+                </div>
+
+                 
+                 <button class="js-accordion__header minimalist-accordion__header" aria-controls="accordionrp21_panel2" aria-expanded="false" role="tab" id="accordionrp21_tab2" tabindex="-1" aria-selected="false">
+                 Vergleichszone&nbsp;<b><script type="jsv#11^"></script>Thurgau<script type="jsv/11^"></script></b>
+                 </button><div class="js-accordion__panel minimalist-accordion__panel" aria-labelledby="accordionrp21_tab2" role="tabpanel" id="accordionrp21_panel2" aria-hidden="true"><h2 class="minimalist-accordion__title" data-accordion-opened="false" tabindex="0">
+                 Vergleichszone&nbsp;<b><script type="jsv#11^"></script>Thurgau<script type="jsv/11^"></script></b>
+                 </h2>
+                    <script type="jsv#67_"></script>
+    <p>Um diese Zone zu modifizieren:</p>
+    <div class="tree_choice flex-container flex-center2 mbvs xmts">
+        <label class="mtn flex-container flex-center2 mrs" title="Suche nach einem anderen Ort, einer anderen Seite">
+            <input type="radio" data-link="selectedGeoMethod" value="r">
+            Suchen
+        </label>
+        <label class="mtn flex-container flex-center2 mrs" data-link="visible{:selgeoTopo2=='PG'}  disabled{:!isSelgeo2Extendable()}" title="Expandieren bis zu einer integrativen geografischen Ebene" disabled="disabled" style="display: none;">
+            <input type="radio" value="e" data-link="disabled{:!isSelgeo2Extendable()} {:selectedGeoMethod:}" disabled="disabled">
+            Ausweiten
+        </label>
+        <label class="mtn flex-container flex-center2 mrs" data-link="visible{:selgeoTopo1=='PT' &amp;&amp; geoSymbsListIsShort()}" style="display: none;">
+            <input type="radio" value="l" data-link="selectedGeoMethod">
+            Liste/Auflisten
+        </label>
+        <label class="mtn flex-container flex-center2 mrs" title="Zeigen und passen Sie Ihr Gebiet auf einer Karte an">
+            <input type="radio" data-link="selectedGeoMethod" value="m">
+            Karte
+        </label>
+        <label class="mtn flex-container flex-center2 mrs" title="Laden eines zuvor gespeicherten Gebiets oder Standortes">
+            <input type="radio" data-link="selectedGeoMethod" value="t">
+            Favoriten
+        </label>
+    </div>
+
+    <div class="mts" data-link="visible{:selectedGeoMethod=='t'}" style="display: none;">
+        <select data-link="selectedSelgeo2" class="w100"><option value="*" class="italic">Ein vordefiniertes Gebiet auswählen...</option><option data-jsv="#12^#124_#125_" value="REF">
+                Thurgau</option><option data-jsv="/125_/124_/12^" value="ADD" class="italic">
+                *Bookmark the current zone*
+            </option></select>
+    </div>
+
+    <div class="mts" data-link="visible{:selectedGeoMethod=='l' &amp;&amp; geoSymbsListIsShort()}" style="display: none;">
+        <select data-link="selectedCodgeo2" class="w100" data-jsv-df=""><option value="*">undefined: <script type="jsv#13^"></script>gemeinden<script type="jsv/13^"></script>...</option></select>
+    </div>
+
+    <div class="mts" data-link="visible{:selectedGeoMethod=='r'}" style="display: block;">
+        <div class="flex-container small">
+            <input aria-label="Suche" data-link="searchStrGeo" class="input-in-row flex-item-fluid" placeholder="Suchen..." autocomplete="off" spellcheck="false" autocapitalize="false" autocorrect="false" type="search">
+            <button aria-label="undefined" data-link="{on searchGeo}" data-jsv="#96^/96^">OK</button>
+            <button class="mls" data-link="{on readPosition}" data-jsv="#97^/97^">
+                <div class="flex-container" style="align-items:center">Ihr Standort<span class="selPlus">p</span></div>
+            </button>
+        </div>
+
+        <p class="no-display ptvs errMsg rechgeo_msg small">Kein kompatibles Gebiet gefunden</p>
+
+        <div class="maxw25 mts rp_rech_geo" data-link="visible{:rechgeo_a.length>0}" style="display: none;">
+            <p>Ein Gebiet auswählen</p>
+            <div data-role="collapsible-set" class="rechgeolist ui-collapsible-set no-display" data-link="visible{:collapsibleRechGeoVisible()}" style="border-top: 1px solid rgb(153, 153, 153); border-right: 1px solid rgb(153, 153, 153); border-left: 1px solid rgb(153, 153, 153); border-image: initial; border-bottom: none; display: block;">
+                <div class="man">
+                    <script type="jsv#15^"></script><script type="jsv#71_"></script><script type="jsv/71_"></script><script type="jsv/15^"></script>
+                </div>
+            </div>
+            <ul id="positionList2" class="ui-listview active" data-link="visible{:!collapsibleRechGeoVisible()}" data-jsv-df="" style="display: none;"></ul>
+        </div>
+    </div>
+
+    <div class="mts" data-link="visible{:selectedGeoMethod=='e'}" style="display: none;">
+        <p class="no-display ptvs errMsg rechgeosup_msg small">Ihre Ausweiterungs Suche ist ergebnislos geblieben</p>
+
+        <ul class="ui-listview extend" data-jsv-df=""></ul>
+    </div>
+
+    <div class="mts" data-link="visible{:selectedGeoMethod=='m' &amp;&amp; selgeoTopo2 != 'PT'}" style="display: none;">
+        <script type="jsv#74_"></script>
+    <script type="jsv#75_"></script>
+    <script type="jsv#76_"></script>
+        <div class="flex-container w100" data-link="visible{:extent_a.length>1}" style="display: none;">
+            <label class="labelgroup" for="rep_extent_cb2">Ausdehnung</label>
+            <script type="jsv#77_"></script>
+                <select id="rep_extent_cb2" data-link="selectedExtent" class="flex-item-fluid mlvs" data-jsv-df=""><option data-jsv="#78_#79_" value="extent0">Kanton</option></select>
+            <script type="jsv/77_"></script>
+
+        </div>
+    <script type="jsv/76_"></script>
+<script type="jsv/75_"></script>
+
+    <div class="flex-container ptvs w100">
+        <script type="jsv#80_"></script><label class="labelgroup" for="rep_view_cb2">Ebene</label><script type="jsv/80_"></script><select id="rep_view_cb2" data-link="selectedView" class="flex-item-fluid mlvs" data-jsv-df=""><option data-jsv="#18^#81_#82_#83_" value="map3">Gemeinde</option><option data-jsv="/83_/82_#84_#85_" value="map2">Bezirk</option></select>
+    </div>
+    <div class="mtm mbm flex-container medium-hidden large-hidden">
+        <button data-link="visible{:!selectedIndics_a || selectedIndics_a.length==0} {on displayMap}" class="center" data-jsv="#107^/107^" style="display: inline-block;">Karte anzeigen</button>
+    </div>
+<script type="jsv/74_"></script>
+    </div>
+<script type="jsv/67_"></script>
+                </div>
+            </div>
+
+            <div class="mtm mbm flex-container medium-hidden large-hidden">
+                <button data-link="{on displayMap}" class="center" data-jsv="#108^/108^">Wiedergabe anzeigen</button>
+            </div>
+        </div>
+
+    <h2 class="upc">Entdecke mehr</h2>
+    <div id="rep-prolonger" class="minimalist-accordion" data-accordion-id="rp1" data-accordion-prefix-classes="minimalist-accordion" data-accordion-multiselectable="none" role="tablist" aria-multiselectable="false">
+         
+         <button class="js-accordion__header minimalist-accordion__header" aria-controls="accordionrp12_panel1" aria-expanded="false" role="tab" id="accordionrp12_tab1" aria-selected="false">Teilen, drucken, exportieren</button><div class="js-accordion__panel minimalist-accordion__panel" aria-labelledby="accordionrp12_tab1" role="tabpanel" id="accordionrp12_panel1" aria-hidden="true"><h2 class="minimalist-accordion__title" data-accordion-opened="false" tabindex="0">Teilen, drucken, exportieren</h2>
+            <p>Zum teilen, drucken, exportieren, sichern, siehe das Menü AKTIONEN, oben rechst</p>
+         </div>
+
+         
+            <button class="js-accordion__header minimalist-accordion__header" aria-controls="accordionrp12_panel2" aria-expanded="false" role="tab" id="accordionrp12_tab2" tabindex="-1" aria-selected="false">Mehr Indikatoren sehen</button><div class="js-accordion__panel minimalist-accordion__panel" aria-labelledby="accordionrp12_tab2" role="tabpanel" id="accordionrp12_panel2" aria-hidden="true"><h2 class="minimalist-accordion__title" data-accordion-opened="false" tabindex="0">Mehr Indikatoren sehen</h2>Die Indikatoren des Observatoriums einsehen.
+           <p class="txtright ptvs"><a data-cu="indicator" href="javascript:void(0)">INDIKATOREN BEREICH</a></p>
+         </div>
+    </div>
+
+    <div id="rep-test" class="dataviz-container no-display"></div>
+
+<script type="jsv/22_"></script>
+        </section>
+
+        <section id="rep-restit-sc" class="cu-restit">
+            <script type="jsv#86_"></script>
+    <div class="js-tabs no-tap-highlight">
+         <a href="javascript:void(0)" style="padding:0.5rem;" data-link="{on toPilotage}" class="mobile-nav-button2 fl plvs " data-jsv="#109^/109^"><span data-gcicon="0"></span><span class="upc">Konfigurieren</span>
+        </a>
+        <ul class="js-tablist no-print tabs__list" role="tablist"><li class="js-tablist__item tabs__item" role="presentation" aria-selected="true">
+                <a id="rp_report" class="js-tablist__link upc tabs__link" role="tab" aria-controls="rep_nav_1" tabindex="0" aria-selected="true">Bericht</a>
+            </li><li class="js-tablist__item tabs__item" title="Zeigen und passen Sie Ihr Gebiet auf einer Karte an" role="presentation" aria-selected="false">
+                <a id="rp_map" class="js-tablist__link upc tabs__link" role="tab" aria-controls="rep_nav_2" tabindex="-1" aria-selected="false">Karte</a>
+            </li></ul>
+
+        <section id="rep_nav_1" class="js-tabcontent flex-container flex-container-v mrvs mlvs tabs__content" style="max-widthXX:80em" role="tabpanel" aria-labelledby="label_rep_nav_1">
+            <script type="jsv#87_"></script>
+    <div class="page-report-container">
+        <div class="page A4 orient-portrait">
+            <div class="page-content">
+                <script type="jsv#88_"></script>
+        <nav class="pageNav" style="">
+            <button data-link="{on backFromPrint}" class="mls backFromPrint" data-jsv="#110^/110^">Zurück</button>
+            <button data-link="{on print}" class="mls" data-jsv="#111^/111^">Drucken</button>
+
+            <select data-link="selectedPageSize" class="mlvs mtn" data-jsv-df=""><option data-jsv="#19^#89_#90_" value="A4">A4</option><option data-jsv="/90_#91_" value="Letter">Letter</option><option data-jsv="/91_#92_" value="Legal">Legal</option></select>
+
+            <select data-link="selectedBrowserMargin" class="mls mtn" data-jsv-df=""><option data-jsv="#20^#93_#94_" value="20mm">Standardmarge</option><option data-jsv="/94_#95_" value="10mm">Schmale Marge (IE/Edge)</option><option data-jsv="/95_#96_" value="2mm">Mindestmarge (Chrome)</option></select>
+
+            <label class="label-checkbox mls mtn" data-link="visible{:toPrintAllReport &amp;&amp; 0}" style="display: none;">
+                <input type="checkbox" data-link="showPresMap">Präsentationskarte
+            </label>
+
+            <script type="jsv#97_"></script><button data-link="{on exportReport}" class="mls" title="Exportieren der im Dataviz verwendeten Daten in das xlsx-Format" data-jsv="#116^/116^">Daten exportieren</button><script type="jsv/97_"></script>
+        </nav>
+
+        <script type="jsv#98_"></script>
+    <div class="ficHeader no-print">
+
+        <div class="flex-item-fluid">
+            <script type="jsv#99_"></script>
+                Studienzone&nbsp;<a data-link="title{:libSelgeoExt1}" class="zonselgeo1 bold" href="javascript:void(0)" title="Frauenfeld (Gemeinde: 4566)"><script type="jsv#21^"></script>Frauenfeld (Gemeinde)<script type="jsv/21^"></script></a><script type="jsv#22^"></script><span>, verglichen mit</span> <span contenteditable="true" class="libSelgeoN2 bold">Thurgau</span><script type="jsv/22^"></script>
+                <!--,verglichen mit&nbsp;<a class='zonselgeo2 bold' data-link='title{:libSelgeoExt2} {:libSelgeoN2}' href='javascript:void(0)'></a>-->
+            <script type="jsv/99_"></script>
+        </div>
+
+        <a href="javascript:void(0)" data-menu-trigger="rep_repmenucontent" class="options-menu map-options-menu" aria-controls="rep_repmenucontent" aria-haspopup="true" role="button">
+                <span class="tiny-hidden prvs plvs">AKTIONEN</span><span class="grille big tiny-hidden"> </span>
+        </a>
+
+        <div id="rep_repmenucontent" class="reportmenucontent" data-menu="" aria-hidden="true" role="menu" style="top: 38.6875px; left: 1374.2px;">
+            <ul data-jsv-df=""><li data-jsv="#100_#101_"><a href="javascript:void(0)" role="button" title="Das Layout anpassen bevor Druck oder PDF export" data-pk="Print" data-index="0">Drucken</a></li><li data-jsv="/101_#102_"><a href="javascript:void(0)" role="button" title="Das Layout anpassen bevor Druck oder PDF export" data-pk="PrintAll" data-index="1">Bericht drucken</a></li><li data-jsv="/102_#103_"><a href="javascript:void(0)" role="button" title="Exportieren der im Dataviz verwendeten Daten in das xlsx-Format" data-pk="ExportAll" data-index="2">Daten exportieren</a></li></ul>
+        </div>
+    </div>
+
+    <nav align="center" class="no-print">
+         <div class="flex-container flex-center2" style="margin:0 auto;justify-content:center">
+            <script type="jsv#104_"></script><button data-gcicon="0" aria-label="Vorheriges Kapitel" class="left arrow-h2" title="Vorheriges Kapitel" data-link="disabled{:getPreviousDatavizInfo()==null} {on prevChapter}" disabled="disabled" data-jsv="#119^/119^"></button><script type="jsv/104_"></script>
+            <h2 class="flex-item-fluid mrs mls h2-like" style="margin-bottom:0"><script type="jsv#23^"></script>REGIONENPORTRÄT<script type="jsv/23^"></script> - <script type="jsv#24^"></script>STARTSEITE<script type="jsv/24^"></script></h2>
+            <script type="jsv#105_"></script><button data-gcicon="5" aria-label="Nächstes Kapitel" class="right arrow-h2" title="Nächstes Kapitel" data-link="disabled{:getNextDatavizInfo()==null} {on nextChapter}" data-jsv="#121^/121^"></button><script type="jsv/105_"></script>
+         </div>
+
+        <div class="mbs no-print" data-link="visible{:globalFilter_a.length>0}" align="center" style="display: none;">
+            <label><script type="jsv#25^"></script><script type="jsv/25^"></script>
+                <select data-link="selectedGlobalFilter" class="center mlvs" data-jsv-df=""></select>
+            </label>
+        </div>
+
+        <div class="mbs no-print" data-link="visible{:dataviz_a.length>1 &amp;&amp; !~isInIframe()}" align="center" style="display: none;">
+            <label>Quick access
+                <select data-link="selectedDataviz" class="center mlvs" data-jsv-df=""><option data-jsv="#27^#107_#149_" value="dv001">Startseite</option></select>
+            </label>
+        </div>
+        <div class="mbs" data-link="visible{:dataviz_a.length>0 &amp;&amp; !reportMode}" align="center" style="display: none;">
+            Bloc/raccourci : <select data-link="selectedBlock" class="center" data-jsv-df=""></select>
+        </div>
+    </nav>
+
+    <script type="jsv#109_"></script>
+            <div class="report-viewport" style="height: 1053px; visibility: visible;"><table class="dataviz print-only" id="presmap">
+       <thead class="report-header">
+         <tr>
+            <th class="report-header-cell">
+                <header class="pageHeader print-only">
+                    <div class="banner-img">
+                        <img width="500" height="50" src="assets/banner500h.png">
+                    </div>
+                    <div class="flex-item-fluid mtvs mbn">
+                        <p class="normal">Studienzone <span contenteditable="true" class="libSelgeoN1 bold">Frauenfeld (Gemeinde)</span><span>, verglichen mit</span> <span contenteditable="true" class="libSelgeoN2 bold">Thurgau</span>
+                        <!--, verglichen mit <span contenteditable="true" class='libSelgeoN2 bold'>Thurgau</span></p>-->
+                    </p></div>
+
+                    <h2 class="flex-item-fluid mrs mls h2-like">REGIONENPORTRÄT - STARTSEITE</h2>
+                </header>
+             </th>
+          </tr>
+        </thead>
+
+        <tbody class="report-content">
+          <tr>
+             <td class="report-content-cell" align="center"><header class="dataviz-header" style="width: 750px;"><h2>Präsentationskarte</h2></header><div class="presmap-img" style="text-align:left;height:623px;width:700px"></div></td>
+           </tr>
+         </tbody>
+
+         <tfoot class="report-footer print-only ">
+          <tr>
+             <td class="report-footer-cell">
+               <div class="footer-info">
+                    &nbsp;
+               </div>
+              </td>
+          </tr>
+        </tfoot>
+    </table><table class="dataviz" id="dv001">
+       <thead class="report-header">
+         <tr>
+            <th class="report-header-cell">
+                <header class="pageHeader print-only">
+                    <div class="banner-img">
+                        <img width="500" height="50" src="assets/banner500h.png">
+                    </div>
+                    <div class="flex-item-fluid mtvs mbn">
+                        <p class="normal">Studienzone <span contenteditable="true" class="libSelgeoN1 bold">Frauenfeld (Gemeinde)</span><span>, verglichen mit</span> <span contenteditable="true" class="libSelgeoN2 bold">Thurgau</span>
+                        <!--, verglichen mit <span contenteditable="true" class='libSelgeoN2 bold'>Thurgau</span></p>-->
+                    </p></div>
+
+                    <h2 class="flex-item-fluid mrs mls h2-like">REGIONENPORTRÄT - STARTSEITE</h2>
+                </header>
+             </th>
+          </tr>
+        </thead>
+
+        <tbody class="report-content">
+          <tr>
+             <td class="report-content-cell"><article id="p12*dv001" class="report-container container-fluid"><div id="p12*dv001b075_A" class="dataviz row no-margin visible-xl visible-sm visible-md visible-lg visible-pr"><div id="p12*dv001b076_A.A" class="col-md-12 col-xl-12 col-pr-12 col-lg-12 col-sm-12 visible-md visible-xl visible-pr visible-lg visible-sm"><article style="visibility: visible; flex: 1 1 0%; display: flex;" id="p12*dv001b076" class="dataviz-container dv-txt" tabindex="0"><header class="datavizHeader"><div><h2></h2><p class="key" style="display: none;"></p></div><a href="javascript:void(0)" data-menu-trigger="chartmenucontentbl065" class="grille no-print" aria-controls="chartmenucontentbl065" aria-haspopup="true" role="button" style=""></a><div id="chartmenucontentbl065" data-menu="" aria-hidden="true" role="menu" style="top: 19.6px; left: 0px;"><li class="no-display"><a href="javascript:void(0)" role="button" data-index="0" class="js-modal" data-focus-back="chartMenu" data-modal-prefix-class="simple" data-modal-content-id="modal_id_2nd_example" data-modal-title="Title for your modal" data-modal-close-text="X" data-modal-close-title="Close it, really">Zurück Diagramm</a></li><li><a href="javascript:void(0)" role="button" data-index="1" class="js-modal" data-focus-back="chartMenu" data-modal-prefix-class="simple" data-modal-content-id="modal_id_2nd_example" data-modal-title="Title for your modal" data-modal-close-text="X" data-modal-close-title="Close it, really">Daten</a></li><li><a href="javascript:void(0)" role="button" data-index="2" class="js-modal" data-focus-back="chartMenu" data-modal-prefix-class="simple" data-modal-content-id="modal_id_2nd_example" data-modal-title="Title for your modal" data-modal-close-text="X" data-modal-close-title="Close it, really">HTML Export</a></li><li><a href="javascript:void(0)" role="button" data-index="3" class="js-modal" data-focus-back="chartMenu" data-modal-prefix-class="simple" data-modal-content-id="modal_id_2nd_example" data-modal-title="Title for your modal" data-modal-close-text="X" data-modal-close-title="Close it, really">SVG Export</a></li><li><a href="javascript:void(0)" role="button" data-index="4" class="js-modal" data-focus-back="chartMenu" data-modal-prefix-class="simple" data-modal-content-id="modal_id_2nd_example" data-modal-title="Title for your modal" data-modal-close-text="X" data-modal-close-title="Close it, really">PNG Export</a></li><li class="hide-iframe"><a href="javascript:void(0)" role="button" data-index="5" class="js-modal" data-focus-back="chartMenu" data-modal-prefix-class="simple" data-modal-content-id="modal_id_2nd_example" data-modal-title="Title for your modal" data-modal-close-text="X" data-modal-close-title="Close it, really">Wiederverwendung</a></li></div></header><figure class="xchart-container" style="display: none;"><svg height="230" width="1452" class="xchart"><g class="header"><text class="chart-title" x="5" dy="20"></text><text class="chart-libzone" x="5" dy="50"></text><text class="chart-subtitle" x="5" dy="80"></text><text class="chart-source"></text></g><g class="chart init"><g class="scale"></g><g class="scale2"></g></g></svg><div class="chart-tooltip"><div class="chart-tooltip-container"></div></div></figure><div class="no-display vertical-scrollable center mts report-table" style="display: none;"><table class="ui-table-reflow mbvs" style="margin-right:20px"></table></div><div class="no-display report-text" style="display: block;"><p><strong>Herzlich willkommen beim Gemeindeporträt</strong><br>Das Gemeindeporträt bietet eine Fülle von statistischen Informationen zu den Themen:<br>• Bevölkerung<br>• Haushalte<br>• Soziales<br>• Wirtschaft und Arbeit<br>• Bauen und Wohnen<br>• Raum<br>• Öffentliche Finanzen<br>• Staat und Politik</p><p><strong>So blättern Sie durch das Gemeindeporträt</strong><br>Klicken Sie auf die Schaltfläche "&gt;" (oben rechts), um durch das Gemeindeporträt zu blättern. Alternativ lässt sich im Menü links das gewünschte Thema auswählen.</p><p><strong>So wählen Sie eine (andere) Gemeinde aus</strong><br>Geben Sie im Menü links unter "Gebiete festlegen" → "Studienzone" die ersten Buchstaben der gewünschten Gemeinde ein, bestätigen Sie mit OK und wählen Sie unten die gewünschte Gemeinde aus.</p><p><strong>Welche weiteren Möglichkeiten bietet das Gemeindeporträt?</strong><br>1. Exportieren einer Grafik oder Tabelle: Klicken Sie auf das Symbol "Rädchen" neben der Grafik oder Tabelle, um diese exportieren.<br>2. Eine Grafik als Tabelle darstellen: Klicken Sie auf das Symbol "Rädchen" neben der Grafik und wählen Sie "Daten" aus. <br>3. Das Gemeindeporträt ausdrucken oder die Daten exportieren: Klicken Sie auf "Aktionen" (oben rechts), um das Gemeindeporträt (oder eine einzelne Seite) auszudrucken oder die Daten in Excel-Format zu exportieren.</p><p><br><strong>Wohin bei Fragen?</strong><br>Wir helfen Ihnen gerne weiter. Schreiben Sie uns eine Mail (statistik@tg.ch) oder rufen Sie uns an ( 058 345 53 64)</p><p>Wir wünschen Ihnen viel Spass mit dem Gemeindeporträt!<br>Dienststelle für Statistik Kanton Thurgau, Grabenstrasse 8, 8510 Frauenfeld<br><br></p><p><img src="assets/Gemeindeportraetl.jpg" alt="" width="799" height="325"></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></div><figure class="spineChart ptvs"></figure><figure class="no-display report-map" style="display: none;"><canvas></canvas></figure><canvas id="legend_cv" class="no-display"></canvas><div class="no-display maplegendH" style="display: none;"></div><div class="no-display filter-axis" style="display: none;"></div> <div class="no-display hide-iframe report-block-iframe vertical-scrollable center mts w100 mbs" style="display: none;"></div><footer><div><p class="source" style="display: none;"></p><p class="note" style="display: none;"></p></div></footer></article></div></div></article></td>
+           </tr>
+         </tbody>
+
+         <tfoot class="report-footer print-only ">
+          <tr>
+             <td class="report-footer-cell">
+               <div class="footer-info">
+                    &nbsp;
+               </div>
+              </td>
+          </tr>
+        </tfoot>
+    </table></div>
+    <script type="jsv/109_"></script>
+<script type="jsv/98_"></script>
+
+<script type="jsv/88_"></script>
+            </div>
+        </div>
+    </div>
+<script type="jsv/87_"></script>
+        </section>
+
+        <div id="rep_nav_2" class="js-tabcontent flex-container flex-container-v map-portrait-only tabs__content noSelInfoInFooter" role="tabpanel" aria-hidden="true" aria-labelledby="label_rep_nav_2">
+            <script type="jsv#110_"></script>
+<div class="page-container" style="height: 1065px;">
+    <div class="page A4 orient-portrait">
+    <div class="page-content">
+
+    <script type="jsv#111_"></script>
+    <header class="pageHeader print-only">
+        <div class="banner-img no-background" data-link="class{merge:hasCustomPrintBanner() toggle='no-background'}">
+          <img data-link="src{:getPrintBanner()}" style="height:50px" src="assets/banner500h.png">
+        </div>
+    </header>
+    <nav class="pageNav">
+        <button data-link="{on backFromPrint}" class="mls backFromPrint" data-jsv="#130^/130^">Zurück</button>
+        <button data-link="{on print}" class="mls" data-jsv="#131^/131^">Drucken</button>
+
+        <select data-link="selectedPageSize" class="mlvs mtn" data-jsv-df=""><option data-jsv="#29^#112_#113_" value="A4">A4</option><option data-jsv="/113_#114_" value="Letter">Letter</option><option data-jsv="/114_#115_" value="Legal">Legal</option></select>
+
+        <select data-link="selectedPageOrient" class="mls mtn" data-jsv-df=""><option data-jsv="#30^#116_#117_" value="portrait">Hochformat</option><option data-jsv="/117_#118_" value="landscape">Querformat</option></select>
+
+        <label class="label-checkbox mls mtn" data-link="disabled{:!metaDocPrint}" disabled="disabled"><input type="checkbox" data-link="printDoc">Dok</label>
+        <label class="label-checkbox mls mtn"><input type="checkbox" data-link="printComment">Kommentar</label>
+
+        <a href="javascript:void(0)" class="mrs help right no-display" tabindex="0">Aide</a>
+    </nav>
+<script type="jsv/111_"></script>
+
+    <div class="thematicmap-layout">
+        <header data-link="class{:getMapHeaderClass()}" class="mapHeader report-map study">
+            <div class="flex-item-fluid">
+                <p contenteditable="true" class="print-only pre-print txtcenter pts pbs"><script type="jsv#31^"></script>Kanton Thurgau nach Gemeinden<script type="jsv/31^"></script></p>
+
+                <p class="report-map-header study">Studienzone&nbsp;<b><script type="jsv#32^"></script>Frauenfeld<script type="jsv/32^"></script></b></p>
+                <p class="report-map-header compar">Vergleichszone&nbsp;<b><script type="jsv#33^"></script>Thurgau<script type="jsv/33^"></script></b></p>
+
+                <p style="margin-top: 0px; display: none;" class="libview" data-link="{:getViewLib(~idMap)} visible{:getViewLibVisibility(~idMap)}">Kanton Thurgau nach Gemeinden</p>
+                <p style="margin-top: 0px; display: none;" data-link="visible{:getLibIndic('1',~idMap)!=''}" class="libIndic">
+                    <span class="figure-with-border mrvs" data-link="visible{:!tinyScreen}" style="display: inline;">1</span><span data-link="getLibIndic('1',~idMap)"></span><a href="#rep_serie1" class="serie-dropdown" data-menu-trigger="rep_serie1" data-link="css-display{:getSerieList('1',~idMap).length>1 ? 'inline':'none'}" aria-controls="rep_serie1" aria-haspopup="true" role="button" style="display: none;"><script type="jsv#34^"></script><script type="jsv/34^"></script></a>
+                    <script type="jsv#35^"></script><script type="jsv/35^"></script>
+                </p>
+                <p class="mtn libIndic ptvs" data-link="visible{:getLibIndic('2',~idMap)!=''}" style="display: none;">
+                    <span class="figure-with-border mrvs" data-link="visible{:!tinyScreen}" style="display: inline;">2</span><span data-link="getLibIndic('2',~idMap)"></span><a href="#rep_serie2" class="serie-dropdown" data-menu-trigger="rep_serie2" data-link="css-display{:getSerieList('2',~idMap).length>1 ? 'inline':'none'}" aria-controls="rep_serie2" aria-haspopup="true" role="button" style="display: none;"><script type="jsv#36^"></script><script type="jsv/36^"></script></a>
+                    <script type="jsv#37^"></script><script type="jsv/37^"></script>
+                </p>
+            </div>
+
+            <a href="javascript:void(0)" data-menu-trigger="rep_mapmenucontent" class="options-menu map-options-menu" aria-controls="rep_mapmenucontent" aria-haspopup="true" role="button">
+                <span class="tiny-hidden prvs">AKTIONEN</span><span class="grille big"> </span>
+            </a>
+
+            <div id="rep_mapmenucontent" class="mapmenucontent" data-menu="" aria-hidden="true" role="menu" style="top: 6px; left: 2px;">
+                <ul data-jsv-df=""><li data-jsv="#119_#120_"><a href="javascript:void(0)" role="button" title="Pläne, Fotos, Zoneneinteilungen..." data-pk="Layers" data-index="0">Ebenen hinzufügen</a></li><li data-jsv="/120_#121_"><a href="javascript:void(0)" role="button" title="" data-pk="Etiq" data-index="1">Beschriften</a></li></ul>
+            </div>
+
+            <div id="rep_serie1" class="l_serie" data-menu="" aria-hidden="true" data-link="data-menu-selectedindex{:getSerieSelectedIndex(1, ~idMap)}" data-menu-selectedindex="0" role="menu" style="top: 6px; left: 2px;">
+                <li data-link="visible{:getSerieList('1',~idMap).length>1 &amp;&amp; getAnim('1',~idMap) &amp;&amp; ( !~isInIframe() || ~isLocalhost()) }" style="display: none;"><a href="javascript:void(0)">Animation...</a></li>
+                <script type="jsv#38^"></script><script type="jsv#122_"></script><script type="jsv/122_"></script><script type="jsv/38^"></script>
+            </div>
+            <div id="rep_serie2" class="l_serie" data-menu="" aria-hidden="true" data-link="data-menu-selectedindex{:getSerieSelectedIndex(2, ~idMap)}" data-menu-selectedindex="0" role="menu" style="top: 6px; left: 2px;">
+                <li data-link="visible{:getSerieList('2',~idMap).length>1 &amp;&amp; getAnim('2',~idMap)}" style="display: none;"><a href="javascript:void(0)">Animation...</a></li>
+                <script type="jsv#39^"></script><script type="jsv#123_"></script><script type="jsv/123_"></script><script type="jsv/39^"></script>
+            </div>
+        </header>
+
+        <div class="mapPrintContainer"></div>
+
+        <div class="printTextContainer comment no-display" data-link="css-visibility{:printComment ? 'visible' : 'hidden'}" style="visibility: hidden;"><textarea>Mein Kommentar...</textarea></div>
+        <div class="printTextContainer doc no-display" data-link="css-visibility{:printDoc ? 'visible' : 'hidden'}" style="visibility: hidden;"><span></span></div>
+
+        <article id="mapSection" class="mapSection" style="height: 1063px;">
+            <div class="map-legendH-container">
+                <div class="mapContainer" style="height: 1063px;"></div>
+
+                <div class="maplegendH" data-linkxx="visible{:libIndic1!=''}" tabindex="0"></div>
+            </div>
+
+            <aside role="complementary" class="flex-container flex-container-v no-display map-aside-sc" style="height: 1075px;">
+                <div id="legends" class="maplegendV"></div>
+            </aside>
+        </article>
+
+        <div class="win-size-grip"></div>
+    </div>
+    </div>
+    </div>
+</div>
+<script type="jsv/110_"></script>
+        </div>
+
+    </div>
+<script type="jsv/86_"></script>
+        </section>
+<script type="jsv/21_"></script></main><main role="main" id="homeComponent" data-role="component" class="cu-component" style="display: none;"><script type="jsv#161_"></script>
+<h1 style="position: absolute; left: -99999px">Statistical Atlas of Thurgau - Kanton Thurgau</h1>
+<div class="container-fluid w100">
+    <div id="b014_B" class="section row no-margin-top lg-12 md-12 pr-12 sm-12 xl-12 visible-lg visible-md visible-pr visible-sm visible-xl"><div id="b015_B.A" class="col-lg-12 col-md-12 col-pr-12 col-sm-12 col-xl-12 visible-lg visible-md visible-pr visible-sm visible-xl" style="padding: 0px; margin: 0px;"><div id="w010" class="widget BG widget-text" style=""><div class="slide" style="background-image: url(&quot;assets/Berlingen.jpg&quot;);"></div></div></div></div><div id="b007_C" class="section row mw1140p lg-12 md-12 sm-12 xl-8 visible-lg visible-md visible-sm visible-xl"><div id="b008_C.A" class="col-lg-4 col-md-6 col-sm-12 col-xl-4 visible-lg visible-md visible-sm visible-xl" title="Zugang zum Indikatoren Bereich"><div id="w005" class="widget whitePrimary CU widget-link widget-text" role="link" data-cu="indicator" tabindex="0" style="height: calc(100% - 10px);"><img alt="" src="assets/picto-cu1.png"><h2>Indikatoren</h2><div>Entdecken Sie den Thurgau mit Karten <br>und laden Sie Datentabellen herunter</div></div></div><div id="b009_C.B" class="col-lg-4 col-md-6 col-sm-12 col-xl-4 visible-lg visible-md visible-sm visible-xl" title="Zugang zum Berichte Bereich"><div id="w006" class="widget whitePrimary CU widget-link widget-text" role="link" data-cu="report" tabindex="0" style="height: calc(100% - 10px);"><img alt="" src="assets/picto-cu2.png"><h2>Berichte</h2><div>Blättern Sie <br>durch die Gemeindeportraits</div></div></div><div id="b011_C.C" class="col-lg-4 col-md-6 col-sm-12 col-xl-4 visible-lg visible-md visible-sm visible-xl" title="Zugang zum externen Daten Bereich"><div id="w008" class="widget whitePrimary CU widget-link widget-text" role="link" data-cu="externaldata" tabindex="0" style="height: calc(100% - 10px);"><img alt="" src="assets/picto-cu4.png"><h2>Externe Daten</h2><div>Visualisieren Sie <br>Ihre eigenen räumlichen Daten</div></div></div></div><div id="b012_D" class="section row greyPrimary lg-12 md-12 sm-12 xl-12 visible-lg visible-md visible-sm visible-xl"><div id="b013_D.A" class="col-lg-12 col-md-12 col-sm-12 col-xl-12 visible-lg visible-md visible-sm visible-xl" style="padding: 0px;"><div id="w009" class="widget FO widget-text" style=""><div><ul><li><p><a href="#c=contact"></a></p></li><li><p><a href="#c=contact|accessibility"></a></p></li><li><p><a href="#c=contact|cookie"></a></p></li><li><p><a href="#c=contact|editor"></a></p></li><li><p><a href="#c=help"></a></p></li></ul></div></div></div></div>
+</div>
+
+<script type="jsv/161_"></script></main><main role="main" id="indicatorComponent" data-role="component" class="cu-component"><script type="jsv#169_"></script>
+        <section id="tm-pilotage-sc" class="cu-pilotage" data-link="data-restit{:selectedRestit}" data-restit="m" style="height: 1015px;">
+
+            <script type="jsv#170_"></script>
+    <div class="mobile-nav-button1">
+        <a href="javascript:void(0)" data-link="{on displayMap}" class="prs" data-jsv="#241^/241^">
+            <span class="upc">Wiedergabe anzeigen</span> <span data-gcicon="5"></span>
+        </a>
+    </div>
+
+    <h1 class="cu-h1 hide-iframe">Indikatoren : Karten, Daten und Diagramme</h1>
+    <h2 class="upc">Indikatoren wählen</h2>
+
+    <div class="hide-iframe">
+        <script type="jsv#171_"></script>
+        <div class="tree_choice flex-container flex-center2 mbvs" style="margin-top: -4px; display: none;">
+            
+        </div>
+
+        <div class="man" data-link="visible{:selectedTree == '__KEYWORD__'}" style="display: none;">
+            <p>Schlüsselwort: <a title="Zurück zu der Schlagwortwolke" onclick="history.back()" href="javascript:void(0)" class="bold"><script type="jsv#163^"></script><script type="jsv/163^"></script></a></p>
+        </div>
+
+        <div class="man filtGroup flex-container" data-link="css-display{:selectedTree == '__KEYWORD__' ? 'none' : 'flex'}" style="display: none;">
+            <span class="inline-flex flex-item-fluid">
+                  <input style="max-width:99em;min-width:65px" autocomplete="off" spellcheck="false" autocapitalize="false" autocorrect="false" name="search" class="input-in-row flex-item-fluid small" placeholder="Suchen..." type="search" aria-label="Suche" data-link="searchStr">
+                  <button data-link="{on keySearch}" aria-label="undefined" class="small" data-jsv="#245^/245^">OK</button>
+
+                  <button class="mlvs small mrvs" data-link="{on filtReset}" title="Alle Filter zurücksetzen" data-jsv="#246^/246^">Löschen</button></span>
+            <span class="js-expandmore small fr" title="Filtern nach Darstellungstypen oder nur die auf dieser Karte sichtbaren Indikatoren anzeigen"><button class="expandmore__button js-expandmore-button" id="label_expand_1" data-controls="expand_1" aria-expanded="false">Weitere Filter</button></span>
+
+            <div class="js-to_expand expandmore__to_expand" id="expand_1" data-hidden="true" data-labelledby="label_expand_1">
+                <select data-link="selectedTypind" class="w100 mbvs small" aria-label="Darstellungen" data-jsv-df=""><option data-jsv="#164^#172_#173_" value="">Alle Darstellungen</option><option data-jsv="/173_#174_" value="PIE">Kreisdiagramme</option><option data-jsv="/174_#175_" value="C">Choropleth (Quotienten)</option><option data-jsv="/175_#176_" value="R">Proportionale Kreise (Zusätze)</option><option data-jsv="/176_#177_" value="SOLDE">Saldos</option></select>
+
+                <div class="flex-container justify-between mtn">
+                    <label class="label-checkbox mtn small" data-link="visible{:hasEssentials()}" title="Auf die wesentlichsten Indikatoren reduzieren" style="display: none;"><input type="checkbox" data-link="essentiels"> Wesentliche Indikatoren</label>
+                    <label class="label-checkbox mtn small" title="Auf die Indikatoren reduzieren, die kompatibel mit dem Umfang und der detailstufe der Karte sind"><input id="cth_compthismap_ckb" type="checkbox" data-link="compthismap"> Sichtbar auf dieser Ebene</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="treeindics ui-tree-classic" style="display: none;">
+            <script type="jsv#178_"></script>
+    <div data-role="collapsible-set" class="ui-collapsible-set">
+        <div class="mts">
+            <script type="jsv#197^"></script><script type="jsv#179_"></script><script type="jsv#180_"></script>
+    <div data-role="collapsible" data-pk="bev" data-level="1" data-nbthemes="7" class="ui-collapsible" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+            <button href="javascript:void(0);" aria-expanded="true" class="ui-collapsible-heading-toggle">
+                <div><span class="ui-li-label">Bevölkerung und Soziales</span><span class="ui-li-count">64</span></div>
+            </button>
+        </h3>
+
+        <div class="ui-collapsible-content" aria-hidden="false" style="">
+
+            <ul data-role="listview" data-jsv-df=""><li data-jsv="#172^#187_#188_" attr_name="Bevölkerungsstand" data-nbthemes="7" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="bevsta" data-level="1">
+    <a href="javascript:void(0);" class="ui-selected">
+    <span class="ui-li-label level1">Bevölkerungsstand</span><span class="ui-li-count">20</span>
+    </a>
+        
+        <script type="jsv#165^"></script><script type="jsv/165^"></script>
+        
+    </li><li data-jsv="/188_#191_" attr_name="Bevölkerungsentwicklung" data-nbthemes="7" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="bevent" data-level="1">
+    <a href="javascript:void(0);" class="">
+    <span class="ui-li-label level1">Bevölkerungsentwicklung</span><span class="ui-li-count">2</span>
+    </a>
+        
+        <script type="jsv#166^"></script><script type="jsv/166^"></script>
+        
+    </li><li data-jsv="/191_#194_" attr_name="Bevölkerungsbewegung" data-nbthemes="7" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="bevbew" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Bevölkerungsbewegung</span><span class="ui-li-count">20</span>
+    </a>
+        
+        <script type="jsv#167^"></script><script type="jsv/167^"></script>
+        
+    </li><li data-jsv="/194_#197_" attr_name="Haushalte" data-nbthemes="7" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="bevhh" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Haushalte</span><span class="ui-li-count">12</span>
+    </a>
+        
+        <script type="jsv#168^"></script><script type="jsv/168^"></script>
+        
+    </li><li data-jsv="/197_#200_" attr_name="Sozialhilfe" data-nbthemes="7" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="bevsoz" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Sozialhilfe</span><span class="ui-li-count">5</span>
+    </a>
+        
+        <script type="jsv#169^"></script><script type="jsv/169^"></script>
+        
+    </li><li data-jsv="/200_#203_" attr_name="Bildungsstand" data-nbthemes="7" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="bevtert_bezirk" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Bildungsstand</span><span class="ui-li-count">1</span>
+    </a>
+        
+        <script type="jsv#170^"></script><script type="jsv/170^"></script>
+        
+    </li><li data-jsv="/203_#206_" attr_name="Krebsneuerkrankungen" data-nbthemes="7" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="bevkr" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Krebsneuerkrankungen</span><span class="ui-li-count">4</span>
+    </a>
+        
+        <script type="jsv#171^"></script><script type="jsv/171^"></script>
+        
+    </li></ul>
+        </div>
+    </div>
+<script type="jsv/180_"></script><script type="jsv#209_"></script>
+    <div data-role="collapsible" data-pk="wua" data-level="1" data-nbthemes="6" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+            <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                <div><span class="ui-li-label">Wirtschaft und Arbeit</span><span class="ui-li-count">38</span></div>
+            </button>
+        </h3>
+
+        <div class="ui-collapsible-content ui-collapsible-content-collapsed" aria-hidden="true" style="display: none">
+
+            <ul data-role="listview" data-jsv-df=""><li data-jsv="#179^#216_#217_" attr_name="Beschäftigte" data-nbthemes="6" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="wuabesch" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Beschäftigte</span><span class="ui-li-count">15</span>
+    </a>
+        
+        <script type="jsv#173^"></script><script type="jsv/173^"></script>
+        
+    </li><li data-jsv="/217_#220_" attr_name="Arbeitsstätten" data-nbthemes="6" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="wuaarb" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Arbeitsstätten</span><span class="ui-li-count">12</span>
+    </a>
+        
+        <script type="jsv#174^"></script><script type="jsv/174^"></script>
+        
+    </li><li data-jsv="/220_#223_" attr_name="Grenzgänger/innen" data-nbthemes="6" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="wuagre" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Grenzgänger/innen</span><span class="ui-li-count">2</span>
+    </a>
+        
+        <script type="jsv#175^"></script><script type="jsv/175^"></script>
+        
+    </li><li data-jsv="/223_#226_" attr_name="Arbeitslosigkeit" data-nbthemes="6" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="wuaarblos" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Arbeitslosigkeit</span><span class="ui-li-count">2</span>
+    </a>
+        
+        <script type="jsv#176^"></script><script type="jsv/176^"></script>
+        
+    </li><li data-jsv="/226_#229_" attr_name="Neu gegründete Unternehmen" data-nbthemes="6" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="wuaneu" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Neu gegründete Unternehmen</span><span class="ui-li-count">2</span>
+    </a>
+        
+        <script type="jsv#177^"></script><script type="jsv/177^"></script>
+        
+    </li><li data-jsv="/229_#232_" attr_name="Pendler" data-nbthemes="6" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="wuapen" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Pendler</span><span class="ui-li-count">5</span>
+    </a>
+        
+        <script type="jsv#178^"></script><script type="jsv/178^"></script>
+        
+    </li></ul>
+        </div>
+    </div>
+<script type="jsv/209_"></script><script type="jsv#235_"></script>
+    <div data-role="collapsible" data-pk="buw" data-level="1" data-nbthemes="3" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+            <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                <div><span class="ui-li-label">Bauen und Wohnen</span><span class="ui-li-count">34</span></div>
+            </button>
+        </h3>
+
+        <div class="ui-collapsible-content ui-collapsible-content-collapsed" aria-hidden="true" style="display: none">
+
+            <ul data-role="listview" data-jsv-df=""><li data-jsv="#183^#242_#243_" attr_name="Leer stehende Wohnungen" data-nbthemes="3" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="buwlsw" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Leer stehende Wohnungen</span><span class="ui-li-count">3</span>
+    </a>
+        
+        <script type="jsv#180^"></script><script type="jsv/180^"></script>
+        
+    </li><li data-jsv="/243_#246_" attr_name="Bauinvestitionen" data-nbthemes="3" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="buwinv" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Bauinvestitionen</span><span class="ui-li-count">7</span>
+    </a>
+        
+        <script type="jsv#181^"></script><script type="jsv/181^"></script>
+        
+    </li><li data-jsv="/246_#249_" attr_name="Gebäude und Wohnungen" data-nbthemes="3" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="buwguw" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Gebäude und Wohnungen</span><span class="ui-li-count">24</span>
+    </a>
+        
+        <script type="jsv#182^"></script><script type="jsv/182^"></script>
+        
+    </li></ul>
+        </div>
+    </div>
+<script type="jsv/235_"></script><script type="jsv#252_"></script>
+    <div data-role="collapsible" data-pk="ruw" data-level="1" data-nbthemes="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+            <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                <div><span class="ui-li-label">Raum und Umwelt</span><span class="ui-li-count">10</span></div>
+            </button>
+        </h3>
+
+        <div class="ui-collapsible-content ui-collapsible-content-collapsed" aria-hidden="true" style="display: none">
+
+            <ul data-role="listview" data-jsv-df=""><li data-jsv="#185^#259_#260_" attr_name="Flächennutzung" data-nbthemes="1" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="ruwfla" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Flächennutzung</span><span class="ui-li-count">10</span>
+    </a>
+        
+        <script type="jsv#184^"></script><script type="jsv/184^"></script>
+        
+    </li></ul>
+        </div>
+    </div>
+<script type="jsv/252_"></script><script type="jsv#263_"></script>
+    <div data-role="collapsible" data-pk="pol" data-level="1" data-nbthemes="10" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+            <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                <div><span class="ui-li-label">Staat und Politik</span><span class="ui-li-count">133</span></div>
+            </button>
+        </h3>
+
+        <div class="ui-collapsible-content ui-collapsible-content-collapsed" aria-hidden="true" style="display: none">
+
+            <ul data-role="listview" data-jsv-df=""><li data-jsv="#196^#270_#271_" attr_name="Grossratswahlen" data-nbthemes="10" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="polgrw" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Grossratswahlen</span><span class="ui-li-count">18</span>
+    </a>
+        
+        <script type="jsv#186^"></script><script type="jsv/186^"></script>
+        
+    </li><li data-jsv="/271_#274_" attr_name="Nationalratswahlen" data-nbthemes="10" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="polnrw" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Nationalratswahlen</span><span class="ui-li-count">21</span>
+    </a>
+        
+        <script type="jsv#187^"></script><script type="jsv/187^"></script>
+        
+    </li><li data-jsv="/274_#277_" attr_name="2024: Eidgenössische Abstimmungen" data-nbthemes="10" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="polabs24" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">2024: Eidgenössische Abstimmungen</span><span class="ui-li-count">4</span>
+    </a>
+        
+        <script type="jsv#188^"></script><script type="jsv/188^"></script>
+        
+    </li><li data-jsv="/277_#280_" attr_name="2022: Eidgenössische Abstimmungen" data-nbthemes="10" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="polabs22" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">2022: Eidgenössische Abstimmungen</span><span class="ui-li-count">22</span>
+    </a>
+        
+        <script type="jsv#189^"></script><script type="jsv/189^"></script>
+        
+    </li><li data-jsv="/280_#283_" attr_name="2021: Eidgenössische Abstimmungen" data-nbthemes="10" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="polabs21" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">2021: Eidgenössische Abstimmungen</span><span class="ui-li-count">26</span>
+    </a>
+        
+        <script type="jsv#190^"></script><script type="jsv/190^"></script>
+        
+    </li><li data-jsv="/283_#286_" attr_name="2020: Eidgenössische Abstimmungen" data-nbthemes="10" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="polabs20" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">2020: Eidgenössische Abstimmungen</span><span class="ui-li-count">18</span>
+    </a>
+        
+        <script type="jsv#191^"></script><script type="jsv/191^"></script>
+        
+    </li><li data-jsv="/286_#289_" attr_name="2019: Eidgenössische Abstimmungen" data-nbthemes="10" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="polabs19" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">2019: Eidgenössische Abstimmungen</span><span class="ui-li-count">6</span>
+    </a>
+        
+        <script type="jsv#192^"></script><script type="jsv/192^"></script>
+        
+    </li><li data-jsv="/289_#292_" attr_name="2019 bis 2022: Kantonale Abstimmungen" data-nbthemes="10" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="tgpolabs" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">2019 bis 2022: Kantonale Abstimmungen</span><span class="ui-li-count">10</span>
+    </a>
+        
+        <script type="jsv#193^"></script><script type="jsv/193^"></script>
+        
+    </li><li data-jsv="/292_#295_" attr_name="Steuerkraft und Steuerfüsse" data-nbthemes="10" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="polsksf" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Steuerkraft und Steuerfüsse</span><span class="ui-li-count">6</span>
+    </a>
+        
+        <script type="jsv#194^"></script><script type="jsv/194^"></script>
+        
+    </li><li data-jsv="/295_#298_" attr_name="Finanzausgleich" data-nbthemes="10" title="Klicken Sie hier, um die Indikatoren für dieses Themas einzusehen" data-pk="polgefa" data-level="1">
+    <a href="javascript:void(0);">
+    <span class="ui-li-label level1">Finanzausgleich</span><span class="ui-li-count">2</span>
+    </a>
+        
+        <script type="jsv#195^"></script><script type="jsv/195^"></script>
+        
+    </li></ul>
+        </div>
+    </div>
+<script type="jsv/263_"></script><script type="jsv/179_"></script><script type="jsv/197^"></script>
+        </div>
+    </div>
+<script type="jsv/178_"></script>
+        </div>
+
+        <p class="no-display mts errMsg indics_msg small" style="display: none;">Ihre Suche hat kein Ergebnis</p>
+
+        <div class="no-display">
+            <select id="cth_indic_cb" class="mts flex-item-fluid" data-link="{:selectedIndic:} visible{:selectedTheme!='' &amp;&amp; selectedDom!='' &amp;&amp; indic_a.length > 0 }" data-jsv-df="" style="display: block;"><option data-jsv="#198^#301_#921_#791^#922_" value="bevsta.bevstaaltdur"><script type="jsv#790^"></script><script type="jsv/790^"></script>
+                        Durchschnittsalter der Bevölkerung</option><option data-jsv="/922_/791^/921_#923_#793^#924_" value="bevsta.bevstaaltdursen"><script type="jsv#792^"></script><script type="jsv/792^"></script>
+                        Durchschnittsalter der Rentnerinnen und Rentner</option><option data-jsv="/924_/793^/923_#925_#795^#926_" value="bevsta.bevstat"><script type="jsv#794^"></script><script type="jsv/794^"></script>
+                        Gesamtbevölkerung</option><option data-jsv="/926_/795^/925_#927_#797^#928_" value="bevsta.bevstadic"><script type="jsv#796^"></script><script type="jsv/796^"></script>
+                        Bevölkerungsdichte</option><option data-jsv="/928_/797^/927_#929_#799^#930_" value="bevsta.bevstateilmf"><script type="jsv#798^"></script><script type="jsv/798^"></script>
+                        Bevölkerungsverteilung nach Geschlecht</option><option data-jsv="/930_/799^/929_#931_#801^#932_" value="bevsta.bevstacht"><script type="jsv#800^"></script><script type="jsv/800^"></script>
+                        Schweizer Bevölkerung</option><option data-jsv="/932_/801^/931_#933_#803^#934_" value="bevsta.bevstatau"><script type="jsv#802^"></script><script type="jsv/802^"></script>
+                        Ausländische Bevölkerung</option><option data-jsv="/934_/803^/933_#935_#805^#936_" value="bevsta.bevstateilchau"><script type="jsv#804^"></script><script type="jsv/804^"></script>
+                        Bevölkerungsverteilung nach Nationalität</option><option data-jsv="/936_/805^/935_#937_#807^#938_" value="bevsta.bevstaantch"><script type="jsv#806^"></script><script type="jsv/806^"></script>
+                        Anteil Schweizer Bevölkerung</option><option data-jsv="/938_/807^/937_#939_#809^#940_" value="bevsta.bevstaantau"><script type="jsv#808^"></script><script type="jsv/808^"></script>
+                        Anteil ausländische Bevölkerung</option><option data-jsv="/940_/809^/939_#941_#811^#942_" value="bevsta.bevsta0_19"><script type="jsv#810^"></script><script type="jsv/810^"></script>
+                        Anzahl Personen unter 20 Jahren</option><option data-jsv="/942_/811^/941_#943_#813^#944_" value="bevsta.bevsta20_64"><script type="jsv#812^"></script><script type="jsv/812^"></script>
+                        Anzahl 20-64-Jährige</option><option data-jsv="/944_/813^/943_#945_#815^#946_" value="bevsta.bevsta65p"><script type="jsv#814^"></script><script type="jsv/814^"></script>
+                        Anzahl über 64-Jährige</option><option data-jsv="/946_/815^/945_#947_#817^#948_" value="bevsta.bevstateil2065"><script type="jsv#816^"></script><script type="jsv/816^"></script>
+                        Bevölkerungsverteilung nach Alter</option><option data-jsv="/948_/817^/947_#949_#819^#950_" value="bevsta.bevstaant0_19"><script type="jsv#818^"></script><script type="jsv/818^"></script>
+                        Anteil unter 20-Jährige</option><option data-jsv="/950_/819^/949_#951_#821^#952_" value="bevsta.bevstaant20_64"><script type="jsv#820^"></script><script type="jsv/820^"></script>
+                        Anteil 20-64-Jährige</option><option data-jsv="/952_/821^/951_#953_#823^#954_" value="bevsta.bevstaant65p"><script type="jsv#822^"></script><script type="jsv/822^"></script>
+                        Anteil über 64-Jährige</option><option data-jsv="/954_/823^/953_#955_#825^#956_" value="bevsta.bevkonf"><script type="jsv#824^"></script><script type="jsv/824^"></script>
+                        Bevölkerung nach Konfession</option><option data-jsv="/956_/825^/955_#957_#827^#958_" value="bevsta.bevevangant"><script type="jsv#826^"></script><script type="jsv/826^"></script>
+                        Anteil evang.-ref. Bevölkerung</option><option data-jsv="/958_/827^/957_#959_#829^#960_" value="bevsta.bevkathpant"><script type="jsv#828^"></script><script type="jsv/828^"></script>
+                        Anteil röm.-kath. Bevölkerung</option></select>
+        </div>
+
+        <div class="ui-indic-list">
+            <script type="jsv#302_"></script>
+    <div data-role="collapsible-set" class="indics_filter1 no-display pan mts" style="display: block;">
+        <div class="ui-collapset-header mtn mbvs">
+            <a href="javascript:void(0)" title="Klicken Sie hier um zur Ordnerstruktur zurückzukehren"><script type="jsv#199^"></script>BEVÖLKERUNG UND SOZIALES<script type="jsv/199^"></script></a>
+            <script type="jsv#201^"></script><script type="jsv#905_"></script> &gt; <b><script type="jsv#777^"></script>Bevölkerungsstand (20)<script type="jsv/777^"></script></b><script type="jsv/905_"></script><script type="jsv/201^"></script>
+        </div>
+        <div data-link="css-display{:nbIndicsInTheme > -5 &amp;&amp; selectedTypind == '' ? 'flex' : 'none'}" class="pbvs flex-center2" style="display: flex;">
+            <label class="label-checkbox mtn small prs" data-link="css-display{:!essentiels &amp;&amp; nbEssentiels !='' &amp;&amp; (essentiels2 || nbEssentiels<nbIndicsInTheme) ? 'flex':'none'}" style="display: none;">
+                <input type="checkbox" data-link="essentiels2">Nur wesentliche Indikatoren (<span data-link="nbEssentiels">20</span>)
+            </label>
+        </div>
+
+        <div class="ui-collapsible-set vertical-scrollable indic-container">
+            <script type="jsv#202^"></script><script type="jsv#961_"></script><script type="jsv#962_"></script>
+
+<script type="jsv#831^"></script><script type="jsv#963_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstaaltdur" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstaaltdur" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(246, 246, 246);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" aria-label="Durchschnittsalter der Bevölkerung" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#830^"></script><script type="jsv/830^"></script> Durchschnittsalter der Bevölkerung <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/963_"></script><script type="jsv/831^"></script>
+<script type="jsv/962_"></script><script type="jsv#966_"></script>
+
+<script type="jsv#833^"></script><script type="jsv#967_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstaaltdursen" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstaaltdursen" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(255, 255, 255);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" aria-label="Durchschnittsalter der Rentnerinnen und Rentner" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#832^"></script><script type="jsv/832^"></script> Durchschnittsalter der Rentnerinnen und Rentner <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/967_"></script><script type="jsv/833^"></script>
+<script type="jsv/966_"></script><script type="jsv#970_"></script>
+
+<script type="jsv#835^"></script><script type="jsv#971_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstat" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstat" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(246, 246, 246);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Gesamtbevölkerung (ständige Wohnbevölkerung)" aria-label="Gesamtbevölkerung (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#834^"></script><script type="jsv/834^"></script> Gesamtbevölkerung <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/971_"></script><script type="jsv/835^"></script>
+<script type="jsv/970_"></script><script type="jsv#975_"></script>
+
+<script type="jsv#837^"></script><script type="jsv#976_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstadic" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstadic" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(255, 255, 255);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Dichte der ständigen Wohnbevölkerung (Personen pro ha Landfläche)" aria-label="Dichte der ständigen Wohnbevölkerung (Personen pro ha Landfläche)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#836^"></script><script type="jsv/836^"></script> Bevölkerungsdichte <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/976_"></script><script type="jsv/837^"></script>
+<script type="jsv/975_"></script><script type="jsv#980_"></script>
+
+<script type="jsv#839^"></script><script type="jsv#981_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstateilmf" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstateilmf" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(246, 246, 246);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Bevölkerungsverteilung nach Geschlecht (ständige Wohnbevölkerung)" aria-label="Bevölkerungsverteilung nach Geschlecht (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#838^"></script><script type="jsv/838^"></script> Bevölkerungsverteilung nach Geschlecht <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/981_"></script><script type="jsv/839^"></script>
+<script type="jsv/980_"></script><script type="jsv#985_"></script>
+
+<script type="jsv#841^"></script><script type="jsv#986_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstacht" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstacht" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(255, 255, 255);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Schweizer Bevölkerung (ständige Wohnbevölkerung)" aria-label="Schweizer Bevölkerung (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#840^"></script><script type="jsv/840^"></script> Schweizer Bevölkerung <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/986_"></script><script type="jsv/841^"></script>
+<script type="jsv/985_"></script><script type="jsv#990_"></script>
+
+<script type="jsv#843^"></script><script type="jsv#991_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstatau" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstatau" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(246, 246, 246);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Ausländische Bevölkerung (ständige Wohnbevölkerung)" aria-label="Ausländische Bevölkerung (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#842^"></script><script type="jsv/842^"></script> Ausländische Bevölkerung <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/991_"></script><script type="jsv/843^"></script>
+<script type="jsv/990_"></script><script type="jsv#995_"></script>
+
+<script type="jsv#845^"></script><script type="jsv#996_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstateilchau" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstateilchau" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(255, 255, 255);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Bevölkerungsverteilung nach Nationalität (ständige Wohnbevölkerung)" aria-label="Bevölkerungsverteilung nach Nationalität (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#844^"></script><script type="jsv/844^"></script> Bevölkerungsverteilung nach Nationalität <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/996_"></script><script type="jsv/845^"></script>
+<script type="jsv/995_"></script><script type="jsv#1000_"></script>
+
+<script type="jsv#847^"></script><script type="jsv#1001_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstaantch" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstaantch" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(246, 246, 246);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Anteil Schweizer Bevölkerung an der Gesamtbevölkerung (ständige Wohnbevölkerung)" aria-label="Anteil Schweizer Bevölkerung an der Gesamtbevölkerung (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#846^"></script><script type="jsv/846^"></script> Anteil Schweizer Bevölkerung <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/1001_"></script><script type="jsv/847^"></script>
+<script type="jsv/1000_"></script><script type="jsv#1005_"></script>
+
+<script type="jsv#849^"></script><script type="jsv#1006_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstaantau" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstaantau" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(255, 255, 255);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Anteil ausländische Bevölkerung an der Gesamtbevölkerung (ständige Wohnbevölkerung)" aria-label="Anteil ausländische Bevölkerung an der Gesamtbevölkerung (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#848^"></script><script type="jsv/848^"></script> Anteil ausländische Bevölkerung <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/1006_"></script><script type="jsv/849^"></script>
+<script type="jsv/1005_"></script><script type="jsv#1010_"></script>
+
+<script type="jsv#851^"></script><script type="jsv#1011_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevsta0_19" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevsta0_19" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(246, 246, 246);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Anzahl unter 20-Jährige (ständige Wohnbevölkerung)" aria-label="Anzahl unter 20-Jährige (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#850^"></script><script type="jsv/850^"></script> Anzahl Personen unter 20 Jahren <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/1011_"></script><script type="jsv/851^"></script>
+<script type="jsv/1010_"></script><script type="jsv#1015_"></script>
+
+<script type="jsv#853^"></script><script type="jsv#1016_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevsta20_64" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevsta20_64" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(255, 255, 255);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Anzahl 20-64-Jährige (ständige Wohnbevölkerung)" aria-label="Anzahl 20-64-Jährige (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#852^"></script><script type="jsv/852^"></script> Anzahl 20-64-Jährige <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/1016_"></script><script type="jsv/853^"></script>
+<script type="jsv/1015_"></script><script type="jsv#1020_"></script>
+
+<script type="jsv#855^"></script><script type="jsv#1021_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevsta65p" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevsta65p" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(246, 246, 246);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Anzahl über 64-Jährige (ständige Wohnbevölkerung)" aria-label="Anzahl über 64-Jährige (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#854^"></script><script type="jsv/854^"></script> Anzahl über 64-Jährige <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/1021_"></script><script type="jsv/855^"></script>
+<script type="jsv/1020_"></script><script type="jsv#1025_"></script>
+
+<script type="jsv#857^"></script><script type="jsv#1026_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstateil2065" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstateil2065" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(255, 255, 255);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Bevölkerungsverteilung nach Alter (ständige Wohnbevölkerung)" aria-label="Bevölkerungsverteilung nach Alter (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#856^"></script><script type="jsv/856^"></script> Bevölkerungsverteilung nach Alter <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/1026_"></script><script type="jsv/857^"></script>
+<script type="jsv/1025_"></script><script type="jsv#1030_"></script>
+
+<script type="jsv#859^"></script><script type="jsv#1031_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstaant0_19" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstaant0_19" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(246, 246, 246);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Anteil unter 20-Jähriger in % (ständige Wohnbevölkerung)" aria-label="Anteil unter 20-Jähriger in % (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#858^"></script><script type="jsv/858^"></script> Anteil unter 20-Jährige <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/1031_"></script><script type="jsv/859^"></script>
+<script type="jsv/1030_"></script><script type="jsv#1035_"></script>
+
+<script type="jsv#861^"></script><script type="jsv#1036_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstaant20_64" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstaant20_64" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(255, 255, 255);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Anteil 20-64-Jährige in % (ständige Wohnbevölkerung)" aria-label="Anteil 20-64-Jährige in % (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#860^"></script><script type="jsv/860^"></script> Anteil 20-64-Jährige <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/1036_"></script><script type="jsv/861^"></script>
+<script type="jsv/1035_"></script><script type="jsv#1040_"></script>
+
+<script type="jsv#863^"></script><script type="jsv#1041_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevstaant65p" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevstaant65p" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(246, 246, 246);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" title="Anteil über 64-Jährige in % (ständige Wohnbevölkerung)" aria-label="Anteil über 64-Jährige in % (ständige Wohnbevölkerung)" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#862^"></script><script type="jsv/862^"></script> Anteil über 64-Jährige <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/1041_"></script><script type="jsv/863^"></script>
+<script type="jsv/1040_"></script><script type="jsv#1045_"></script>
+
+<script type="jsv#865^"></script><script type="jsv#1046_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevkonf" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevkonf" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(255, 255, 255);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" aria-label="Bevölkerung nach Konfession" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#864^"></script><script type="jsv/864^"></script> Bevölkerung nach Konfession <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/1046_"></script><script type="jsv/865^"></script>
+<script type="jsv/1045_"></script><script type="jsv#1049_"></script>
+
+<script type="jsv#867^"></script><script type="jsv#1050_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevevangant" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevevangant" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(246, 246, 246);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" aria-label="Anteil evang.-ref. Bevölkerung" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#866^"></script><script type="jsv/866^"></script> Anteil evang.-ref. Bevölkerung <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/1050_"></script><script type="jsv/867^"></script>
+<script type="jsv/1049_"></script><script type="jsv#1053_"></script>
+
+<script type="jsv#869^"></script><script type="jsv#1054_"></script>
+    <div data-role="collapsible" data-pk="bevsta.bevkathpant" data-level="1" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+        <h3 class="ui-collapsible-heading no-filter1" data-pk="bevsta.bevkathpant" data-link="css-background-color{:~getIndicBackgroundColor(~root.sortByType)}" style="background-color: rgb(255, 255, 255);">
+
+            <a href="javascript:void(0);" data-link="class{merge:selected toggle='selected'}" aria-label="Anteil röm.-kath. Bevölkerung" class="ui-collapsible-heading-toggle">
+                <span class="ui-li-label"><script type="jsv#868^"></script><script type="jsv/868^"></script> Anteil röm.-kath. Bevölkerung <span>(2023...1970)</span></span>
+            </a>
+
+        </h3>
+
+        
+
+    </div>
+<script type="jsv/1054_"></script><script type="jsv/869^"></script>
+<script type="jsv/1053_"></script><script type="jsv/961_"></script><script type="jsv/202^"></script>
+        </div>
+
+        <p class="italic small" data-link="visible{:hasNoCompatibleIndics2}" style="margin-top: 0px; display: none;">*: Sichtbar auf einer anderen Karte</p>
+
+        <div class="flex-container" data-link="css-display{:isSortByTypeVisible?'flex':'none'} css-margin-bottom{:nbIndicsInTheme<=4 ? '1em' : '0'}" style="display: flex; margin-bottom: 0px;">
+            <label class="label-checkbox small" title="Trennen nach kartografischer Darstellungstyp" style="margin-top:0;padding-top:3px">
+                <input type="checkbox" data-link="sortByType"><i>Klassifizierung nach Typ</i>
+            </label>
+
+            <span class="js-expandmore mlvs" title="Legende der Darstellungstypen"><button class="expandmore__button js-expandmore-button" id="label_expand_2" data-controls="expand_2" aria-expanded="false"></button></span>
+
+            <div class="js-to_expand indic-color-legend small expandmore__to_expand" id="expand_2" data-hidden="true" data-labelledby="label_expand_2">
+                <p>
+                <script type="jsv#305_"></script><script type="jsv#306_"></script>
+                    <span><span class="box" style="background-color:#FFDDF5"></span><label>Klassifikationen</label></span>
+                <script type="jsv/306_"></script><script type="jsv#307_"></script>
+                    <span><span class="box" style="background-color:#ddeeff"></span><label>Quoten</label></span>
+                <script type="jsv/307_"></script><script type="jsv#308_"></script>
+                    <span><span class="box" style="background-color:#FFffdd"></span><label>Absolute Werte</label></span>
+                <script type="jsv/308_"></script><script type="jsv#309_"></script>
+                    <span><span class="box" style="background-color:#ccffee"></span><label>Punktdaten</label></span>
+                <script type="jsv/309_"></script><script type="jsv#310_"></script>
+                    <span><span class="box" style="background-color:#f0f0f0"></span><label>Flüsse</label></span>
+                <script type="jsv/310_"></script><script type="jsv/305_"></script>
+                </p>
+            </div>
+        </div>
+    </div>
+<script type="jsv/302_"></script>
+        </div>
+<script type="jsv/171_"></script>
+    </div>
+
+    <div class="js-tabs mts pan">
+        <ul class="js-tablist onglet_style c2-on-basket tabs__list" role="tablist"><li class="js-tablist__item tabs__item" role="presentation" aria-selected="true">
+                <a data-pk="map1" class="js-tablist__link upc small tabs__link" role="tab" aria-controls="indc2basket_nav_1" tabindex="0" aria-selected="true">Karte 1</a>
+            </li><li class="js-tablist__item tabs__item" role="presentation" aria-selected="false">
+                <a data-pk="map2" class="js-tablist__link upc small tabs__link" role="tab" aria-controls="indc2basket_nav_2" tabindex="-1" aria-selected="false">Karte 2</a>
+            </li><li class="js-tablist__item tabs__item" role="presentation">
+                &nbsp;</li></ul>
+
+        <section id="indc2basket_nav_1" class="js-tabcontent js-tabcontent-basket tabs__content" style="padding:0" role="tabpanel" aria-labelledby="label_indc2basket_nav_1">
+            
+
+            <script type="jsv#311_"></script>
+    <div class="indic-basket background-basket" data-link="visible{:~selectedIndics_a.length>0 || (checkFicSectionVisibility() &amp;&amp; selectedRestit=='f' ) }" style="display: none;">
+        <fieldset class="pan">
+           <div class="flex-container">
+                <h3 class="txtcenter flex-item-fluid">Meine Indikatoren</h3>
+                <span class="removeAllItems hide-iframe" data-link="visible{:~selectedIndics_a.length>1}" tabindex="0" title="Alles löschen" style="display: none;"></span>
+           </div>
+            <ul class="man" data-jsv-df=""></ul>
+        </fieldset>
+
+        <p class="small mtn txtright italic" data-link="visible{:hasNoCompatibleIndics &amp;&amp; selectedRestit != 'f'}" style="display: none;">*: Verfügbarer Indikator auf einer anderen Karte</p>
+        <script type="jsv#315_"></script>
+    <script type="jsv#206^"></script><script type="jsv#408_"></script><script type="jsv/408_"></script><script type="jsv/206^"></script>
+<script type="jsv/315_"></script>
+    </div>
+    <div class="mtm mbm flex-container medium-hidden large-hidden">
+        <button data-link="visible{:~selectedIndics_a.length>0} {on displayMap}" class="center" data-jsv="#265^/265^" style="display: none;">Wiedergabe anzeigen</button>
+    </div>
+<script type="jsv/311_"></script>
+            <p class="mtn pavs small italic" data-link="visible{:selectedIndics_a.length==0 &amp;&amp; selectedRestit == 'm2'}" style="display: none;">Fügen Sie einen Indikator hinzu, indem Sie den Baum oben durchsuchen...</p>
+        </section>
+
+        <section id="indc2basket_nav_2" class="js-tabcontent js-tabcontent-basket tabs__content" style="padding:0" role="tabpanel" aria-hidden="true" aria-labelledby="label_indc2basket_nav_2">
+            <script type="jsv#317_"></script>
+    <div class="indic-basket background-basket" data-link="visible{:~selectedIndics_a.length>0 || (checkFicSectionVisibility() &amp;&amp; selectedRestit=='f' ) }" style="display: none;">
+        <fieldset class="pan">
+           <div class="flex-container">
+                <h3 class="txtcenter flex-item-fluid">Meine Indikatoren</h3>
+                <span class="removeAllItems hide-iframe" data-link="visible{:~selectedIndics_a.length>1}" tabindex="0" title="Alles löschen" style="display: none;"></span>
+           </div>
+            <ul class="man" data-jsv-df=""></ul>
+        </fieldset>
+
+        <p class="small mtn txtright italic" data-link="visible{:hasNoCompatibleIndics &amp;&amp; selectedRestit != 'f'}" style="display: none;">*: Verfügbarer Indikator auf einer anderen Karte</p>
+        <script type="jsv#321_"></script>
+    <script type="jsv#210^"></script><script type="jsv#409_"></script><script type="jsv/409_"></script><script type="jsv/210^"></script>
+<script type="jsv/321_"></script>
+    </div>
+    <div class="mtm mbm flex-container medium-hidden large-hidden">
+        <button data-link="visible{:~selectedIndics_a.length>0} {on displayMap}" class="center" data-jsv="#271^/271^" style="display: none;">Wiedergabe anzeigen</button>
+    </div>
+<script type="jsv/317_"></script>
+            <p class="mtn pavs small italic" data-link="visible{:selectedIndics_a_c2.length==0 &amp;&amp; selectedRestit == 'm2'}" style="display: none;">Fügen Sie einen Indikator hinzu, indem Sie den Baum oben durchsuchen...</p>
+        </section>
+    </div>
+
+    <h2 class="upc">Darstellungsebene ändern</h2>
+    <div>
+         <div class="js-tabs">
+            <ul class="js-tablist onglet_style c2-on-geo tabs__list" role="tablist"><li class="js-tablist__item tabs__item" role="presentation" aria-selected="true">
+                    <a data-pk="map1" class="js-tablist__link upc small tabs__link" role="tab" aria-controls="indc2_nav_1" tabindex="0" aria-selected="true">Karte 1</a>
+                </li><li class="js-tablist__item tabs__item" role="presentation" aria-selected="false">
+                    <a data-pk="map2" class="js-tablist__link upc small tabs__link" role="tab" aria-controls="indc2_nav_2" tabindex="-1" aria-selected="false">Karte 2</a>
+                </li><li class="js-tablist__item tabs__item" role="presentation">
+                &nbsp;</li></ul>
+
+            <section id="indc2_nav_1" class="js-tabcontent js-tabcontent-geo tabs__content" role="tabpanel" aria-labelledby="label_indc2_nav_1">
+                <script type="jsv#323_"></script>
+    <script type="jsv#324_"></script>
+        <div class="flex-container w100" data-link="visible{:extent_a.length>1}" style="display: none;">
+            <label class="labelgroup" for="tm_extent_cb" style="min-width: 40.4844px;">Ausdehnung</label>
+
+            <script type="jsv#325_"></script>
+                <select id="tm_extent_cb" data-link="selectedExtentFn(~idMap)" class="flex-item-fluid mlvs" data-jsv-df=""><option data-jsv="#326_#327_" value="extent0">Kanton</option></select>
+            <script type="jsv/325_"></script>
+        </div>
+    <script type="jsv/324_"></script>
+
+    <div class="flex-container ptvs w100">
+            <script type="jsv#328_"></script>
+                <script type="jsv#329_"></script><label class="labelgroup" for="tm_view_cb" style="min-width: 40.4844px;">Ebene</label><script type="jsv/329_"></script><select id="tm_view_cb" data-link="selectedView" class="flex-item-fluid mlvs" data-jsv-df=""><option data-jsv="#213^#330_#331_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics=='*' || ~root.nivgeosIndics.split('|').indexOf(id_nivgeo) >= 0 ? '' : 'Nicht kompatibel mit diesem Indikator'}" value="map3" title=""><script type="jsv#211^"></script><script type="jsv/211^"></script>
+                    Gemeinde</option><option data-jsv="/331_#332_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics=='*' || ~root.nivgeosIndics.split('|').indexOf(id_nivgeo) >= 0 ? '' : 'Nicht kompatibel mit diesem Indikator'}" value="map2" title=""><script type="jsv#212^"></script><script type="jsv/212^"></script>
+                    Bezirk</option></select>
+    </div>
+    <div class="mtm mbm flex-container medium-hidden large-hidden">
+        <button data-link="visible{:!selectedIndics_a || selectedIndics_a.length==0} {on displayMap}" class="center" data-jsv="#279^/279^" style="display: block;">Karte anzeigen</button>
+    </div>
+<script type="jsv/323_"></script>
+            </section>
+
+            <section id="indc2_nav_2" class="js-tabcontent js-tabcontent-geo tabs__content" role="tabpanel" aria-hidden="true" aria-labelledby="label_indc2_nav_2">
+                <script type="jsv#333_"></script>
+    <script type="jsv#334_"></script>
+        <div class="flex-container w100" data-link="visible{:extent_a.length>1}" style="display: none;">
+            <label class="labelgroup" for="tm_extent_cb2" style="min-width: 40.4844px;">Ausdehnung</label>
+
+            <script type="jsv#335_"></script>
+                <select id="tm_extent_cb2" data-link="selectedExtentFn(~idMap)" class="flex-item-fluid mlvs" data-jsv-df=""><option data-jsv="#336_#337_" value="extent0">Kanton</option></select>
+            <script type="jsv/335_"></script>
+        </div>
+    <script type="jsv/334_"></script>
+
+    <div class="flex-container ptvs w100">
+            <script type="jsv#338_"></script>
+                <script type="jsv#339_"></script><label class="labelgroup" for="tm_view2_cb" style="min-width: 40.4844px;">Ebene</label><script type="jsv/339_"></script><select id="tm_view2_cb" data-link="selectedView2" class="flex-item-fluid mlvs" data-jsv-df=""><option data-jsv="#216^#340_#341_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics=='*' || ~root.nivgeosIndics.split('|').indexOf(id_nivgeo) >= 0 ? '' : 'Nicht kompatibel mit diesem Indikator'}" value="map3" title=""><script type="jsv#214^"></script><script type="jsv/214^"></script>
+                    Gemeinde</option><option data-jsv="/341_#342_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics=='*' || ~root.nivgeosIndics.split('|').indexOf(id_nivgeo) >= 0 ? '' : 'Nicht kompatibel mit diesem Indikator'}" value="map2" title=""><script type="jsv#215^"></script><script type="jsv/215^"></script>
+                    Bezirk</option></select>
+    </div>
+    <div class="mtm mbm flex-container medium-hidden large-hidden">
+        <button data-link="visible{:!selectedIndics_a || selectedIndics_a.length==0} {on displayMap}" class="center" data-jsv="#286^/286^" style="display: block;">Karte anzeigen</button>
+    </div>
+<script type="jsv/333_"></script>
+            </section>
+        </div>
+
+        <div class="flex-container mtvs flex-center2" data-link="css-display{:selectedRestit=='m2' ? 'flex':'none'} disabled{:selectedExtent!=selectedExtent2}" style="display: none;">
+            <input type="checkbox" id="tm-linkedmaps" data-link="linkedMaps">
+            <label class="flex-item-fluid italic small mtn plvs" title="xxx" for="tm-linkedmaps">
+                Karten koppeln (gleicher Ausschnitt)
+            </label>
+        </div>
+
+         <p class="mts tiny-hidden small-hidden">
+            <a href="javascript:void(0)" data-link="{on searchGeo}" data-jsv="#290^/290^">Gebiet suchen</a>
+         </p>
+    </div>
+
+    <div class="mts hide-iframe">
+        <h2 class="upc">Entdecke mehr</h2>
+
+        <div id="tm-prolonger" class="minimalist-accordion" data-accordion-id="in1" data-accordion-prefix-classes="minimalist-accordion" data-accordion-multiselectable="none" role="tablist" aria-multiselectable="false">
+             
+             <button class="js-accordion__header minimalist-accordion__header" aria-controls="accordionin11_panel1" aria-expanded="false" role="tab" id="accordionin11_tab1" aria-selected="false">Teilen, Drucken, Exportieren</button><div class="js-accordion__panel minimalist-accordion__panel" aria-labelledby="accordionin11_tab1" role="tabpanel" id="accordionin11_panel1" aria-hidden="true"><h2 class="minimalist-accordion__title" data-accordion-opened="false" tabindex="0">Teilen, Drucken, Exportieren</h2>
+                <p>Über das Menü AKTIONEN können Inhalte aus KARTE, TABELLE oder ZUSAMMENFASSUNG geteilt, gedruckt, exportiert oder gespeichert werden.</p>
+             </div>
+
+        <script type="jsv#343_"></script>
+            
+             <button class="js-accordion__header minimalist-accordion__header" aria-controls="accordionin11_panel2" aria-expanded="false" role="tab" id="accordionin11_tab2" tabindex="-1" aria-selected="false">Einen Bericht bearbeiten</button><div class="js-accordion__panel minimalist-accordion__panel" aria-labelledby="accordionin11_tab2" role="tabpanel" id="accordionin11_panel2" aria-hidden="true"><h2 class="minimalist-accordion__title" data-accordion-opened="false" tabindex="0">Einen Bericht bearbeiten</h2>
+                <p>Ein Forschungsgebiet abstecken und einen detaillirten Bericht erstellen</p>
+                <p class="txtright"><a data-cu="report" href="javascript:void(0)" tabindex="0">BERICHTE BEREICH</a></p>
+             </div>
+        <script type="jsv/343_"></script>
+        <script type="jsv#344_"></script>
+             
+             <button class="js-accordion__header minimalist-accordion__header" aria-controls="accordionin11_panel3" aria-expanded="false" role="tab" id="accordionin11_tab3" tabindex="-1" aria-selected="false">Externe Daten laden</button><div class="js-accordion__panel minimalist-accordion__panel" aria-labelledby="accordionin11_tab3" role="tabpanel" id="accordionin11_panel3" aria-hidden="true"><h2 class="minimalist-accordion__title" data-accordion-opened="false" tabindex="0">Externe Daten laden</h2>
+               <p>Daten aus einer Tabelle kopieren oder von einem externen Server importieren.</p>
+               <p class="txtright upc"><a data-cu="externaldata" href="javascript:void(0)">BEREICH EXTERNE DATEN</a></p>
+             </div>
+        <script type="jsv/344_"></script>
+        </div>
+    </div>
+<script type="jsv/170_"></script>
+        </section>
+
+        <section id="tm-restit-sc" class="cu-restit">
+            <script type="jsv#345_"></script>
+    <div class="js-tabs">
+        <a href="javascript:void(0)" style="padding:0.5rem;" data-link="{on toPilotage}" class="mobile-nav-button2 fl plvs " data-jsv="#291^/291^"><span data-gcicon="0"></span><span class="upc">Konfigurieren</span>
+        </a>
+
+        <a href="javascript:void(0)" class="no-print pavs fl switch-pilotage-hide no-display" title="Bedienfeld ausblenden" data-link="{on hidePilotage}" data-jsv="#292^/292^">&lt;&lt;</a>
+        <a href="javascript:void(0)" class="no-print pavs fl switch-pilotage-show no-display" title="Bedienfeld anzeigen" data-link="{on showPilotage}" data-jsv="#293^/293^">&gt;&gt;</a>
+
+        <ul class="js-tablist no-print tabs__list" style="position:relative" data-jsv-df="" role="tablist"><li class="js-tablist__item tabs__item" data-link="" role="presentation" aria-selected="true">
+                <a id="tm_map" class="js-tablist__link upc tabs__link" title="Die Indikatoren auf der interaktiven Karte anzeigen" role="tab" aria-controls="tm_nav_1" tabindex="0" aria-selected="true">Karte</a>
+                <script type="jsv#346_"></script><a href="javascript:void(0)" class="tiny-hidden small-hidden js-tablist__link_plus" data-menu-trigger="tm_tabmenucontent" aria-controls="tm_tabmenucontent" aria-haspopup="true" role="button">+</a>
+                <div id="tm_tabmenucontent" class="tabmenucontent" data-menu="" aria-hidden="true" role="menu" style="top: 34px; left: 0px;">
+<!--                    Liste des onglets CARTE/TABLEAU/SYNTHESE-->
+                    <ul data-jsv-df=""><li data-jsv="#347_#348_#349_"><a href="javascript:void(0)" class="" role="button" data-pk="m2" data-index="For #index in nested block use #getIndex().">2 KARTEN</a></li><li data-jsv="/349_/348_#350_#351_"><a href="javascript:void(0)" class="" role="button" data-pk="mt" data-index="For #index in nested block use #getIndex().">KARTE + TABELLE</a></li><li data-jsv="/351_/350_#352_#353_"><a href="javascript:void(0)" data-link="css-display{:~root.checkFicSectionVisibility()}" class="" role="button" data-pk="mf" data-index="For #index in nested block use #getIndex()." style="display: none;">KARTE + ZUSAMMENFASSUNG</a></li></ul>
+                </div>
+                <script type="jsv/346_"></script>
+            </li><li class="js-tablist__item tiny-hiddenXX tabs__item" data-link="" role="presentation" aria-selected="false" style="display: flex;">
+                <a id="tm_table" class="js-tablist__link upc tabs__link" title="Die Tabelle samt aller geladenen Indikatoren anzeigen" role="tab" aria-controls="tm_nav_2" tabindex="-1" aria-selected="false">Tabelle</a>
+            </li><li data-jsv="#355_" class="js-tablist__item tabs__item" data-link="css-display{:checkFicSectionVisibility()}" role="presentation" aria-selected="false" style="display: none;">
+                    <a id="tm_fiche" class="js-tablist__link upc tabs__link" title="Eine Kartei für jeden Indikator anzeigen" role="tab" aria-controls="tm_nav_3" tabindex="-1" aria-selected="false">Zusammenfassung</a>
+                </li></ul>
+
+    <div class="flex-container">
+        <section id="tm_nav_1" class="js-tabcontent mln flex-item-fluid tabs__content" role="tabpanel" aria-labelledby="label_tm_nav_1">
+            <script type="jsv#356_"></script>
+<div class="page-container" style="height: 1065px;">
+    <div class="page A4 orient-portrait">
+    <div class="page-content">
+
+    <script type="jsv#357_"></script>
+    <header class="pageHeader print-only">
+        <div class="banner-img no-background" data-link="class{merge:hasCustomPrintBanner() toggle='no-background'}">
+          <img data-link="src{:getPrintBanner()}" style="height:50px" src="assets/banner500h.png">
+        </div>
+    </header>
+    <nav class="pageNav">
+        <button data-link="{on backFromPrint}" class="mls backFromPrint" data-jsv="#298^/298^">Zurück</button>
+        <button data-link="{on print}" class="mls" data-jsv="#299^/299^">Drucken</button>
+
+        <select data-link="selectedPageSize" class="mlvs mtn" data-jsv-df=""><option data-jsv="#217^#358_#359_" value="A4">A4</option><option data-jsv="/359_#360_" value="A5">A5</option><option data-jsv="/360_#361_" value="A3">A3</option><option data-jsv="/361_#362_" value="Letter">Letter</option><option data-jsv="/362_#363_" value="Legal">Legal</option></select>
+
+        <select data-link="selectedPageOrient" class="mls mtn" data-jsv-df=""><option data-jsv="#218^#364_#365_" value="portrait">Hochformat</option><option data-jsv="/365_#366_" value="landscape">Querformat</option></select>
+
+        <label class="label-checkbox mls mtn" data-link="disabled{:!metaDocPrint}" disabled="disabled"><input type="checkbox" data-link="printDoc">Dok</label>
+        <label class="label-checkbox mls mtn"><input type="checkbox" data-link="printComment">Kommentar</label>
+
+        <a href="javascript:void(0)" class="mrs help right no-display" tabindex="0">Aide</a>
+    </nav>
+<script type="jsv/357_"></script>
+
+    <div class="thematicmap-layout">
+        <header data-link="class{:getMapHeaderClass()}" class="mapHeader i0">
+            <div class="flex-item-fluid">
+                <p contenteditable="true" class="print-only pre-print txtcenter pts pbs"><script type="jsv#219^"></script>Kanton Thurgau nach Gemeinden<script type="jsv/219^"></script></p>
+
+                <p class="report-map-header study">Studienzone&nbsp;<b><script type="jsv#220^"></script><script type="jsv/220^"></script></b></p>
+                <p class="report-map-header compar">Vergleichszone&nbsp;<b><script type="jsv#221^"></script><script type="jsv/221^"></script></b></p>
+
+                <p style="margin-top: 0px; display: block;" class="libview" data-link="{:getViewLib(~idMap)} visible{:getViewLibVisibility(~idMap)}">Kanton Thurgau nach Gemeinden</p>
+                <p style="margin-top: 0px; display: none;" data-link="visible{:getLibIndic('1',~idMap)!=''}" class="libIndic">
+                    <span class="figure-with-border mrvs" data-link="visible{:!tinyScreen}" style="display: inline;">1</span><span data-link="getLibIndic('1',~idMap)"></span><a href="#tm_serie1" class="serie-dropdown" data-menu-trigger="tm_serie1" data-link="css-display{:getSerieList('1',~idMap).length>1 ? 'inline':'none'}" aria-controls="tm_serie1" aria-haspopup="true" role="button" style="display: inline;"><script type="jsv#222^"></script><script type="jsv#452_"></script><script type="jsv#403^"></script>2023<script type="jsv/403^"></script><span class="no-print" style="color:#666">▼</span><script type="jsv/452_"></script><script type="jsv/222^"></script></a>
+                    <script type="jsv#223^"></script><script type="jsv#450_"></script><span class="print-only source"> Quelle: <script type="jsv#401^"></script>Dienststelle für Statistik Kanton Thurgau, Kantonale Bevölkerungserhebung<script type="jsv/401^"></script></span><script type="jsv/450_"></script><script type="jsv/223^"></script>
+                </p>
+                <p class="mtn libIndic ptvs" data-link="visible{:getLibIndic('2',~idMap)!=''}" style="display: none;">
+                    <span class="figure-with-border mrvs" data-link="visible{:!tinyScreen}" style="display: inline;">2</span><span data-link="getLibIndic('2',~idMap)"></span><a href="#tm_serie2" class="serie-dropdown" data-menu-trigger="tm_serie2" data-link="css-display{:getSerieList('2',~idMap).length>1 ? 'inline':'none'}" aria-controls="tm_serie2" aria-haspopup="true" role="button" style="display: none;"><script type="jsv#224^"></script><script type="jsv/224^"></script></a>
+                    <script type="jsv#225^"></script><script type="jsv/225^"></script>
+                </p>
+            </div>
+
+            <a href="javascript:void(0)" data-menu-trigger="tm_mapmenucontent" class="options-menu map-options-menu" aria-controls="tm_mapmenucontent" aria-haspopup="true" role="button">
+                <span class="tiny-hidden prvs">AKTIONEN</span><span class="grille big"> </span>
+            </a>
+
+            <div id="tm_mapmenucontent" class="mapmenucontent" data-menu="" aria-hidden="true" role="menu" style="top: 47.5938px; left: 793.078px;">
+                <ul data-jsv-df=""><li data-jsv="#367_#368_"><a href="javascript:void(0)" role="button" title="Ein Gebiet identifizieren, sich geolokalisieren..." data-pk="Search" data-index="0">Suchen</a></li><li data-jsv="/368_#369_"><a href="javascript:void(0)" role="button" title="Pläne, Fotos, Zoneneinteilungen..." data-pk="Layers" data-index="1">Ebenen hinzufügen</a></li><li data-jsv="/369_#370_"><a href="javascript:void(0)" role="button" title="" data-pk="Select" data-index="2">Auswählen</a></li><li data-jsv="/370_#371_"><a href="javascript:void(0)" role="button" title="Arbeit sichern, auf den sozialen Netzwerkent teilen..." data-pk="Export" data-index="3">Exportieren und Weiterverwenden</a></li><li data-jsv="/371_#372_"><a href="javascript:void(0)" role="button" title="" data-pk="Etiq" data-index="4">Beschriften</a></li><li data-jsv="/372_#373_"><a href="javascript:void(0)" role="button" title="Das Layout anpassen bevor Druck oder PDF export" data-pk="Print" data-index="5">Drucken</a></li></ul>
+            </div>
+
+            <div id="tm_serie1" class="l_serie" data-menu="" aria-hidden="true" data-link="data-menu-selectedindex{:getSerieSelectedIndex(1, ~idMap)}" data-menu-selectedindex="1" role="menu" style="top: 6px; left: 0px;">
+                <li data-link="visible{:getSerieList('1',~idMap).length>1 &amp;&amp; getAnim('1',~idMap) &amp;&amp; ( !~isInIframe() || ~isLocalhost()) }" style="display: list-item;"><a href="javascript:void(0)">Animation...</a></li>
+                <script type="jsv#226^"></script><script type="jsv#587_"></script><script type="jsv#588_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2023</a></li>
+                <script type="jsv/588_"></script><script type="jsv#589_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2022</a></li>
+                <script type="jsv/589_"></script><script type="jsv#590_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2021</a></li>
+                <script type="jsv/590_"></script><script type="jsv#591_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2020</a></li>
+                <script type="jsv/591_"></script><script type="jsv#592_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2019</a></li>
+                <script type="jsv/592_"></script><script type="jsv#593_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2018</a></li>
+                <script type="jsv/593_"></script><script type="jsv#594_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2017</a></li>
+                <script type="jsv/594_"></script><script type="jsv#595_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2016</a></li>
+                <script type="jsv/595_"></script><script type="jsv#596_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2015</a></li>
+                <script type="jsv/596_"></script><script type="jsv#597_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2014</a></li>
+                <script type="jsv/597_"></script><script type="jsv#598_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2013</a></li>
+                <script type="jsv/598_"></script><script type="jsv#599_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2012</a></li>
+                <script type="jsv/599_"></script><script type="jsv#600_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2011</a></li>
+                <script type="jsv/600_"></script><script type="jsv#601_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2010</a></li>
+                <script type="jsv/601_"></script><script type="jsv#602_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2009</a></li>
+                <script type="jsv/602_"></script><script type="jsv#603_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2008</a></li>
+                <script type="jsv/603_"></script><script type="jsv#604_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2007</a></li>
+                <script type="jsv/604_"></script><script type="jsv#605_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2006</a></li>
+                <script type="jsv/605_"></script><script type="jsv#606_"></script>
+                    <li><a href="javascript:void(0)" data-link="{:#data}">2005</a></li>
+                <script type="jsv/606_"></script><script type="jsv/587_"></script><script type="jsv/226^"></script>
+            </div>
+            <div id="tm_serie2" class="l_serie" data-menu="" aria-hidden="true" data-link="data-menu-selectedindex{:getSerieSelectedIndex(2, ~idMap)}" data-menu-selectedindex="0" role="menu" style="top: 6px; left: 0px;">
+                <li data-link="visible{:getSerieList('2',~idMap).length>1 &amp;&amp; getAnim('2',~idMap)}" style="display: none;"><a href="javascript:void(0)">Animation...</a></li>
+                <script type="jsv#227^"></script><script type="jsv#375_"></script><script type="jsv/375_"></script><script type="jsv/227^"></script>
+            </div>
+        </header>
+
+        <div class="mapPrintContainer"></div>
+
+        <div class="printTextContainer comment no-display" data-link="css-visibility{:printComment ? 'visible' : 'hidden'}" style="visibility: hidden;"><textarea>Mein Kommentar...</textarea></div>
+        <div class="printTextContainer doc no-display" data-link="css-visibility{:printDoc ? 'visible' : 'hidden'}" style="visibility: visible;"><span></span></div>
+
+        <article id="mapSection" class="mapSection" style="height: 920px;">
+            <div class="map-legendH-container">
+                <div class="mapContainer" style="height: 868px;"><div class="map-background" style="border-width: 654px; height: 868px; border-color: rgb(206, 222, 236);"></div><div id="mapgroup_cv" class="map-display" style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 654px; height: 868px;"><canvas id="mapenv_cv" width="654" height="868" style="width: 654px; height: 868px; display: block; opacity: 1;"></canvas><div id="mapraster_cv" class="no-display" style="overflow: hidden; width: 654px; height: 868px; opacity: 0;"></div><div id="gmaps_cv" class="no-display" style="width: 654px; height: 868px; opacity: 0;"></div><canvas id="mapstat_cv" width="654" height="868" style="opacity: 1; width: 654px; height: 868px; display: block;"></canvas><canvas id="maptransition_cv" class="no-display" width="654" height="868" style="width: 654px; height: 868px; display: none;"></canvas><canvas id="maptransition1_cv" class="no-display" width="654" height="868" style="width: 654px; height: 868px;"></canvas><canvas id="maprov_cv" width="654" height="868" style="width: 654px; height: 868px;"></canvas><canvas id="maplin_cv" width="654" height="868" style="width: 654px; height: 868px; display: block; opacity: 1;"></canvas><canvas id="mapsel_cv" class="no-display" width="654" height="868" style="width: 654px; height: 868px; display: none; opacity: 0;"></canvas><canvas id="maptoptheme_cv" class="no-display" width="654" height="868" style="width: 654px; height: 868px; display: none; opacity: 0;"></canvas><canvas id="mapcities_cv" width="654" height="868" style="width: 654px; height: 868px; display: block; opacity: 1;"></canvas><canvas id="maprovtoptheme_cv" class="noxxx-display" width="654" height="868" style="width: 654px; height: 868px;"></canvas><canvas id="mapetiq_cv" class="no-display" width="654" height="868" style="width: 654px; height: 868px; display: block; opacity: 1;"></canvas><svg id="mapsvgetiq_cv" class="no-display" width="654" height="868" style="display: block; opacity: 1;"></svg><canvas id="maptools_cv" class="no-display" style="z-index: 2; width: 654px; height: 868px; display: none;" width="654" height="868"></canvas><canvas id="mapcapture_cv" class="map-capture" style="z-index: 2; opacity: 0; transform: translate3d(0px, 0px, 0px); width: 654px; height: 868px;" width="654" height="868"></canvas><div id="mapglass_cv" class="no-display" style="overflow: hidden; z-index: 2; width: 654px; height: 868px; display: block; opacity: 1;"><div class="mapHint"></div><div class="copyright-scale" style="z-index:2"><label class="copyright">©  Kanton Thurgau</label><label class="scale-label">5km</label><div class="scale-ruler" style="width: 55.7848px;"></div></div></div><div class="map-zoom map-control" style="z-index:3"><button class="map-zoom-in" type="button" title="Zoom +"><span aria-hidden="true" data-gcicon="+"></span></button><button class="map-zoom-out" type="button" title="Zoom -"><span aria-hidden="true" data-gcicon="-"></span></button><button class="map-zoom-rect" type="button" title="Zoom durch Rechteck"><span aria-hidden="true" data-gcicon="s"></span></button><button class="map-zoom-reframe" type="button" title="Überblick"><span aria-hidden="true" data-gcicon="r"></span></button></div></div><div id="maptooltip" class="maptooltip arrowbottom" style="top: 0px; left: 0px; z-index: 100; background-color: rgb(85, 85, 85); display: none;"><p class="ttpt1">Gemeinde: 4536 - Basadingen-Schlattingen</p></div><div id="mapwmslegend" class="no-display" style="z-index:5"><img class="mtm"></div></div>
+
+                <div class="maplegendH" data-linkxx="visible{:libIndic1!=''}" tabindex="0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><div class="mapLibView" style="transform: none;"><p class="txtcenter">Kanton Thurgau nach Gemeinden<br>80 <b>Gemeinden</b></p></div><button class="mapselH" title="Optionen zur aktuellen Auswahl"><div><p class="selText">Kanton Thurgau nach Gemeinden<br>80 <b>Gemeinden</b></p><span class="selPlus">5</span></div></button><div class="mapthlegendH" style="transform: none;"></div></div>
+            </div>
+
+            <aside role="complementary" class="flex-container flex-container-v no-display map-aside-sc" style="height: 1073px;">
+                <div id="legends" class="maplegendV"><div class="mapselV" tabindex="0"><p class="pbn flex-container" style="justify-content:space-between"><span class="selTit"></span><button class="removeAllItems" tabindex="0" title="Alle Auswahlen aufheben"></button></p><div class="selMsg">Kanton Thurgau nach Gemeinden<br>80 <b>Gemeinden</b></div><ul class="button-set pavs" style="line-height: 120%"><li><a href="javascript:void(0)" class="selPlusV small" title="Erweitern, speichern, zoomen auf...">Optionen und Details</a></li><li class="goto-report" style="display: block;"><a href="javascript:void(0)" class="pdzV small" title="Zugang zum Berichte Bereich">Die Berichte bearbeiten</a></li><li><a href="javascript:void(0)" class="methodsselgeo small" title="Hilfe zu den verschiedenen Arten ein Gebiet auszuwählen...">Hilfe zur Auswahl</a><br class="no-display"><a href="javascript:void(0)" class="zoomselgeo small no-display">Zoomen auf</a></li></ul></div><div class="mapthlegendV"></div></div>
+            </aside>
+        </article>
+
+        <div class="win-size-grip"></div>
+    </div>
+    </div>
+    </div>
+</div>
+<script type="jsv/356_"></script>
+        </section>
+
+        <div id="sep_12" class="no-display" style="width:5px;backgroundXX:#ccc">
+
+        </div>
+        <div id="tm_nav_2" class="js-tabcontent mlvs flex-item-fluid tabs__content" role="tabpanel" aria-hidden="true" aria-labelledby="label_tm_nav_2">
+            <script type="jsv#376_"></script>
+    <div class="flex-container tableHeader">
+        <div data-link="visible{:tableref_a.length>1}" class="flex-container" style="display: none;">
+            <label style="margin-top:0" for="tableref_cb">Geografisches Bezugssystem
+                <select class="mlvs" data-link="selectedTableRef" id="tableref_cb" data-jsv-df=""></select>
+            </label>
+        </div>
+
+        <span data-link="html{:getRefLib()} visible{:tableref_a.length==1}" style="display: none;"></span>
+
+        <a href="javascript:void(0)" data-menu-trigger="tm_tablemenucontent" class="options-menu right" aria-controls="tm_tablemenucontent" aria-haspopup="true" role="button">
+            <span class="tiny-hidden prvs">AKTIONEN</span><span class="grille big"> </span>
+        </a>
+
+        <div id="tm_tablemenucontent" class="tablemenucontent" data-menu="" aria-hidden="true" role="menu" style="top: 6px; left: 2px;">
+            <ul data-jsv-df=""><li data-jsv="#378_#379_"><a href="javascript:void(0)" role="button" data-pk="Filter" data-index="0">Filtern</a></li><li data-jsv="/379_#380_"><a href="javascript:void(0)" role="button" data-pk="Export" data-index="1">Exportieren</a></li><li data-jsv="/380_#381_"><a href="javascript:void(0)" role="button" data-pk="Print" data-index="2">Drucken</a></li></ul>
+        </div>
+    </div>
+    <div class="wait-table-msg mts center">
+        <p>Erstellung der Tabelle im Gange...</p>
+    </div>
+    <table id="tm_datatable" class="datatable display responsive prs w100" style="cellspacing:0"><thead><tr></tr></thead><tfoot><tr></tr><tr></tr></tfoot></table>
+<script type="jsv/376_"></script>
+        </div>
+        <div id="tm_nav_3" class="js-tabcontent mlvs flex-item-fluid flex-container flex-container-v tabs__content" role="tabpanel" aria-hidden="true" aria-labelledby="label_tm_nav_3">
+            <script type="jsv#382_"></script>
+    <header class="pageHeader print-only">
+        <div class="banner-img">
+          <img width="500" height="50" src="assets/banner500h.png">
+        </div>
+    </header>
+    <div data-link="visible{:ficindics_a.length>=1}" class="mbn mtn ficHeader flex-container" style="display: none;">
+        <button data-gcicon="0" aria-label="undefined" class="left arrow-h2" data-link="visible{:ficindics_a.length>1} disabled{:!getPrevFicIndicInfo()} {on prevFicIndic}" disabled="disabled" data-jsv="#329^/329^" style="display: none;"></button>
+
+        <h2 data-link="getSelectedFicIndicLabel()">BEREICHSPROFIL</h2>
+        <button data-gcicon="5" aria-label="undefined" class="right mrs arrow-h2" data-link="visible{:ficindics_a.length>1} disabled{:!getNextFicIndicInfo()} {on nextFicIndic}" data-jsv="#333^/333^" disabled="disabled" style="display: none;"></button>
+        <a href="javascript:void(0)" data-menu-trigger="tm_ficmenucontent" class="options-menu right" data-link="visible{:selectedFicIndic!='SPINE'}" aria-controls="tm_ficmenucontent" aria-haspopup="true" role="button" style="display: flex;">
+            <span class="tiny-hidden prvs">AKTIONEN</span><span class="grille big"> </span>
+        </a>
+
+        <div id="tm_ficmenucontent" class="tableficcontent" data-menu="" aria-hidden="true" role="menu" style="top: 6px; left: 2px;">
+            <ul data-jsv-df=""><li data-jsv="#383_#384_"><a href="javascript:void(0)" role="button" data-pk="Export" data-index="0">Exportieren</a></li><li data-jsv="/384_#385_"><a href="javascript:void(0)" role="button" data-pk="Print" data-index="1">Drucken</a></li></ul>
+        </div>
+    </div>
+
+    <div class="fic-body mtn prvs vertical-scrollable">
+        
+    </div>
+<script type="jsv/382_"></script>
+        </div>
+
+        <div id="tm_nav_4" class="no-display mlvs flex-item-fluid flex-container flex-container-v">
+            <script type="jsv#386_"></script>
+<div class="page-container" style="height: 1065px;">
+    <div class="page A4 orient-portrait">
+    <div class="page-content">
+
+    <script type="jsv#387_"></script>
+    <header class="pageHeader print-only">
+        <div class="banner-img no-background" data-link="class{merge:hasCustomPrintBanner() toggle='no-background'}">
+          <img data-link="src{:getPrintBanner()}" style="height:50px" src="assets/banner500h.png">
+        </div>
+    </header>
+    <nav class="pageNav">
+        <button data-link="{on backFromPrint}" class="mls backFromPrint" data-jsv="#337^/337^">Zurück</button>
+        <button data-link="{on print}" class="mls" data-jsv="#338^/338^">Drucken</button>
+
+        <select data-link="selectedPageSize" class="mlvs mtn" data-jsv-df=""><option data-jsv="#229^#388_#389_" value="A4">A4</option><option data-jsv="/389_#390_" value="A5">A5</option><option data-jsv="/390_#391_" value="A3">A3</option><option data-jsv="/391_#392_" value="Letter">Letter</option><option data-jsv="/392_#393_" value="Legal">Legal</option></select>
+
+        <select data-link="selectedPageOrient" class="mls mtn" data-jsv-df=""><option data-jsv="#230^#394_#395_" value="portrait">Hochformat</option><option data-jsv="/395_#396_" value="landscape">Querformat</option></select>
+
+        <label class="label-checkbox mls mtn" data-link="disabled{:!metaDocPrint}" disabled="disabled"><input type="checkbox" data-link="printDoc">Dok</label>
+        <label class="label-checkbox mls mtn"><input type="checkbox" data-link="printComment">Kommentar</label>
+
+        <a href="javascript:void(0)" class="mrs help right no-display" tabindex="0">Aide</a>
+    </nav>
+<script type="jsv/387_"></script>
+
+    <div class="thematicmap-layout">
+        <header data-link="class{:getMapHeaderClass()}" class="mapHeader i0">
+            <div class="flex-item-fluid">
+                <p contenteditable="true" class="print-only pre-print txtcenter pts pbs"><script type="jsv#231^"></script>Kanton Thurgau nach Gemeinden<script type="jsv/231^"></script></p>
+
+                <p class="report-map-header study">Studienzone&nbsp;<b><script type="jsv#232^"></script><script type="jsv/232^"></script></b></p>
+                <p class="report-map-header compar">Vergleichszone&nbsp;<b><script type="jsv#233^"></script><script type="jsv/233^"></script></b></p>
+
+                <p style="margin-top: 0px; display: block;" class="libview" data-link="{:getViewLib(~idMap)} visible{:getViewLibVisibility(~idMap)}">Kanton Thurgau nach Gemeinden</p>
+                <p style="margin-top: 0px; display: none;" data-link="visible{:getLibIndic('1',~idMap)!=''}" class="libIndic">
+                    <span class="figure-with-border mrvs" data-link="visible{:!tinyScreen}" style="display: inline;">1</span><span data-link="getLibIndic('1',~idMap)"></span><a href="#tm_serie12" class="serie-dropdown" data-menu-trigger="tm_serie12" data-link="css-display{:getSerieList('1',~idMap).length>1 ? 'inline':'none'}" style="display: none;" aria-controls="tm_serie12" aria-haspopup="true" role="button"><script type="jsv#234^"></script><script type="jsv/234^"></script></a>
+                    <script type="jsv#235^"></script><script type="jsv#451_"></script><span class="print-only source"> Quelle: <script type="jsv#402^"></script>Dienststelle für Statistik Kanton Thurgau, Kantonale Bevölkerungserhebung<script type="jsv/402^"></script></span><script type="jsv/451_"></script><script type="jsv/235^"></script>
+                </p>
+                <p class="mtn libIndic ptvs" data-link="visible{:getLibIndic('2',~idMap)!=''}" style="display: none;">
+                    <span class="figure-with-border mrvs" data-link="visible{:!tinyScreen}" style="display: inline;">2</span><span data-link="getLibIndic('2',~idMap)"></span><a href="#tm_serie22" class="serie-dropdown" data-menu-trigger="tm_serie22" data-link="css-display{:getSerieList('2',~idMap).length>1 ? 'inline':'none'}" style="display: none;" aria-controls="tm_serie22" aria-haspopup="true" role="button"><script type="jsv#236^"></script><script type="jsv/236^"></script></a>
+                    <script type="jsv#237^"></script><script type="jsv/237^"></script>
+                </p>
+            </div>
+
+            <a href="javascript:void(0)" data-menu-trigger="tm_mapmenucontent2" class="options-menu map-options-menu" aria-controls="tm_mapmenucontent2" aria-haspopup="true" role="button">
+                <span class="tiny-hidden prvs">AKTIONEN</span><span class="grille big"> </span>
+            </a>
+
+            <div id="tm_mapmenucontent2" class="mapmenucontent" data-menu="" aria-hidden="true" role="menu" style="top: 6px; left: 2px;">
+                <ul data-jsv-df=""><li data-jsv="#397_#398_"><a href="javascript:void(0)" role="button" title="Ein Gebiet identifizieren, sich geolokalisieren..." data-pk="Search" data-index="0">Suchen</a></li><li data-jsv="/398_#399_"><a href="javascript:void(0)" role="button" title="Pläne, Fotos, Zoneneinteilungen..." data-pk="Layers" data-index="1">Ebenen hinzufügen</a></li><li data-jsv="/399_#400_"><a href="javascript:void(0)" role="button" title="" data-pk="Select" data-index="2">Auswählen</a></li><li data-jsv="/400_#401_"><a href="javascript:void(0)" role="button" title="Arbeit sichern, auf den sozialen Netzwerkent teilen..." data-pk="Export" data-index="3">Exportieren und Weiterverwenden</a></li><li data-jsv="/401_#402_"><a href="javascript:void(0)" role="button" title="" data-pk="Etiq" data-index="4">Beschriften</a></li><li data-jsv="/402_#403_"><a href="javascript:void(0)" role="button" title="Das Layout anpassen bevor Druck oder PDF export" data-pk="Print" data-index="5">Drucken</a></li></ul>
+            </div>
+
+            <div id="tm_serie12" class="l_serie" data-menu="" aria-hidden="true" data-link="data-menu-selectedindex{:getSerieSelectedIndex(1, ~idMap)}" data-menu-selectedindex="0" role="menu" style="top: 6px; left: 2px;">
+                <li data-link="visible{:getSerieList('1',~idMap).length>1 &amp;&amp; getAnim('1',~idMap) &amp;&amp; ( !~isInIframe() || ~isLocalhost()) }" style="display: none;"><a href="javascript:void(0)">Animation...</a></li>
+                <script type="jsv#238^"></script><script type="jsv#607_"></script><script type="jsv/607_"></script><script type="jsv/238^"></script>
+            </div>
+            <div id="tm_serie22" class="l_serie" data-menu="" aria-hidden="true" data-link="data-menu-selectedindex{:getSerieSelectedIndex(2, ~idMap)}" data-menu-selectedindex="0" role="menu" style="top: 6px; left: 2px;">
+                <li data-link="visible{:getSerieList('2',~idMap).length>1 &amp;&amp; getAnim('2',~idMap)}" style="display: none;"><a href="javascript:void(0)">Animation...</a></li>
+                <script type="jsv#239^"></script><script type="jsv#405_"></script><script type="jsv/405_"></script><script type="jsv/239^"></script>
+            </div>
+        </header>
+
+        <div class="mapPrintContainer"></div>
+
+        <div class="printTextContainer comment no-display" data-link="css-visibility{:printComment ? 'visible' : 'hidden'}" style="visibility: hidden;"><textarea>Mein Kommentar...</textarea></div>
+        <div class="printTextContainer doc no-display" data-link="css-visibility{:printDoc ? 'visible' : 'hidden'}" style="visibility: visible;"><span></span></div>
+
+        <article id="mapSection2" class="mapSection">
+            <div class="map-legendH-container">
+                <div class="mapContainer"></div>
+
+                <div class="maplegendH" data-linkxx="visible{:libIndic1!=''}" tabindex="0"></div>
+            </div>
+
+            <aside role="complementary" class="flex-container flex-container-v no-display map-aside-sc" style="height: 1073px;">
+                <div id="legends2" class="maplegendV"></div>
+            </aside>
+        </article>
+
+        <div class="win-size-grip"></div>
+    </div>
+    </div>
+    </div>
+</div>
+<script type="jsv/386_"></script>
+        </div>
+    </div>
+
+    </div>
+<script type="jsv/345_"></script>
+        </section>
+<script type="jsv/169_"></script></main></body></html>

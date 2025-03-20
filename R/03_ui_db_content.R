@@ -41,7 +41,9 @@ db_content <-   tabItems(
                          column(12, uiOutput("filter_ui")), # Filter dynamically displayed,
                          column(12, selectizeInput("bfs_nr_gemeinde", "Gemeinde", choices = NULL,selected=NULL)),
                          column(12, selectizeInput("year", "Jahr", choices = NULL)),
-                         column(12, uiOutput("radio_bas_perc"))
+                         column(12, uiOutput("radio_bas_perc")),
+                         column(12, actionButton("draw_map","Anzeigen"))
+
                        )
                    ),
 

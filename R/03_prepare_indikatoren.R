@@ -1715,6 +1715,25 @@ saveRDS(data_source_list,"data/data_source_list.rds")
 }
 
 
+# Beispieldaten für Schulgemeinden
+finanzlage_sg <-get_data_from_ogd("dek-av-30")
+
+finanzlage_ssg <- finanzlage_sg %>%
+  filter(str_detect(sg_bezeichnung,"SSG"))
+
+
+finanzlage_vsg <- finanzlage_sg %>%
+  filter(str_detect(sg_bezeichnung,"VSG"))
+
+
+finanzlage_psg <- finanzlage_sg %>%
+  filter(str_detect(sg_bezeichnung,"PSG"))
+
+
+
+ssg_list <- list()
+vsg_list <- list()
+psg_list <- list()
 
 
 

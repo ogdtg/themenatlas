@@ -34,6 +34,7 @@ db_content <-   tabItems(
           fluidRow(width=12,
                    box(width = 4,
                        fluidRow(
+                         column(12, selectizeInput("topic", "Themenbereich", choices = c("Bezirk","Gemeinde","Primarschulgemeinde","Volksschulgemeinde","Sekundarschulgemeinde"))),
                          column(12, selectizeInput("topic", "Themenbereich", choices = names(nested_list))),
                          column(12, selectizeInput("subtopic", "Thema", choices = NULL)),
                          column(12, selectizeInput("indicator", "Indikator", choices = NULL)),
@@ -44,14 +45,17 @@ db_content <-   tabItems(
                        )
                    ),
 
-                   tabBox(width=8,id = "tab_box",
-                          tabPanel("Karte",value = "map_tab",leafletOutput("map")),
-                          tabPanel("Tabelle",value = "table_tab",DTOutput("data_table")),
-                          tabPanel("Zusammenfassung",value = "summary_tab",
-                                   selectizeInput("summary_select","Diagrammtyp",choices = NULL,selected=NULL),
-                                   highchartOutput("summary_graph"))
+                   box(title = uiOutput("indicator_title"),
+                       width = 8,
+                       tabBox(width=12,id = "tab_box",
+                              collapsible = FALSE,
+                              tabPanel("Karte",value = "map_tab",leafletOutput("map")),
+                              tabPanel("Tabelle",value = "table_tab",DTOutput("data_table")),
+                              tabPanel("Zusammenfassung",value = "summary_tab",
+                                       selectizeInput("summary_select","Diagrammtyp",choices = NULL,selected=NULL),
+                                       highchartOutput("summary_graph"))
 
-                   )
+                       ))
           )
 
   ),
@@ -108,7 +112,10 @@ db_content <-   tabItems(
                   class = "dt-table",
                   DTOutput("download_table"),
                   style = "font-size: 75%"
-                )
+                ),
+                downloadButton("self_service_download_csv","Download als CSV"),
+                downloadButton("self_service_download_excel","Download als Excel")
+
             )
 
 

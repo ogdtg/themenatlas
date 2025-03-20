@@ -54,7 +54,7 @@ server <- function(input, output, session) {
   bezirk_data_compare <- reactiveVal(bezirk_data_mod)
   selected_base_area <- reactiveVal("4566")
   selected_compare_area <- reactiveVal("4671")
-
+  geo_data <- reactiveVal(gemeindegrenzen)
 
   ### Check conditions function -----------------------------------------------
 
@@ -65,6 +65,45 @@ server <- function(input, output, session) {
 
   })
 
+
+  observeEvent(input$area,{
+    if (input$area == "Gemeinde") {
+
+      geo_data(gemeindegrenzen)
+
+
+    } else if (input$area == "Bezirk") {
+      if (!exists("bezirksgrenzen")) {
+        bezirksgrenzen <- readRDS("data/bezirksgrenzen.rds")
+        geo_data(bezirksgrenzen)
+      } else {
+        geo_data(bezirksgrenzen)
+      }
+
+    } else if (input$area == "Primarschulgemeinde") {
+      if (!exists("psg")) {
+        psg <- readRDS("data/psg.rds")
+        geo_data(psg)
+      } else {
+        geo_data(psg)
+      }
+
+    } else if (input$area == "Sekundarschulgemeinde") {
+      if (!exists("ssg")) {
+        ssg <- readRDS("data/ssg.rds")
+        geo_data(ssg)
+      } else {
+        geo_data(ssg)
+      }
+    } else if (input$area == "Volksschulgemeinde") {
+      if (!exists("vsg")) {
+        vsg <- readRDS("data/vsg.rds")
+        geo_data(vsg)
+      } else {
+        geo_data(vsg)
+      }
+    }
+  },ignoreInit = FALSE)
   ### Screen width ------------------------------------------------------------
 
 
@@ -117,7 +156,7 @@ server <- function(input, output, session) {
 
   ### Basiskarte initialisieren ---------------------------------------
 
-  init_map(output,geo_data)
+  init_map(output,input,geo_data)
 
 
 
@@ -135,7 +174,7 @@ server <- function(input, output, session) {
     session=session,
     input=input,
     selected_data = selected_data,
-    geo_data = geo_data,
+    geo_data = geo_data(),
     palette_ds = palette_ds,
     palette_ds_alternative = palette_ds_alternative,
     check_conditions = check_conditions
@@ -154,7 +193,7 @@ server <- function(input, output, session) {
 
   ### Zoom auf Gemeinde ----------------------------------
 
-  zoom_and_zoom_reset(session,input,previous_gemeinde,geo_data)
+  zoom_and_zoom_reset(session,input,previous_gemeinde,geo_data())
 
 
 
@@ -258,10 +297,10 @@ server <- function(input, output, session) {
 
 
   # Base Map
-  draw_base_map(output,geo_data)
+  draw_base_map(output,gemeindegrenzen)
 
   # Karte neu einfärben basieredn auf hochgeladenenen Daten
-  update_map_with_custom_data(session,input,geo_data,uploaded_data)
+  update_map_with_custom_data(session,input,gemeindegrenzen,uploaded_data)
 
 
 

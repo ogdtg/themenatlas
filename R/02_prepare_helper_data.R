@@ -45,7 +45,8 @@ palette_ds <- readRDS("data/farbpalette_karte.rds")
 palette_ds_alternative <- readRDS("data/farbpalette_karte_mod.rds")
 
 # Geo Data for the Map
-geo_data <- readRDS("data/gemeindegrenzen.rds")
+gemeindegrenzen <- readRDS("data/gemeindegrenzen.rds")
+geo_data <- gemeindegrenzen
 
 # or th
 # content <- read_html("data/atlas.Rhtml")

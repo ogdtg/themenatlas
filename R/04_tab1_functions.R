@@ -408,34 +408,34 @@ update_year_on_filter <- function(session,input,output,selected_data){
 #' @param output Shiny output object for rendering the map.
 #' @param geo_data Spatial dataset containing geometry and tooltips.
 #' @return A Leaflet map rendered in the Shiny UI.
-init_map <- function(output,geo_data){
-  output$map <- renderLeaflet({
-    # Construct initial tooltips
-    geo_data$tooltip_text <- paste0(
-      "<b>", geo_data$name, "</b>"
-    )
+init_map <- function(output,input,geo_data){
+  observeEvent(geo_data(),{
+    geo_data <- geo_data()
+    output$map <- renderLeaflet({
+      # Construct initial tooltips
+      geo_data$tooltip_text <- paste0("<b>", geo_data$name, "</b>")
 
-    leaflet(geo_data) %>%
-      addTiles(
-        options = providerTileOptions(minZoom = 9)
-      ) %>%
-      # addProviderTiles(providers$Stadia.StamenToner) %>%
-      addPolygons(
-        layerId = ~bfsnr,
-        fillColor = "grey",
-        color = "white",
-        weight = 1.5,
-        opacity = .5,
-        fillOpacity = 1,
-        label = lapply(geo_data$tooltip_text, HTML)  # ✅ Initial tooltip
-      ) %>%
-      setView(
-        lng = mean(st_coordinates(geo_data)[,1]),
-        lat = mean(st_coordinates(geo_data)[,2]),
-        zoom = 10
-      )
+      leaflet(geo_data) %>%
+        addTiles(options = providerTileOptions(minZoom = 9)) %>%
+        # addProviderTiles(providers$Stadia.StamenToner) %>%
+        addPolygons(
+          layerId = ~ bfsnr,
+          fillColor = "grey",
+          color = "white",
+          weight = 1.5,
+          opacity = .5,
+          fillOpacity = 1,
+          label = lapply(geo_data$tooltip_text, HTML)  # ✅ Initial tooltip
+        ) %>%
+        setView(
+          lng = mean(st_coordinates(geo_data)[, 1]),
+          lat = mean(st_coordinates(geo_data)[, 2]),
+          zoom = 10
+        )
 
+    })
   })
+
 
 }
 

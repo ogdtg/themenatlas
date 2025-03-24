@@ -111,10 +111,9 @@ draw_base_map <- function(output,geo_data){
     )
 
     leaflet(geo_data) %>%
-      addTiles(
-        options = providerTileOptions(minZoom = 9)
-      ) %>%
-      # addProviderTiles(providers$Stadia.StamenToner) %>%
+      leaflet(geo_data) %>%
+      addProviderTiles(providers$SwissFederalGeoportal.NationalMapGrey,
+                       options = providerTileOptions(minZoom = 9)) %>%  # ✅ Set minZoom to 9
       addPolygons(
         layerId = ~bfsnr,
         fillColor = "grey",
@@ -128,6 +127,10 @@ draw_base_map <- function(output,geo_data){
         lng = mean(st_coordinates(geo_data)[,1]),
         lat = mean(st_coordinates(geo_data)[,2]),
         zoom = 10
+      ) %>%
+      setMaxBounds(
+        lng1 = 8.6, lat1 = 47.8,  # 🔒 Expanded Top-left boundary
+        lng2 = 9.7, lat2 = 47.3   # 🔒 Expanded Bottom-right boundary
       )
 
   })

@@ -199,9 +199,9 @@ prepare_color_map <- function(df, geo_data, input, palette_ds, palette_ds_altern
 #'
 #' @param input List of user inputs.
 #' @param selected_data Reactive function returning the dataset.
-#' @param prevYear, prevValueType, prevIndicator, prevFilter Previous user selections.
+#' @param prevYear, prevValueType, prevIndicator, prevFilter,prevArea Previous user selections.
 #' @return Logical value indicating whether the data should be updated.
-check_conditions_func <- function(input, selected_data,prevYear,prevValueType,prevIndicator,prevFilter) {
+check_conditions_func <- function(input, selected_data,prevYear,prevValueType,prevIndicator,prevFilter,prevArea) {
   df <- selected_data()
 
 
@@ -272,6 +272,7 @@ check_conditions_func <- function(input, selected_data,prevYear,prevValueType,pr
     isTRUE(identical(prevYear(), input$year)) &&
     isTRUE(identical(prevValueType(), input$value_type)) &&
     isTRUE(identical(prevIndicator(), input$indicator)) &&
+    isTRUE(identical(prevArea(), input$area)) &&
     isTRUE(identical(prevFilter(), input$filter1))
   ) {
     print("Nichts verändert")
@@ -281,6 +282,8 @@ check_conditions_func <- function(input, selected_data,prevYear,prevValueType,pr
     prevValueType(input$value_type)
     prevIndicator(input$indicator)
     prevFilter(input$filter1)
+    prevArea(input$area)
+
 
     # print("Change")
     return(TRUE)
@@ -416,10 +419,10 @@ init_map <- function(output,input,geo_data){
       geo_data$tooltip_text <- paste0("<b>", geo_data$name, "</b>")
 
       leaflet(geo_data) %>%
-        addTiles(options = providerTileOptions(minZoom = 9)) %>%
-        # addProviderTiles(providers$Stadia.StamenToner) %>%
+        addProviderTiles(providers$SwissFederalGeoportal.NationalMapGrey,
+                         options = providerTileOptions(minZoom = 9)) %>%  # ✅ Set minZoom to 9
         addPolygons(
-          layerId = ~ bfsnr,
+          layerId = ~bfsnr,
           fillColor = "grey",
           color = "white",
           weight = 1.5,
@@ -428,10 +431,15 @@ init_map <- function(output,input,geo_data){
           label = lapply(geo_data$tooltip_text, HTML)  # ✅ Initial tooltip
         ) %>%
         setView(
-          lng = mean(st_coordinates(geo_data)[, 1]),
-          lat = mean(st_coordinates(geo_data)[, 2]),
+          lng = mean(st_coordinates(geo_data)[,1]),
+          lat = mean(st_coordinates(geo_data)[,2]),
           zoom = 10
+        ) %>%
+        setMaxBounds(
+          lng1 = 8.6, lat1 = 47.8,  # 🔒 Expanded Top-left boundary
+          lng2 = 9.7, lat2 = 47.3   # 🔒 Expanded Bottom-right boundary
         )
+
 
     })
   })
@@ -456,18 +464,19 @@ init_map <- function(output,input,geo_data){
 modify_map <- function(id,session, input,selected_data, geo_data, palette_ds, palette_ds_alternative, check_conditions) {
 
 
-    observeEvent(list(input$indicator, input$filter1, input$year, input$value_type, selected_data()), {
-      req(input$indicator, input$filter1, input$year, input$value_type, selected_data())
+    observeEvent(list(input$indicator, input$filter1, input$year, input$value_type,input$area, selected_data(),geo_data()), {
+      req(input$indicator, input$filter1, input$year, input$value_type,input$area, selected_data(),geo_data())
 
       if (check_conditions()) {
-        result <- prepare_color_map(selected_data(), geo_data, input, palette_ds, palette_ds_alternative)
+        result <- prepare_color_map(selected_data(), geo_data(), input, palette_ds, palette_ds_alternative)
+
 
         # ✅ Update the reactive color_map inside the function
         color_map <- result$color_map
         pal <- result$pal
 
         # ✅ Update polygon fill color
-        leafletProxy(session$ns("map"), data = geo_data) %>%
+        leafletProxy(session$ns("map"), data = geo_data()) %>%
           setShapeStyle(
             layerId = ~bfsnr,
             fillColor = pal(color_map$category)

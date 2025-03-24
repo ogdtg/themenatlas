@@ -35,7 +35,7 @@ db_content <-   tabItems(
                    box(width = 4,
                        fluidRow(
                          column(12, selectizeInput("area", "Gebietseinheit", choices = c("Bezirk","Gemeinde","Primarschulgemeinde","Volksschulgemeinde","Sekundarschulgemeinde"),selected="Gemeinde")),
-                         column(12, selectizeInput("topic", "Themenbereich", choices = names(nested_list))),
+                         column(12, selectizeInput("topic", "Themenbereich", choices = NULL)),
                          column(12, selectizeInput("subtopic", "Thema", choices = NULL)),
                          column(12, selectizeInput("indicator", "Indikator", choices = NULL)),
                          column(12, uiOutput("filter_ui")), # Filter dynamically displayed,

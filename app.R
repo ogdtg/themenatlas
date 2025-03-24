@@ -21,6 +21,7 @@ ui <- dashboardPage(
   help = TRUE, # show popover
   header = db_header,
   sidebar = db_sidebar,
+  preloader = list(html = tagList(spin_folding_cube(), "Lädt ..."), color = "#40a636"),
   body = db_body
 )
 
@@ -48,6 +49,7 @@ server <- function(input, output, session) {
   previous_gemeinde <- reactiveVal(NULL)
   prevYear <- reactiveVal("")
   prevFilter <- reactiveVal(NULL)
+  prevArea <- reactiveVal("")
   prevIndicator <- reactiveVal("")
   prevValueType <- reactiveVal(NULL)
   prevTab <- reactiveVal(NULL)
@@ -55,13 +57,17 @@ server <- function(input, output, session) {
   selected_base_area <- reactiveVal("4566")
   selected_compare_area <- reactiveVal("4671")
   geo_data <- reactiveVal(gemeindegrenzen)
+  area_data <- reactiveVal(nested_list)
+
+
+
 
   ### Check conditions function -----------------------------------------------
 
   check_conditions <- reactive({
     req(selected_data())  # Ensure selected_data() is not NULL
 
-    check_conditions_func(input, selected_data,prevYear,prevValueType,prevIndicator,prevFilter)
+    check_conditions_func(input, selected_data,prevYear,prevValueType,prevIndicator,prevFilter,prevArea)
 
   })
 
@@ -71,6 +77,8 @@ server <- function(input, output, session) {
 
       geo_data(gemeindegrenzen)
 
+      updateSelectizeInput(session, "topic", choices = names(nested_list), selected = NULL)
+
 
     } else if (input$area == "Bezirk") {
       if (!exists("bezirksgrenzen")) {
@@ -79,6 +87,9 @@ server <- function(input, output, session) {
       } else {
         geo_data(bezirksgrenzen)
       }
+      updateSelectizeInput(session, "topic", choices = names(nested_list), selected = NULL)
+      area_data(nested_list)
+
 
     } else if (input$area == "Primarschulgemeinde") {
       if (!exists("psg")) {
@@ -87,6 +98,10 @@ server <- function(input, output, session) {
       } else {
         geo_data(psg)
       }
+      updateSelectizeInput(session, "topic", choices = names(psg_list), selected = NULL)
+      area_data(psg_list)
+
+
 
     } else if (input$area == "Sekundarschulgemeinde") {
       if (!exists("ssg")) {
@@ -95,6 +110,9 @@ server <- function(input, output, session) {
       } else {
         geo_data(ssg)
       }
+      updateSelectizeInput(session, "topic", choices = names(ssg_list), selected = NULL)
+      area_data(ssg_list)
+
     } else if (input$area == "Volksschulgemeinde") {
       if (!exists("vsg")) {
         vsg <- readRDS("data/vsg.rds")
@@ -102,6 +120,9 @@ server <- function(input, output, session) {
       } else {
         geo_data(vsg)
       }
+      updateSelectizeInput(session, "topic", choices = names(vsg_list), selected = NULL)
+      area_data(vsg_list)
+
     }
   },ignoreInit = FALSE)
   ### Screen width ------------------------------------------------------------
@@ -118,7 +139,7 @@ server <- function(input, output, session) {
   # Reactive object for selected dataset
   selected_data <- reactive({
     req(input$topic, input$subtopic, input$indicator)
-    nested_list[[input$topic]][[input$subtopic]][[input$indicator]]
+    area_data()[[input$topic]][[input$subtopic]][[input$indicator]]
   })
 
 
@@ -127,7 +148,7 @@ server <- function(input, output, session) {
 
   # Update Subtopics when Topic changes
   observeEvent(input$topic, {
-    updateSelectizeInput(session, "subtopic", choices = names(nested_list[[input$topic]]), selected = NULL)
+    updateSelectizeInput(session, "subtopic", choices = names(area_data()[[input$topic]]), selected = NULL)
 
   })
 
@@ -136,7 +157,7 @@ server <- function(input, output, session) {
 
   # Update Indicators when Subtopic changes
   observeEvent(input$subtopic, {
-    updateSelectizeInput(session, "indicator", choices = names(nested_list[[input$topic]][[input$subtopic]]), selected = NULL)
+    updateSelectizeInput(session, "indicator", choices = names(area_data()[[input$topic]][[input$subtopic]]), selected = NULL)
 
   })
 
@@ -174,7 +195,7 @@ server <- function(input, output, session) {
     session=session,
     input=input,
     selected_data = selected_data,
-    geo_data = geo_data(),
+    geo_data = geo_data,
     palette_ds = palette_ds,
     palette_ds_alternative = palette_ds_alternative,
     check_conditions = check_conditions

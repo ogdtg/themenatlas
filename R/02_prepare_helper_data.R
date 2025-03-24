@@ -46,7 +46,7 @@ palette_ds_alternative <- readRDS("data/farbpalette_karte_mod.rds")
 
 # Geo Data for the Map
 gemeindegrenzen <- readRDS("data/gemeindegrenzen.rds")
-geo_data <- gemeindegrenzen
+# geo_data <- gemeindegrenzen
 
 # or th
 # content <- read_html("data/atlas.Rhtml")
@@ -55,4 +55,6 @@ geo_data <- gemeindegrenzen
 # All necessary data that is updated via GitHub Actions in the prepare_indicators repo
 nested_list <- readRDS(gzcon(url("https://github.com/ogdtg/prepare_indicators/raw/refs/heads/main/data/nested_list.rds")))
 additional_data <- readRDS(gzcon(url("https://github.com/ogdtg/prepare_indicators/raw/refs/heads/main/data/additional_data.rds")))
-
+psg_list <- readRDS(gzcon(url("https://github.com/ogdtg/prepare_indicators/raw/refs/heads/main/data/psg_list.rds")))
+vsg_list <- readRDS(gzcon(url("https://github.com/ogdtg/prepare_indicators/raw/refs/heads/main/data/vsg_list.rds")))
+ssg_list <- readRDS(gzcon(url("https://github.com/ogdtg/prepare_indicators/raw/refs/heads/main/data/ssg_list.rds")))

@@ -36,6 +36,9 @@ bezirk_data2 <- bezirk_data %>%
 bezirk_data_mod <- bezirk_data2 %>%
   filter(name_gemeinde != "Frauenfeld")
 
+# Data with names for all areas
+area_names_data <- readRDS("data/area_names_data.rds")
+
 # Named character (bfs_nr named with the gemeinde name)
 bezirk_data_names2 <- setNames(bezirk_data2$bfs_nr_gemeinde,bezirk_data2$name_gemeinde)
 bezirk_data_names <- setNames(bezirk_data$bfs_nr_gemeinde,bezirk_data$name_gemeinde)
@@ -45,13 +48,25 @@ palette_ds <- readRDS("data/farbpalette_karte.rds")
 palette_ds_alternative <- readRDS("data/farbpalette_karte_mod.rds")
 
 # Geo Data for the Map
-geo_data <- readRDS("data/gemeindegrenzen.rds")
+gemeindegrenzen <- readRDS("data/gemeindegrenzen.rds")
+# geo_data <- gemeindegrenzen
 
 # or th
 # content <- read_html("data/atlas.Rhtml")
 
+read_url <- function(gh_url) {
+  con <- gzcon(url(gh_url))
+  on.exit(close(con))  # Ensures the connection is closed when the function exits
+  readRDS(con)
+}
+
 
 # All necessary data that is updated via GitHub Actions in the prepare_indicators repo
-nested_list <- readRDS(gzcon(url("https://github.com/ogdtg/prepare_indicators/raw/refs/heads/main/data/nested_list.rds")))
-additional_data <- readRDS(gzcon(url("https://github.com/ogdtg/prepare_indicators/raw/refs/heads/main/data/additional_data.rds")))
+nested_list <- read_url("https://github.com/ogdtg/prepare_indicators/raw/refs/heads/main/data/nested_list.rds")
+additional_data <- read_url("https://github.com/ogdtg/prepare_indicators/raw/refs/heads/main/data/additional_data.rds")
+psg_list <- read_url("https://github.com/ogdtg/prepare_indicators/raw/refs/heads/main/data/psg_list.rds")
+vsg_list <- read_url("https://github.com/ogdtg/prepare_indicators/raw/refs/heads/main/data/vsg_list.rds")
+ssg_list <- read_url("https://github.com/ogdtg/prepare_indicators/raw/refs/heads/main/data/ssg_list.rds")
+
+
 

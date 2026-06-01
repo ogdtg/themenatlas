@@ -195,13 +195,129 @@ prepare_color_map <- function(df, geo_data, input, palette_ds, palette_ds_altern
 
 
 
+
+
+
+init_selected_data <- function(input,area_data,selected_data){
+
+  observeEvent(list(input$topic, input$subtopic, input$indicator,area_data(),input$area),{
+    req(input$topic, input$subtopic, input$indicator,area_data())
+    topics <- names(area_data())
+
+    if (input$topic %in% topics){
+
+      subtopics <- names(area_data()[[input$topic]])
+
+      if (input$subtopic %in% subtopics){
+
+        indicators <- names(area_data()[[input$topic]][[input$subtopic]])
+
+        if (input$indicator %in% indicators){
+
+
+          temp_df <- area_data()[[input$topic]][[input$subtopic]][[input$indicator]]
+
+
+          if (input$area == "Bezirk") {
+            temp_df <- temp_df %>% filter(str_detect(bfs_nr_gemeinde, "^2"))
+          } else if (input$area == "Gemeinde") {
+            temp_df <- temp_df %>% filter(str_detect(bfs_nr_gemeinde, "^4"))
+          }
+
+          selected_data(temp_df)
+          #print(head(selected_data()))
+
+
+        }
+
+
+      }
+
+    }
+  },ignoreInit = F)
+
+
+
+
+}
+
+check_filter1 <- function(selected_data,input){
+  req(selected_data(), input$filter1)
+
+  df <- selected_data()
+
+  if ("filter1" %in% colnames(selected_data())){
+    if (input$filter1 %in% unique(df$filter1)){
+      return(TRUE)
+    }
+
+  } else if (!"filter1" %in% colnames(selected_data())){
+
+    if (input$filter1 == "Kein Filter"){
+      return(TRUE)
+    }
+  }
+  return(FALSE)
+}
+
+
+check_year <- function(selected_data,input){
+  req(selected_data(), input$year)
+
+  df <- selected_data()
+  #print(selected_data()["jahr"])
+  if (input$year %in% unique(df$jahr)){
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+
+}
+
+
+check_value_type <- function(selected_data,input){
+  req(selected_data(), input$value_type)
+
+  if (!"share" %in% colnames(selected_data())){
+    if (input$value_type == "Prozentual"){
+      return(FALSE)
+    }
+  }
+  return(TRUE)
+}
+
+
+check_all_filters <- function(input,selected_data){
+
+
+    if (!check_filter1(selected_data,input)){
+      #print("Filter not correct")
+      return(FALSE)
+    }
+
+    if (!check_year(selected_data,input)){
+      #print("Year not correct")
+
+      return(FALSE)
+    }
+
+    if (!check_year(selected_data,input)){
+      #print("Valuetype not correct")
+
+      return(FALSE)
+    }
+    return(TRUE)
+
+}
+
+
 #' Check if input conditions allow data rendering
 #'
 #' @param input List of user inputs.
 #' @param selected_data Reactive function returning the dataset.
-#' @param prevYear, prevValueType, prevIndicator, prevFilter Previous user selections.
+#' @param prevYear, prevValueType, prevIndicator, prevFilter,prevArea Previous user selections.
 #' @return Logical value indicating whether the data should be updated.
-check_conditions_func <- function(input, selected_data,prevYear,prevValueType,prevIndicator,prevFilter) {
+check_conditions_func <- function(input, selected_data,prevYear,prevValueType,prevIndicator,prevFilter,prevArea) {
   df <- selected_data()
 
 
@@ -213,18 +329,20 @@ check_conditions_func <- function(input, selected_data,prevYear,prevValueType,pr
   contains_year <- input$year %in% df$jahr
   # Wenn es eine filter1 Spalte gibt aber kein Filter gewählt ist
 
+
   if (filter_is_null) {
-    print("filter is null")
+    #print("filter_is_null")
     return(FALSE)
   }
   if (input$filter1 == "Kein Filter" & has_filter) {
-    print("kein filter aber hat filter spalte")
+    #print("Filter ist kein Filter aber Tabelle besitz Filter")
+
     return(FALSE)
   }
 
   # Wenn es einen Filter gibt, aber keine Spalte zum filtern
   if (input$filter1 != "Kein Filter" & !has_filter) {
-    print("filter aber hat keine filter spalte")
+    #print("Filter ist angegeben aber Tabelle besitzt keinen")
 
     return(FALSE)
   }
@@ -233,13 +351,14 @@ check_conditions_func <- function(input, selected_data,prevYear,prevValueType,pr
   # Wenn es keine share Spalte gibt aber ein value_type gewählt ist
 
   if (input$value_type == "Prozentual" & !has_share) {
-    print("keine value_type  aber share Spalte")
+    #print("keine share Spalte gibt aber  value_type ist gewählt")
+
     return(FALSE)
   }
 
   # Wenn das Jahr nicht im datensatz vorhanden ist
   if (!contains_year) {
-    print("Jahr nicht im datensatz vorhanden")
+    #print(" Jahr nicht im datensatz vorhanden")
 
     return(FALSE)
   }
@@ -248,7 +367,7 @@ check_conditions_func <- function(input, selected_data,prevYear,prevValueType,pr
   if (input$filter1 != "Kein Filter") {
     contains_filter <- input$filter1 %in% df$filter1
     if (!contains_filter) {
-      print(" korrekten Filter gibt, dessen Wert aber nicht in der filter1 Spalte verfügbar")
+      #print(" Wenn es einen korrekten Filter gibt, dessen Wert aber nicht in der filter1 Spalte verfügbar ist")
 
       return(FALSE)
     }
@@ -257,12 +376,11 @@ check_conditions_func <- function(input, selected_data,prevYear,prevValueType,pr
                                    filter1 == input$filter1)
     num_rows <-  df_filtered %>% nrow()
     if (num_rows == 0) {
-      print(" korrekten Filter gibt, für die Kombi aus Jahr und filter aber keine Daten")
+      #print(" Wenn es einen korrekten Filter gibt, es für die Kombi aus Jahr und filter aber keine Daten gibt")
 
       return(FALSE)
     }
     if (sum(is.na(df_filtered$value)) == num_rows) {
-      print("ungleiche reihen")
 
       return(FALSE)
     }
@@ -272,17 +390,20 @@ check_conditions_func <- function(input, selected_data,prevYear,prevValueType,pr
     isTRUE(identical(prevYear(), input$year)) &&
     isTRUE(identical(prevValueType(), input$value_type)) &&
     isTRUE(identical(prevIndicator(), input$indicator)) &&
+    isTRUE(identical(prevArea(), input$area)) &&
     isTRUE(identical(prevFilter(), input$filter1))
   ) {
-    print("Nichts verändert")
+    #print(" Keine Veränderung")
+
     return(FALSE)
   } else {
     prevYear(input$year)
     prevValueType(input$value_type)
     prevIndicator(input$indicator)
     prevFilter(input$filter1)
+    prevArea(input$area)
 
-    # print("Change")
+
     return(TRUE)
 
   }
@@ -313,12 +434,15 @@ values_have_changed <- function(prevYear,prevValueType,prevIndicator,prevFilter)
 #' @param session Shiny session object.
 #' @param input List of user inputs.
 #' @param output Shiny output list.
+#' @param area_names df with names and numbers of the area
 #' @param selected_data Reactive function returning the dataset.
-render_selections_dynamic <- function(session,input,output,selected_data){
+render_selections_dynamic <- function(session,input,output,selected_data,area_names){
+
 
   observeEvent(selected_data(), {
     df <- selected_data()
 
+    bezirk_data <- area_names()
 
 
     if ("filter1" %in% colnames(df) && input$filter1!="Kein Filter") {
@@ -408,34 +532,39 @@ update_year_on_filter <- function(session,input,output,selected_data){
 #' @param output Shiny output object for rendering the map.
 #' @param geo_data Spatial dataset containing geometry and tooltips.
 #' @return A Leaflet map rendered in the Shiny UI.
-init_map <- function(output,geo_data){
-  output$map <- renderLeaflet({
-    # Construct initial tooltips
-    geo_data$tooltip_text <- paste0(
-      "<b>", geo_data$name, "</b>"
-    )
+init_map <- function(output,input,geo_data){
+  observeEvent(geo_data(),{
+    geo_data <- geo_data()
+    output$map <- renderLeaflet({
+      # Construct initial tooltips
+      geo_data$tooltip_text <- paste0("<b>", geo_data$name, "</b>")
 
-    leaflet(geo_data) %>%
-      addTiles(
-        options = providerTileOptions(minZoom = 9)
-      ) %>%
-      # addProviderTiles(providers$Stadia.StamenToner) %>%
-      addPolygons(
-        layerId = ~bfsnr,
-        fillColor = "grey",
-        color = "white",
-        weight = 1.5,
-        opacity = .5,
-        fillOpacity = 1,
-        label = lapply(geo_data$tooltip_text, HTML)  # ✅ Initial tooltip
-      ) %>%
-      setView(
-        lng = mean(st_coordinates(geo_data)[,1]),
-        lat = mean(st_coordinates(geo_data)[,2]),
-        zoom = 10
-      )
+      leaflet(geo_data) %>%
+        addProviderTiles(providers$SwissFederalGeoportal.NationalMapGrey,
+                         options = providerTileOptions(minZoom = 9)) %>%  # ✅ Set minZoom to 9
+        addPolygons(
+          layerId = ~bfsnr,
+          fillColor = "grey",
+          color = "white",
+          weight = 1.5,
+          opacity = .5,
+          fillOpacity = 1,
+          label = lapply(geo_data$tooltip_text, HTML)  # ✅ Initial tooltip
+        ) %>%
+        setView(
+          lng = mean(st_coordinates(geo_data)[,1]),
+          lat = mean(st_coordinates(geo_data)[,2]),
+          zoom = 10
+        ) %>%
+        setMaxBounds(
+          lng1 = 8.6, lat1 = 47.8,  # 🔒 Expanded Top-left boundary
+          lng2 = 9.7, lat2 = 47.3   # 🔒 Expanded Bottom-right boundary
+        )
 
+
+    })
   })
+
 
 }
 
@@ -456,18 +585,19 @@ init_map <- function(output,geo_data){
 modify_map <- function(id,session, input,selected_data, geo_data, palette_ds, palette_ds_alternative, check_conditions) {
 
 
-    observeEvent(list(input$indicator, input$filter1, input$year, input$value_type, selected_data()), {
-      req(input$indicator, input$filter1, input$year, input$value_type, selected_data())
+    observeEvent(list(input$indicator, input$filter1, input$year, input$value_type,input$area, selected_data(),geo_data()), {
+      req(input$indicator, input$filter1, input$year, input$value_type,input$area, selected_data(),geo_data())
 
       if (check_conditions()) {
-        result <- prepare_color_map(selected_data(), geo_data, input, palette_ds, palette_ds_alternative)
+        result <- prepare_color_map(selected_data(), geo_data(), input, palette_ds, palette_ds_alternative)
+
 
         # ✅ Update the reactive color_map inside the function
         color_map <- result$color_map
         pal <- result$pal
 
         # ✅ Update polygon fill color
-        leafletProxy(session$ns("map"), data = geo_data) %>%
+        leafletProxy(session$ns("map"), data = geo_data()) %>%
           setShapeStyle(
             layerId = ~bfsnr,
             fillColor = pal(color_map$category)
@@ -492,63 +622,65 @@ modify_map <- function(id,session, input,selected_data, geo_data, palette_ds, pa
 #' @param output Shiny output object.
 #' @param selected_data Reactive dataset filtered based on user inputs.
 #' @param check_conditions Function to verify if table update should proceed.
-modify_table <- function(session,input,output,selected_data,check_conditions){
+modify_table <- function(session, input, output, selected_data, check_conditions,area_names) {
+  observeEvent(check_conditions(), {
+    req(check_conditions())  # Ensure all inputs are in a "ready" state
+    req(selected_data())
 
-
-
-  observeEvent(list(input$indicator, input$filter1, input$year, input$value_type, selected_data()), {
-    req(input$indicator, input$filter1, input$year, input$value_type, selected_data())
     output$data_table <- renderDT({
       df <- selected_data()
 
+      #print(head(df))
+      #print("__________________________________")
+
+      if (input$area == "Bezirk") {
+        df <- df %>% filter(str_detect(bfs_nr_gemeinde, "^2"))
+      } else if (input$area == "Gemeinde") {
+        df <- df %>% filter(str_detect(bfs_nr_gemeinde, "^4"))
+      }
+
       # Apply filters
-      if (!is.null(input$year))
+      if (!is.null(input$year)) {
         df <- df %>% filter(jahr %in% input$year)
-      if (input$filter1 != "Kein Filter" &&
-          "filter1" %in% colnames(df))
+      }
+
+      if (input$filter1 != "Kein Filter" && "filter1" %in% colnames(df)) {
         df <- df %>% filter(filter1 %in% input$filter1)
+      }
+
+      value_type <- ""
+      percentage <- ""
 
       if (!is.null(input$value_type)) {
-        value_type =  paste0(" (", input$value_type, ") ")
+        value_type <- paste0(" (", input$value_type, ") ")
         if (input$value_type == "Prozentual") {
-          if (!"share" %in% names(df)) {
-            percentage = ""
-          } else {
+          if ("share" %in% names(df)) {
             df$value <- df$share
-            percentage = "%"
+            percentage <- "%"
           }
-        } else {
-          percentage = ""
         }
-      } else {
-        percentage = ""
-        value_type = " "
       }
 
       value_name <- paste0(input$indicator, value_type, input$year)
 
-      # Select relevant columns
       if ("filter1" %in% colnames(df)) {
         df <- df %>%
-          left_join(bezirk_data, "bfs_nr_gemeinde") %>%
+          left_join(area_names(), "bfs_nr_gemeinde") %>%
           select(bfs_nr_gemeinde, name_gemeinde, filter1, value) %>%
           mutate(value = round(value, 2)) %>%
           arrange(desc(value))
-        col_labels = c("BFS Nr.", "Gemeinde", "Filter", value_name)
 
+        col_labels <- c("BFS Nr.", "Gemeinde", "Filter", value_name)
       } else {
         df <- df %>%
-          left_join(bezirk_data, "bfs_nr_gemeinde") %>%
+          left_join(area_names(), "bfs_nr_gemeinde") %>%
           select(bfs_nr_gemeinde, name_gemeinde, value) %>%
           mutate(value = round(value, 2)) %>%
           arrange(desc(value))
 
-        col_labels = c("BFS Nr.", "Gemeinde", value_name)
+        col_labels <- c("BFS Nr.", "Gemeinde", value_name)
       }
 
-
-
-      # Highlight selected row
       datatable(df,
                 colnames = col_labels,
                 options = list(dom = 't', pageLength = nrow(df))) %>%
@@ -557,9 +689,115 @@ modify_table <- function(session,input,output,selected_data,check_conditions){
           target = 'row',
           backgroundColor = styleEqual(input$bfs_nr_gemeinde, 'yellow')
         )
-
-
     })
+  }, ignoreInit = TRUE)
+}
+
+
+modify_map_and_table <- function(id,session, input,output,selected_data, geo_data, palette_ds, palette_ds_alternative, check_all_filters,debounced_inputs,counter,area_names){
+
+  observeEvent(debounced_inputs(),{
+    counter(counter()+1)
+    print(counter())
+    req(selected_data(),input$year, input$filter1, input$year, input$value_type,geo_data())
+      # if (check_all_filters(input,selected_data)) {
+        result <- prepare_color_map(selected_data(), geo_data(), input, palette_ds, palette_ds_alternative)
+
+
+        # ✅ Update the reactive color_map inside the function
+        color_map <- result$color_map
+        pal <- result$pal
+
+        # ✅ Update polygon fill color
+        leafletProxy(session$ns("map"), data = geo_data()) %>%
+          setShapeStyle(
+            layerId = ~bfsnr,
+            fillColor = pal(color_map$category)
+          ) %>%
+          clearControls() %>%
+          addLegend(
+            position = "bottomright",
+            pal = pal,
+            values = color_map$category,
+            title = input$indicator
+          ) %>%
+          setShapeLabel(layerId = ~bfsnr, label = color_map$tooltip_text)
+
+
+        output$data_table <- renderDT({
+          df <- selected_data()
+
+
+
+          if (input$area == "Bezirk"){
+            df <- df %>%
+              filter(str_detect(bfs_nr_gemeinde,"^2"))
+          }
+          if (input$area == "Gemeinde"){
+            df <- df %>%
+              filter(str_detect(bfs_nr_gemeinde,"^4"))
+          }
+          # Apply filters
+          if (!is.null(input$year))
+            df <- df %>% filter(jahr %in% input$year)
+          if (input$filter1 != "Kein Filter" &&
+              "filter1" %in% colnames(df))
+            df <- df %>% filter(filter1 %in% input$filter1)
+
+          if (!is.null(input$value_type)) {
+            value_type =  paste0(" (", input$value_type, ") ")
+            if (input$value_type == "Prozentual") {
+              if (!"share" %in% names(df)) {
+                percentage = ""
+              } else {
+                df$value <- df$share
+                percentage = "%"
+              }
+            } else {
+              percentage = ""
+            }
+          } else {
+            percentage = ""
+            value_type = " "
+          }
+
+          value_name <- paste0(input$indicator, value_type, input$year)
+
+          # Select relevant columns
+          if ("filter1" %in% colnames(df)) {
+            df <- df %>%
+              left_join(area_names(), "bfs_nr_gemeinde") %>%
+              select(bfs_nr_gemeinde, name_gemeinde, filter1, value) %>%
+              mutate(value = round(value, 2)) %>%
+              arrange(desc(value))
+            col_labels = c("BFS Nr.", "Gemeinde", "Filter", value_name)
+
+          } else {
+            df <- df %>%
+              left_join(area_names(), "bfs_nr_gemeinde") %>%
+              select(bfs_nr_gemeinde, name_gemeinde, value) %>%
+              mutate(value = round(value, 2)) %>%
+              arrange(desc(value))
+
+            col_labels = c("BFS Nr.", "Gemeinde", value_name)
+          }
+
+
+
+          # Highlight selected row
+          datatable(df,
+                    colnames = col_labels,
+                    options = list(dom = 't', pageLength = nrow(df))) %>%
+            formatStyle(
+              "bfs_nr_gemeinde",
+              target = 'row',
+              backgroundColor = styleEqual(input$bfs_nr_gemeinde, 'yellow')
+            )
+
+
+        })
+
+      # }
 
 
   })
@@ -601,12 +839,12 @@ zoom_and_zoom_reset <- function(session,input,previous_gemeinde,geo_data){
       # ✅ If no Gemeinde is selected, reset to original zoom & reset all borders
       leafletProxy(session$ns("map")) %>%
         setView(
-          lng = mean(st_coordinates(geo_data)[,1]),
-          lat = mean(st_coordinates(geo_data)[,2]),
+          lng = mean(st_coordinates(geo_data())[,1]),
+          lat = mean(st_coordinates(geo_data())[,2]),
           zoom = 10
         ) %>%
         setShapeStyle(
-          layerId = geo_data$bfsnr,
+          layerId = geo_data()$bfsnr,
           weight = 1,  # Reset border thickness
           opacity = .5,
           color = "white"
@@ -624,7 +862,7 @@ zoom_and_zoom_reset <- function(session,input,previous_gemeinde,geo_data){
       }
 
       # ✅ Zoom to selected Gemeinde and highlight it
-      geom <- geo_data %>% filter(bfsnr == input$bfs_nr_gemeinde)
+      geom <- geo_data() %>% filter(bfsnr == input$bfs_nr_gemeinde)
       if (nrow(geom) > 0) {
         bbox <- st_bbox(geom)
         leafletProxy(session$ns("map")) %>%
@@ -661,7 +899,6 @@ update_summary_filter <- function(session, input,selected_data) {
 
     observeEvent(list(selected_data,input$bfs_nr_gemeinde,input$filter,input$indicator,input$tab_box), {
       if (input$tab_box=="summary_tab"){
-        print(input$bfs_nr_gemeinde)
         if (input$bfs_nr_gemeinde == "") {
           updateSelectizeInput(session,
                                session$ns("summary_select"),
@@ -712,7 +949,6 @@ render_hc_summary <- function(session, input, output, selected_data, check_condi
     if (input$tab_box=="summary_tab"){
       df <- selected_data()
 
-      print(input$summary_select)
       # ✅ Apply filtering logic if "filter1" exists
       if ("filter1" %in% colnames(df) && input$filter1 != "Kein Filter") {
         df <- df %>% filter(filter1 == input$filter1)

@@ -24,172 +24,44 @@
 
 
 
-#' Prepare a color-coded geographic map based on selected data
+#' Prepare a value-mapped geographic dataset for echarts4r choropleth rendering.
 #'
-#' @param df Dataframe containing the dataset to visualize.
-#' @param geo_data Spatial dataframe containing geographic information.
-#' @param input List of user inputs from the Shiny app.
-#' @param palette_ds Color palette for mapping.
-#' @param palette_ds_alternative Alternative palette for cases with negative values.
-#' @return A list with a color-mapped dataframe and a color palette.
+#' Filters and joins the indicator data with geographic data, applying value-type
+#' (absolute / share) selection. The returned `color_map` data frame is passed
+#' directly to [build_echarts_map()]; echarts4r handles colour binning via its
+#' own `e_visual_map()`.
+#'
+#' @param df Data frame with columns `bfs_nr_gemeinde`, `jahr`, `value`
+#'   (and optionally `filter1`, `share`).
+#' @param geo_data sf object with columns `bfsnr` and `name`.
+#' @param input Shiny input list (uses `year`, `filter1`, `value_type`,
+#'   `indicator`, `topic`).
+#' @param palette_ds Unused — kept for API compatibility.
+#' @param palette_ds_alternative Unused — kept for API compatibility.
+#' @return A list with element `color_map` (data frame ready for echarts4r).
 prepare_color_map <- function(df, geo_data, input, palette_ds, palette_ds_alternative) {
-  # Apply filters
   if (!is.null(input$year)) df <- df %>% filter(jahr %in% input$year)
-  if (input$filter1!="Kein Filter" && "filter1" %in% colnames(df)) df <- df %>% filter(filter1 %in% input$filter1)
+  if (input$filter1 != "Kein Filter" && "filter1" %in% colnames(df)) {
+    df <- df %>% filter(filter1 %in% input$filter1)
+  }
   if (nrow(df) > 80) req(input$filter1)
 
-
-  # Merge geo_data with df
-  color_map <- geo_data %>% left_join(df, by = c("bfsnr" = "bfs_nr_gemeinde"))
+  color_map <- as.data.frame(geo_data) %>%
+    left_join(df, by = c("bfsnr" = "bfs_nr_gemeinde"))
   color_map$value <- as.numeric(color_map$value)
 
-  if (sum(is.na(color_map$value))==length(color_map$value)){
-    pal <- colorFactor(palette = "grey",domain =c(NA))
-    color_map$category <- "Keine Werte"
-    return(list(color_map = color_map, pal = pal))
+  # Switch to share column when user requests percentage view
+  if (!is.null(input$value_type) && input$value_type == "Prozentual" &&
+      "share" %in% names(color_map)) {
+    color_map$value <- as.numeric(color_map$share)
   }
 
-  threshold <- NULL
-  palette <- palette_ds
-
-  #Bei negativen Werten
-  if (min(color_map$value,na.rm = T)<0){
-    threshold <- 0
-    palette <- palette_ds_alternative
-  }
-
-  # Bei Abstimmungen
-  if (input$filter1!="Kein Filter"){
-    if (input$filter1=="Ja-Stimmenanteil" & input$topic == "Staat und Politik"){ #TODO sauberer lösen
-      threshold <- 50
-      palette <- palette_ds_alternative
-    }
-
-  }
-
-  # Determine value type
-  percentage <- ""
-  if (!is.null(input$value_type) && input$value_type == "Prozentual" && "share" %in% names(color_map)) {
-    color_map$value <- color_map$share
-    percentage <- "%"
-  }
-
-  # Blaue Palette wenn kein Threshold definiert ist
-  if (is.null(threshold)){
-    # Define quantile-based bins
-    bins <- unique(quantile(color_map$value, probs = seq(0, 1, length.out = 7), na.rm = TRUE, type = 7))
-    # bins <- seq(min(color_map$value, na.rm = TRUE), max(color_map$value, na.rm = TRUE), length.out = 7)
-
-    bin_labels <- paste0(round(head(bins, -1), 2), percentage, " bis ", round(tail(bins, -1), 2), percentage)
-    # Assign each value to a labeled category
-    color_map$category <- cut(color_map$value, breaks = bins, include.lowest = TRUE, labels = bin_labels)
-
-    # Create a categorical color palette
-    pal <- colorFactor(palette, domain = color_map$category)
-  } else {
-    # Separate positive and negative values
-    pos_values <- color_map$value[color_map$value > threshold & !is.na(color_map$value)]
-    neg_values <- color_map$value[color_map$value < threshold & !is.na(color_map$value)]
-
-    # Nur Werte unter threshold
-    if (length(neg_values)>0 & length(pos_values)==0){
-      bins <- unique(quantile(color_map$value, probs = seq(0, 1, length.out = 4), na.rm = TRUE, type = 7))
-      bin_labels <- paste0(round(head(bins, -1), 2), percentage, " bis ", round(tail(bins, -1), 2), percentage)
-      color_map$category <- cut(color_map$value, breaks = bins, include.lowest = TRUE, labels = bin_labels)
-      pal <- colorFactor(palette[1:3], domain = color_map$category)
-
-    }
-
-    # Nur werte über threshold
-    if (length(neg_values)==0 & length(pos_values)>0){
-      bins <- unique(quantile(color_map$value, probs = seq(0, 1, length.out = 4), na.rm = TRUE, type = 7))
-      bin_labels <- paste0(round(head(bins, -1), 2), percentage, " bis ", round(tail(bins, -1), 2), percentage)
-      color_map$category <- cut(color_map$value, breaks = bins, include.lowest = TRUE, labels = bin_labels)
-      pal <- colorFactor(palette[4:6], domain = color_map$category)
-
-    }
-
-    # Beides vorhanden
-    if (length(neg_values)>0 & length(pos_values)>0){
-      # Define quantiles separately for positive and negative values
-      if (length(pos_values) > 0) {
-        bins_positive <- unique(c(threshold, quantile(pos_values, probs = seq(0, 1, length.out = 3), na.rm = TRUE, type = 7)))
-        labels_positive <- paste0(round(head(bins_positive, -1), 2), percentage, " bis ", round(tail(bins_positive, -1), 2), percentage)
-      }
-
-      if (length(neg_values) > 0) {
-        bins_negative <- unique(c(quantile(neg_values, probs = seq(0, 1, length.out = 3), na.rm = TRUE, type = 7),threshold))
-        labels_negative <- paste0(round(head(bins_negative, -1), 2), percentage, " bis ", round(tail(bins_negative, -1), 2), percentage)
-      }
-
-      # Assign categories to values
-      color_map$category <- NA
-      color_map$num <- NA
-      neg_colors <- NULL
-      pos_colors <- NULL
-      if (length(neg_values) > 0) {
-
-        neg_cat_values <- cut(color_map$value[color_map$value < threshold & !is.na(color_map$value)],
-                              breaks = bins_negative,
-                              include.lowest = TRUE,
-                              labels = labels_negative)
-
-
-        color_map$category[color_map$value < threshold & !is.na(color_map$value)] <- neg_cat_values %>% as.character()
-
-        color_map$num[color_map$value < threshold & !is.na(color_map$value)] <- neg_cat_values %>% as.numeric()
-
-        neg_palette_index <- length(levels(neg_cat_values))
-
-        neg_colors = palette[1:neg_palette_index]
-      }
-      if (length(pos_values) > 0) {
-
-
-        pos_cat_values <- cut(color_map$value[color_map$value > threshold & !is.na(color_map$value)],
-                              breaks = bins_positive,
-                              include.lowest = TRUE,
-                              labels = labels_positive)
-
-        start_val_neg <- 3
-        if (length(neg_values)>0)  start_val_neg <- max(color_map$num,na.rm = T)
-
-
-
-        color_map$category[which(color_map$value > threshold & !is.na(color_map$value))] <- pos_cat_values %>% as.character()
-        color_map$num[color_map$value > threshold & !is.na(color_map$value)] <- pos_cat_values %>% as.numeric() +start_val_neg
-
-        pos_palette_index <- length(unique(pos_cat_values %>% as.numeric() +start_val_neg ))+3
-
-        pos_colors = palette[4:pos_palette_index]
-
-
-      }
-      # Zu Factor
-      color_map <- color_map %>%
-        mutate(category = factor(category, levels = unique(category[order(num)]), ordered = TRUE)) %>%
-        select(-num)
-
-
-
-      # Define color mapping: Blue shades for positive, Orange shades for negative
-      color_palette <- c(neg_colors,pos_colors)
-      pal <- colorFactor(color_palette, domain = color_map$category)
-    }
-
-  }
-
-
-  # Construct tooltip text
   color_map$tooltip_text <- paste0(
-    "<b>", color_map$name, "</b><br>",
-    "<b>Indicator:</b> ", input$indicator, "<br>",
-    if (input$filter1!="Kein Filter") paste0("<b>Filter:</b> ", input$filter1, "<br>") else "",
-    "<b>Year:</b> ", color_map$jahr, "<br>",
-    "<b>Value:</b> ", round(color_map$value, 2)
+    color_map$name, " | ", input$indicator, ": ",
+    round(color_map$value, 2)
   )
 
-  return(list(color_map = color_map, pal = pal))
+  list(color_map = color_map)
 }
 
 
@@ -528,92 +400,76 @@ update_year_on_filter <- function(session,input,output,selected_data){
 }
 
 
-#' Initialize the Leaflet map with default settings.
+#' Build an echarts4r choropleth map from a colour-mapped dataset.
 #'
-#' @param output Shiny output object for rendering the map.
-#' @param geo_data Spatial dataset containing geometry and tooltips.
-#' @return A Leaflet map rendered in the Shiny UI.
-init_map <- function(output,input,geo_data){
-  observeEvent(geo_data(),{
-    geo_data <- geo_data()
-    output$map <- renderLeaflet({
-      # Construct initial tooltips
-      geo_data$tooltip_text <- paste0("<b>", geo_data$name, "</b>")
+#' @param color_map sf-joined data frame with `name`, `value`, `category`, `tooltip_text`.
+#' @param geojson_str GeoJSON string (WGS84) for the map region.
+#' @param indicator Label used in the visual-map legend.
+#' @param map_name Internal echarts map name (must be unique per area type).
+#' @return An echarts4r widget.
+build_echarts_map <- function(color_map, geojson_str, indicator, map_name = "thurgau") {
+  df_plot <- as.data.frame(color_map) %>%
+    select(name, value) %>%
+    filter(!is.na(value))
 
-      leaflet(geo_data) %>%
-        addProviderTiles(providers$SwissFederalGeoportal.NationalMapGrey,
-                         options = providerTileOptions(minZoom = 9)) %>%  # ✅ Set minZoom to 9
-        addPolygons(
-          layerId = ~bfsnr,
-          fillColor = "grey",
-          color = "white",
-          weight = 1.5,
-          opacity = .5,
-          fillOpacity = 1,
-          label = lapply(geo_data$tooltip_text, HTML)  # ✅ Initial tooltip
-        ) %>%
-        setView(
-          lng = mean(st_coordinates(geo_data)[,1]),
-          lat = mean(st_coordinates(geo_data)[,2]),
-          zoom = 10
-        ) %>%
-        setMaxBounds(
-          lng1 = 8.6, lat1 = 47.8,  # 🔒 Expanded Top-left boundary
-          lng2 = 9.7, lat2 = 47.3   # 🔒 Expanded Bottom-right boundary
-        )
+  df_plot %>%
+    echarts4r::e_charts(name) %>%
+    echarts4r::e_map_register(map_name, geojson_str) %>%
+    echarts4r::e_map(value, map = map_name,
+                     name = indicator,
+                     nameProperty = "name") %>%
+    echarts4r::e_visual_map(
+      value,
+      type       = "piecewise",
+      show       = TRUE,
+      orient     = "vertical",
+      right      = 0,
+      bottom     = 20,
+      itemSymbol = "rect"
+    ) %>%
+    echarts4r::e_tooltip(
+      trigger   = "item",
+      formatter = echarts4r::e_tooltip_item_formatter("decimal", digits = 2)
+    ) %>%
+    echarts4r::e_toolbox_feature("saveAsImage")
+}
 
 
+#' Initialize the echarts4r choropleth map with grey placeholder fill.
+#'
+#' @param output Shiny output object.
+#' @param input Shiny input object.
+#' @param geo_data Reactive sf spatial dataset.
+#' @param geo_data_geojson Reactive GeoJSON string (WGS84).
+init_map <- function(output, input, geo_data, geo_data_geojson) {
+  observeEvent(geo_data_geojson(), {
+    geojson_str <- geo_data_geojson()
+    req(geojson_str)
+
+    sf_obj  <- geo_data()
+    df_init <- as.data.frame(sf_obj) %>%
+      select(name) %>%
+      mutate(value = NA_real_)
+
+    output$map <- echarts4r::renderEcharts4r({
+      df_init %>%
+        echarts4r::e_charts(name) %>%
+        echarts4r::e_map_register("thurgau_init", geojson_str) %>%
+        echarts4r::e_map(value, map = "thurgau_init",
+                         name = "Gemeinden", nameProperty = "name",
+                         itemStyle = list(areaColor = "#cccccc",
+                                          borderColor = "white",
+                                          borderWidth = 1)) %>%
+        echarts4r::e_tooltip(trigger = "item") %>%
+        echarts4r::e_on("click", "function(params){ Shiny.setInputValue(this.id + '_clicked_data', params.data, {priority: 'event'}); }")
     })
   })
-
-
 }
 
 
 
 
 
-#' Modify the Leaflet map based on user-selected filters and data.
-#'
-#' @param id Shiny module ID.
-#' @param session Shiny session object.
-#' @param input Shiny input object.
-#' @param selected_data Reactive dataset containing filtered data.
-#' @param geo_data Spatial dataset with polygon geometries.
-#' @param palette_ds Color palette function for mapping categories.
-#' @param palette_ds_alternative Alternative color palette.
-#' @param check_conditions Function to check if update conditions are met.
-modify_map <- function(id,session, input,selected_data, geo_data, palette_ds, palette_ds_alternative, check_conditions) {
-
-
-    observeEvent(list(input$indicator, input$filter1, input$year, input$value_type,input$area, selected_data(),geo_data()), {
-      req(input$indicator, input$filter1, input$year, input$value_type,input$area, selected_data(),geo_data())
-
-      if (check_conditions()) {
-        result <- prepare_color_map(selected_data(), geo_data(), input, palette_ds, palette_ds_alternative)
-
-
-        # ✅ Update the reactive color_map inside the function
-        color_map <- result$color_map
-        pal <- result$pal
-
-        # ✅ Update polygon fill color
-        leafletProxy(session$ns("map"), data = geo_data()) %>%
-          setShapeStyle(
-            layerId = ~bfsnr,
-            fillColor = pal(color_map$category)
-          ) %>%
-          clearControls() %>%
-          addLegend(
-            position = "bottomright",
-            pal = pal,
-            values = color_map$category,
-            title = input$indicator
-          ) %>%
-          setShapeLabel(layerId = ~bfsnr, label = color_map$tooltip_text)
-      }
-    })
-}
 
 
 #' Update and render the data table based on selected filters.
@@ -695,34 +551,22 @@ modify_table <- function(session, input, output, selected_data, check_conditions
 }
 
 
-modify_map_and_table <- function(id,session, input,output,selected_data, geo_data, palette_ds, palette_ds_alternative, check_all_filters,debounced_inputs,counter,area_names){
+modify_map_and_table <- function(id, session, input, output, selected_data, geo_data,
+                                 geo_data_geojson, palette_ds, palette_ds_alternative,
+                                 check_all_filters, debounced_inputs, counter, area_names) {
 
-  observeEvent(debounced_inputs(),{
-    counter(counter()+1)
-    print(counter())
-    req(selected_data(),input$year, input$filter1, input$year, input$value_type,geo_data())
-      # if (check_all_filters(input,selected_data)) {
-        result <- prepare_color_map(selected_data(), geo_data(), input, palette_ds, palette_ds_alternative)
+  observeEvent(debounced_inputs(), {
+    counter(counter() + 1)
+    req(selected_data(), input$year, input$filter1, input$value_type, geo_data(), geo_data_geojson())
 
+    result    <- prepare_color_map(selected_data(), geo_data(), input, palette_ds, palette_ds_alternative)
+    color_map <- result$color_map
 
-        # ✅ Update the reactive color_map inside the function
-        color_map <- result$color_map
-        pal <- result$pal
-
-        # ✅ Update polygon fill color
-        leafletProxy(session$ns("map"), data = geo_data()) %>%
-          setShapeStyle(
-            layerId = ~bfsnr,
-            fillColor = pal(color_map$category)
-          ) %>%
-          clearControls() %>%
-          addLegend(
-            position = "bottomright",
-            pal = pal,
-            values = color_map$category,
-            title = input$indicator
-          ) %>%
-          setShapeLabel(layerId = ~bfsnr, label = color_map$tooltip_text)
+    # Re-render the echarts4r map with updated data
+    output$map <- echarts4r::renderEcharts4r({
+      build_echarts_map(color_map, geo_data_geojson(), input$indicator) %>%
+        echarts4r::e_on("click", "function(params){ Shiny.setInputValue(this.id + '_clicked_data', params.data, {priority: 'event'}); }")
+    })
 
 
         output$data_table <- renderDT({
@@ -806,85 +650,73 @@ modify_map_and_table <- function(id,session, input,output,selected_data, geo_dat
 }
 
 
-#' Update the selection when a polygon is clicked on the map.
+#' Update the Gemeinde selection when a region is clicked on the echarts4r map.
+#'
+#' The echarts4r click event for a map series arrives as `input$map_clicked_data`,
+#' a list with at least a `name` field (the feature's name property in GeoJSON).
+#' We resolve `name` → `bfsnr` via `geo_data`.
 #'
 #' @param session Shiny session object.
-#' @param input Shiny input object containing click events.
-update_gemeinde_selection_on_click <- function(session,input){
-  observeEvent(input$map_shape_click, {
-    clicked_bfsnr <- input$map_shape_click$id  # Get clicked polygon ID
+#' @param input Shiny input object.
+#' @param geo_data Reactive sf dataset (has columns `name` and `bfsnr`).
+update_gemeinde_selection_on_click <- function(session, input, geo_data) {
+  observeEvent(input$map_clicked_data, {
+    clicked_name <- input$map_clicked_data$name
+    req(clicked_name)
 
-    # ✅ Set selected BFS number
-    updateSelectizeInput(session, "bfs_nr_gemeinde", selected = clicked_bfsnr)
-
-    # ✅ Highlight selected polygon
-    leafletProxy(session$ns("map")) %>%
-      setShapeStyle(layerId = as.character(clicked_bfsnr), weight = 3, color = "red")
+    # Resolve name → bfsnr
+    match_row <- as.data.frame(geo_data()) %>%
+      filter(name == clicked_name)
+    if (nrow(match_row) > 0) {
+      updateSelectizeInput(session, "bfs_nr_gemeinde",
+                           selected = as.character(match_row$bfsnr[1]))
+    }
   })
 }
 
 
-#' Control zoom behavior based on Gemeinde selection.
+#' Handle Gemeinde selection changes: highlight region on the echarts4r map.
+#'
+#' echarts4r supports programmatic highlighting via `e_dispatch_action_p()`.
+#' When a Gemeinde is selected we dispatch a "highlight" action; deselect
+#' sends a "downplay" across all regions.
 #'
 #' @param session Shiny session object.
 #' @param input Shiny input object.
-#' @param previous_gemeinde Reactive value storing the previously selected Gemeinde.
-#' @param geo_data Spatial dataset for map rendering.
-zoom_and_zoom_reset <- function(session,input,previous_gemeinde,geo_data){
+#' @param previous_gemeinde Reactive value storing the previously selected name.
+#' @param geo_data Reactive sf dataset.
+#' @param geo_data_geojson Reactive GeoJSON string (unused here but kept for API symmetry).
+zoom_and_zoom_reset <- function(session, input, previous_gemeinde, geo_data, geo_data_geojson) {
   observeEvent(input$bfs_nr_gemeinde, {
+    old_bfsnr <- previous_gemeinde()
 
-    # Get the previously selected Gemeinde
-    old_gemeinde <- previous_gemeinde()
+    # Resolve bfsnr → name for echarts4r dispatch
+    resolve_name <- function(bfsnr_val) {
+      row <- as.data.frame(geo_data()) %>% filter(bfsnr == bfsnr_val)
+      if (nrow(row) > 0) row$name[1] else NULL
+    }
 
-    if (is.null(input$bfs_nr_gemeinde) || input$bfs_nr_gemeinde == "") {
-      # ✅ If no Gemeinde is selected, reset to original zoom & reset all borders
-      leafletProxy(session$ns("map")) %>%
-        setView(
-          lng = mean(st_coordinates(geo_data())[,1]),
-          lat = mean(st_coordinates(geo_data())[,2]),
-          zoom = 10
-        ) %>%
-        setShapeStyle(
-          layerId = geo_data()$bfsnr,
-          weight = 1,  # Reset border thickness
-          opacity = .5,
-          color = "white"
-        )
-    } else {
-      # ✅ Reset the old Gemeinde's border before selecting the new one
-      if (!is.null(old_gemeinde)) {
-        leafletProxy(session$ns("map")) %>%
-          setShapeStyle(
-            layerId = as.character(old_gemeinde),
-            weight = 1,  # Reset border thickness
-            opacity = .5,
-            color = "white"
-          )
-      }
-
-      # ✅ Zoom to selected Gemeinde and highlight it
-      geom <- geo_data() %>% filter(bfsnr == input$bfs_nr_gemeinde)
-      if (nrow(geom) > 0) {
-        bbox <- st_bbox(geom)
-        leafletProxy(session$ns("map")) %>%
-          fitBounds(
-            lng1 = as.numeric(bbox["xmin"]),
-            lat1 = as.numeric(bbox["ymin"]),
-            lng2 = as.numeric(bbox["xmax"]),
-            lat2 = as.numeric(bbox["ymax"])
-          ) %>%
-          setShapeStyle(
-            layerId = as.character(input$bfs_nr_gemeinde),
-            weight = 3,
-            opacity = 1,
-            color = "red"
-          )
+    if (!is.null(old_bfsnr) && old_bfsnr != "") {
+      old_name <- resolve_name(old_bfsnr)
+      if (!is.null(old_name)) {
+        echarts4r::echarts4rProxy(session$ns("map")) %>%
+          echarts4r::e_dispatch_action_p("downplay",
+                                         seriesName = "Gemeinden",
+                                         name       = old_name)
       }
     }
 
-    # ✅ Update the stored previous Gemeinde
-    previous_gemeinde(input$bfs_nr_gemeinde)
+    if (!is.null(input$bfs_nr_gemeinde) && input$bfs_nr_gemeinde != "") {
+      new_name <- resolve_name(input$bfs_nr_gemeinde)
+      if (!is.null(new_name)) {
+        echarts4r::echarts4rProxy(session$ns("map")) %>%
+          echarts4r::e_dispatch_action_p("highlight",
+                                         seriesName = "Gemeinden",
+                                         name       = new_name)
+      }
+    }
 
+    previous_gemeinde(input$bfs_nr_gemeinde)
   }, ignoreNULL = FALSE)
 }
 
@@ -935,69 +767,76 @@ update_summary_filter <- function(session, input,selected_data) {
 }
 
 
-#' Render a summary visualization (bar chart or time series) using highcharter.
+#' Render a summary visualization (bar or line chart) using echarts4r.
 #'
 #' @param session Shiny session object.
 #' @param input Shiny input object.
 #' @param output Shiny output object.
-#' @param selected_data Reactive dataset containing user-selected data.
-#' @param check_conditions Function to verify if chart update should proceed.
-#' @param bezirk_data Dataset containing administrative region mappings.
+#' @param selected_data Reactive dataset.
+#' @param check_conditions Reactive checking whether rendering is valid.
+#' @param bezirk_data Data frame with `bfs_nr_gemeinde` / `name_gemeinde`.
 render_hc_summary <- function(session, input, output, selected_data, check_conditions, bezirk_data) {
-  observeEvent(list(input$indicator, input$filter1, input$year, input$value_type, selected_data(),input$tab_box,input$summary_select), {
+  observeEvent(list(input$indicator, input$filter1, input$year, input$value_type,
+                    selected_data(), input$tab_box, input$summary_select), {
     req(input$indicator, input$filter1, input$year, input$value_type, selected_data())
+    if (input$tab_box != "summary_tab") return()
 
-    if (input$tab_box=="summary_tab"){
-      df <- selected_data()
-
-      # ✅ Apply filtering logic if "filter1" exists
-      if ("filter1" %in% colnames(df) && input$filter1 != "Kein Filter") {
-        df <- df %>% filter(filter1 == input$filter1)
-      }
-
-      # ✅ Determine chart type and filter accordingly
-      if (input$summary_select == "Erste 10 Gebiete") {
-        df <- df %>%
-          filter(jahr == input$year) %>%
-          arrange(desc(value)) %>%
-          slice(1:10)
-        chart_title <- "Erste 10 Gebiete"
-        x_axis_categories <- df$name_gemeinde
-      }
-      else if (input$summary_select == "Zeitlicher Verlauf" & input$bfs_nr_gemeinde != "") {
-        df <- df %>%
-          filter(bfs_nr_gemeinde == input$bfs_nr_gemeinde) %>%
-          arrange(jahr)
-        chart_title <- "Zeitlicher Verlauf"
-        x_axis_categories <- df$jahr
-      }
-      else if (input$summary_select == "Letzte 10 Gebiete") {
-        df <- df %>%
-          filter(jahr == input$year) %>%
-          arrange(value) %>%
-          slice(1:10)
-        chart_title <- "Letzte 10 Gebiete"
-        x_axis_categories <- df$name_gemeinde
-      }
-      else {
-        return()  # ✅ Exit function if none of the conditions match
-      }
-
-      # ✅ Join with bezirk_data at the end
-      df <- df %>% left_join(bezirk_data, by = "bfs_nr_gemeinde")
-
-      # ✅ Render highchart (only once)
-      output$summary_graph <- renderHighchart({
-        highchart() %>%
-          hc_chart(type = "bar") %>%
-          hc_title(text = chart_title) %>%
-          hc_xAxis(categories = x_axis_categories, title = list(text = "Gemeinde")) %>%
-          hc_yAxis(title = list(text = "Wert")) %>%
-          hc_add_series(name = "Wert", data = df$value, colorByPoint = TRUE) %>%
-          hc_tooltip(pointFormat = "Wert: {point.y}")
-      })
+    df <- selected_data()
+    if ("filter1" %in% colnames(df) && input$filter1 != "Kein Filter") {
+      df <- df %>% filter(filter1 == input$filter1)
     }
 
+    if (input$summary_select == "Erste 10 Gebiete") {
+      df <- df %>%
+        filter(jahr == input$year) %>%
+        left_join(bezirk_data, by = "bfs_nr_gemeinde") %>%
+        arrange(desc(value)) %>%
+        slice(1:10)
+
+      output$summary_graph <- echarts4r::renderEcharts4r({
+        df %>%
+          echarts4r::e_charts(name_gemeinde) %>%
+          echarts4r::e_bar(value, name = "Wert", color = "#185FA5") %>%
+          echarts4r::e_flip_coords() %>%
+          echarts4r::e_title(input$indicator, "Erste 10 Gebiete") %>%
+          echarts4r::e_tooltip(trigger = "axis") %>%
+          echarts4r::e_toolbox_feature("saveAsImage")
+      })
+
+    } else if (input$summary_select == "Letzte 10 Gebiete") {
+      df <- df %>%
+        filter(jahr == input$year) %>%
+        left_join(bezirk_data, by = "bfs_nr_gemeinde") %>%
+        arrange(value) %>%
+        slice(1:10)
+
+      output$summary_graph <- echarts4r::renderEcharts4r({
+        df %>%
+          echarts4r::e_charts(name_gemeinde) %>%
+          echarts4r::e_bar(value, name = "Wert", color = "#BA7517") %>%
+          echarts4r::e_flip_coords() %>%
+          echarts4r::e_title(input$indicator, "Letzte 10 Gebiete") %>%
+          echarts4r::e_tooltip(trigger = "axis") %>%
+          echarts4r::e_toolbox_feature("saveAsImage")
+      })
+
+    } else if (input$summary_select == "Zeitlicher Verlauf" &&
+               !is.null(input$bfs_nr_gemeinde) && input$bfs_nr_gemeinde != "") {
+      df <- df %>%
+        filter(bfs_nr_gemeinde == input$bfs_nr_gemeinde) %>%
+        left_join(bezirk_data, by = "bfs_nr_gemeinde") %>%
+        mutate(jahr = as.character(jahr)) %>%
+        arrange(jahr)
+
+      output$summary_graph <- echarts4r::renderEcharts4r({
+        df %>%
+          echarts4r::e_charts(jahr) %>%
+          echarts4r::e_line(value, name = "Wert", color = "#185FA5") %>%
+          echarts4r::e_title(input$indicator, unique(df$name_gemeinde)[1]) %>%
+          echarts4r::e_tooltip(trigger = "axis") %>%
+          echarts4r::e_toolbox_feature("saveAsImage")
+      })
+    }
   })
 }
 

@@ -53,8 +53,8 @@ render_donut_chart <- function(session, id, input, output, reactive_val, data, t
     arrange(filter1)
 
 
-  output[[id]] <- renderHighchart({
-    create_donut_chart(df,color_mapping)
+  output[[id]] <- echarts4r::renderEcharts4r({
+    create_donut_chart(df, color_mapping)
   })
 
   output[[paste0(id,"_title")]] <- renderUI({
@@ -106,8 +106,10 @@ render_single_chart <- function(session, id, input, output, data,selected_base_a
 
   if(ts){
 
-    output[[id]] <- renderHighchart({
-      create_report_chart_year(df=data,chart_type=chart_type,value_title=value_title,gemeinde_names=gemeinde_names,filter_value=filter_value)
+    output[[id]] <- echarts4r::renderEcharts4r({
+      create_report_chart_year(df = data, chart_type = chart_type,
+                               value_title = value_title, gemeinde_names = gemeinde_names,
+                               filter_value = filter_value)
     })
 
   } else {
@@ -123,8 +125,9 @@ render_single_chart <- function(session, id, input, output, data,selected_base_a
       filter(jahr == year)
 
 
-    output[[id]] <- renderHighchart({
-      create_report_chart_categories(df=data,chart_type=chart_type,value_title=value_title,gemeinde_names=gemeinde_names)
+    output[[id]] <- echarts4r::renderEcharts4r({
+      create_report_chart_categories(df = data, chart_type = chart_type,
+                                     value_title = value_title, gemeinde_names = gemeinde_names)
     })
 
 
@@ -219,8 +222,8 @@ render_pyramid <- function(session, id, input, output, reactive_val, data,bezirk
 
 
 
-  output[[id]] <- renderHighchart({
-    create_highchart_pyramid(df=data,year=year,gemeinde = reactive_val())
+  output[[id]] <- echarts4r::renderEcharts4r({
+    create_highchart_pyramid(df = data, year = year, gemeinde = reactive_val())
   })
 
   output[[paste0(id,"_title")]] <- renderUI({

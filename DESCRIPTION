@@ -20,10 +20,10 @@ Depends:
     tidyr,
     stringr,
     purrr,
-    leaflet,
     sf,
     DT,
-    highcharter
+    echarts4r,
+    htmlwidgets
 Imports:
     golem,
     config,

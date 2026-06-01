@@ -12,7 +12,7 @@ app_server <- function(input, output, session) {
 
   mod_karte_server("karte")
   mod_berichte_server("berichte")
-  mod_selfservice_server("selfservice")
-  mod_extern_server("extern")
-  mod_info_server("info")
+  # mod_selfservice_server("selfservice")  # TODO: re-enable after refactor
+  # mod_extern_server("extern")            # TODO: re-enable after refactor
+  # mod_info_server("info")               # TODO: re-enable after refactor
 }

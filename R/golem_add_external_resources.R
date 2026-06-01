@@ -12,10 +12,25 @@ add_external_resources <- function() {
     shinyjs::useShinyjs(),
     shinybrowser::detect(),
     tags$head(
-      includeCSS(app_sys_or_local("www/dashboard_style.css"))
+      includeCSS(app_sys_or_local("www/dashboard_style.css")),
+      # Constrain main content width to match tg_header / tg_footer (1320 px max)
+      tags$style(HTML("
+        .bslib-page-navbar > .tab-content,
+        .bslib-page-navbar > .container-fluid {
+          max-width: 1320px;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+        }
+        /* Prevent the sidebar layout from overflowing horizontally */
+        .bslib-sidebar-layout {
+          max-width: 100%;
+          overflow-x: hidden;
+        }
+      "))
     ),
     HTML('<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>'),
-    leaflet_widget_js()
+    shiny_cookie_js()
   )
 }
 
@@ -36,14 +51,11 @@ app_sys_or_local <- function(rel) {
 }
 
 
-#' Custom Leaflet widget JavaScript methods
+#' Cookie + screen-width JavaScript helpers
 #'
-#' Adds the `setStyle`, `setRadius` and `setLabel` methods to the Leaflet
-#' widget so polygon styles, marker radii and tooltips can be updated through
-#' `leafletProxy()` without redrawing the whole map. Also reports browser
-#' width to the server and wires up generic clickable elements.
+#' Reports browser width to the server and tracks new-user cookie state.
 #' @noRd
-leaflet_widget_js <- function() {
+shiny_cookie_js <- function() {
   tags$script(HTML(
     '
     $(document).on("shiny:connected", function(){
@@ -56,50 +68,11 @@ leaflet_widget_js <- function() {
       var clicked_id = $(this).attr("id");
       Shiny.setInputValue("clicked_element_id", clicked_id, {priority: "event"});
     });
-    window.LeafletWidget.methods.setStyle = function(category, layerId, style){
-      var map = this;
-      if (!layerId) return;
-      if (!(typeof(layerId) === "object" && layerId.length)) layerId = [layerId];
-      style = HTMLWidgets.dataframeToD3(style);
-      layerId.forEach(function(d,i){
-        var layer = map.layerManager.getLayer(category, d);
-        if (layer) layer.setStyle(style[i]);
-      });
-    };
-    window.LeafletWidget.methods.setRadius = function(layerId, radius){
-      var map = this;
-      if (!layerId) return;
-      if (!(typeof(layerId) === "object" && layerId.length)) {
-        layerId = [layerId];
-        radius = [radius];
-      }
-      layerId.forEach(function(d,i){
-        var layer = map.layerManager.getLayer("marker", d);
-        if (layer) layer.setRadius(radius[i]);
-      });
-    };
-    window.LeafletWidget.methods.setLabel = function(category, layerId, label){
-      var map = this;
-      if (!layerId){
-        return;
-      } else if (!(typeof(layerId) === "object" && layerId.length)){
-        layerId = [layerId];
-      }
-      layerId.forEach(function(d,i){
-        var layer = map.layerManager.getLayer(category, d);
-        if (layer){
-          layer.unbindTooltip();
-          layer.bindTooltip(label[i]);
-        }
-      });
-    };
     $(document).on("shiny:connected", function(e) {
-      var width = $(window).width();
-      Shiny.setInputValue("screen_width", width);
+      Shiny.setInputValue("screen_width", $(window).width());
     });
     $(window).resize(function() {
-      var width = $(window).width();
-      Shiny.setInputValue("screen_width", width);
+      Shiny.setInputValue("screen_width", $(window).width());
     });
     '
   ))

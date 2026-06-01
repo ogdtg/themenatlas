@@ -89,11 +89,11 @@ ui_double_chart <- function(id_num, title, select_year, topic, ns = identity) {
           col_widths = c(6, 6),
           tagList(
             uiOutput(ns(paste0("report_chart_ba_", topic, "_", id_num, "_title"))),
-            div(class = "hc-chart", highchartOutput(ns(paste0("report_chart_ba_", topic, "_", id_num))))
+            div(class = "hc-chart", echarts4r::echarts4rOutput(ns(paste0("report_chart_ba_", topic, "_", id_num))))
           ),
           tagList(
             uiOutput(ns(paste0("report_chart_ca_", topic, "_", id_num, "_title"))),
-            div(class = "hc-chart", highchartOutput(ns(paste0("report_chart_ca_", topic, "_", id_num))))
+            div(class = "hc-chart", echarts4r::echarts4rOutput(ns(paste0("report_chart_ca_", topic, "_", id_num))))
           )
         )
       ),
@@ -143,7 +143,7 @@ ui_single_chart <- function(id_num, title, select_year, topic, ns = identity) {
       nav_panel(
         "Diagramm",
         value = paste0("report_chart_tab_", id_num),
-        div(class = "hc-chart", highchartOutput(ns(paste0("report_chart_", topic, "_", id_num))))
+        div(class = "hc-chart", echarts4r::echarts4rOutput(ns(paste0("report_chart_", topic, "_", id_num))))
       ),
       nav_panel(
         "Tabelle",

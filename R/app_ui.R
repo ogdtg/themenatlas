@@ -34,9 +34,9 @@ app_ui <- function(request) {
       # --- Tabs (one module each) ----------------------------------------
       mod_karte_ui("karte"),
       mod_berichte_ui("berichte"),
-      mod_selfservice_ui("selfservice"),
-      mod_extern_ui("extern"),
-      mod_info_ui("info"),
+      # mod_selfservice_ui("selfservice"),  # TODO: re-enable after refactor
+      # mod_extern_ui("extern"),            # TODO: re-enable after refactor
+      # mod_info_ui("info"),                # TODO: re-enable after refactor
 
       # --- Right-aligned header items ------------------------------------
       nav_spacer(),

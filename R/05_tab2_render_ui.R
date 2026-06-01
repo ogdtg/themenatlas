@@ -67,61 +67,48 @@ update_selected_compare_area <- function(input,selected_compare_area){
 #' @param select_year Logical, whether a year selection dropdown should be included.
 #' @param topic The topic associated with the chart.
 #' @return A `fluidRow` containing the UI elements.
-ui_double_chart <- function(id_num, title,select_year,topic) {
+ui_double_chart <- function(id_num, title, select_year, topic) {
 
-  if (select_year){
-    title = div(
-      HTML(paste0("<b>", title, "</b><br>")),  # Title
-      uiOutput(paste0("report_chart_select_", topic,"_", id_num)),  # UI Output for selectInput
-      style = "display: flex; justify-content: space-between; align-items: center;"
+  header_content <- if (select_year) {
+    div(
+      class = "d-flex justify-content-between align-items-center w-100",
+      tags$b(title),
+      uiOutput(paste0("report_chart_select_", topic, "_", id_num))
     )
   } else {
-    title = div(
-      HTML(paste0("<b>", title, "</b><br>"))
-    )
+    tags$b(title)
   }
 
-
-  fluidRow(
-    box(
-      title = title,
-      width = 12,
-      tabBox(
-        width = 12,
-        tabPanel(
-          "Diagramm",
-          value = paste0("report_chart_tab_", id_num),
-          fluidRow(
-            column(
-              6,
-              uiOutput(paste0("report_chart_ba_", topic,"_",id_num,"_title")),
-              div(class = "hc-chart", highchartOutput(paste0("report_chart_ba_",topic,"_", id_num)))
-            ),
-            column(
-              6,
-              uiOutput(paste0("report_chart_ca_",topic,"_", id_num,"_title")),
-              div(class = "hc-chart", highchartOutput(paste0("report_chart_ca_",topic,"_",  id_num)))
-            )
-          )
-        ),
-        tabPanel(
-          "Tabelle",
-          value = paste0("report_table_tab_", id_num),
-          div(
-            class = "dt-table",
-            DTOutput(paste0("report_table_",topic,"_",  id_num)),
-            style = "font-size: 75%"
+  card(
+    card_header(header_content),
+    navset_card_tab(
+      nav_panel(
+        "Diagramm",
+        value = paste0("report_chart_tab_", id_num),
+        layout_columns(
+          col_widths = c(6, 6),
+          tagList(
+            uiOutput(paste0("report_chart_ba_", topic, "_", id_num, "_title")),
+            div(class = "hc-chart", highchartOutput(paste0("report_chart_ba_", topic, "_", id_num)))
           ),
-          div(
-            class = "dt-footer",
-            downloadButton(paste0("report_table_", topic,"_", id_num,"_download"), "Download")
+          tagList(
+            uiOutput(paste0("report_chart_ca_", topic, "_", id_num, "_title")),
+            div(class = "hc-chart", highchartOutput(paste0("report_chart_ca_", topic, "_", id_num)))
           )
-        ),
-        tabPanel(
-          "Datenquellen",  # New Tab for Data Sources
-          value = paste0("report_sources_tab_", id_num),
-          div(class = "data-source-links", uiOutput(paste0("data_sources_", topic, "_", id_num)))
         )
+      ),
+      nav_panel(
+        "Tabelle",
+        value = paste0("report_table_tab_", id_num),
+        div(class = "dt-table", DTOutput(paste0("report_table_", topic, "_", id_num)),
+            style = "font-size: 75%"),
+        div(class = "dt-footer mt-2",
+            downloadButton(paste0("report_table_", topic, "_", id_num, "_download"), "Download"))
+      ),
+      nav_panel(
+        "Datenquellen",
+        value = paste0("report_sources_tab_", id_num),
+        div(class = "data-source-links", uiOutput(paste0("data_sources_", topic, "_", id_num)))
       )
     )
   )
@@ -138,48 +125,38 @@ ui_double_chart <- function(id_num, title,select_year,topic) {
 #' @param select_year Logical, whether a year selection dropdown should be included.
 #' @param topic The topic associated with the chart.
 #' @return A `fluidRow` containing the UI elements.
-ui_single_chart <- function(id_num, title,select_year,topic) {
+ui_single_chart <- function(id_num, title, select_year, topic) {
 
-  if (select_year){
-    title = div(
-      HTML(paste0("<b>", title, "</b><br>")),  # Title
-      uiOutput(paste0("report_chart_select_", topic,"_", id_num)),  # UI Output for selectInput
-      style = "display: flex; justify-content: space-between; align-items: center;"
+  header_content <- if (select_year) {
+    div(
+      class = "d-flex justify-content-between align-items-center w-100",
+      tags$b(title),
+      uiOutput(paste0("report_chart_select_", topic, "_", id_num))
     )
   } else {
-    title = div(
-      HTML(paste0("<b>", title, "</b><br>"))
-    )
+    tags$b(title)
   }
 
-  fluidRow(
-    box(
-      title = title,  width = 12,
-      tabBox(
-        collapsible = FALSE, width = 12,
-        tabPanel(
-          "Diagramm",
-          value = paste0("report_chart_tab_", id_num),
-          div(class = "hc-chart", highchartOutput(paste0("report_chart_",topic,"_",  id_num)))
-        ),
-        tabPanel(
-          "Tabelle",
-          value = paste0("report_table_tab_", id_num),
-          div(
-            class = "dt-table",
-            DTOutput(paste0("report_table_", topic,"_", id_num)),
-            style = "font-size: 75%"
-          ),
-          div(
-            class = "dt-footer",
-            downloadButton(paste0("report_table_", topic,"_", id_num,"_download"), "Download")
-          )
-        ),
-        tabPanel(
-          "Datenquellen",  # New Tab for Data Sources
-          value = paste0("report_sources_tab_", id_num),
-          div(class = "data-source-links", uiOutput(paste0("data_sources_", topic, "_", id_num)))
-        )
+  card(
+    card_header(header_content),
+    navset_card_tab(
+      nav_panel(
+        "Diagramm",
+        value = paste0("report_chart_tab_", id_num),
+        div(class = "hc-chart", highchartOutput(paste0("report_chart_", topic, "_", id_num)))
+      ),
+      nav_panel(
+        "Tabelle",
+        value = paste0("report_table_tab_", id_num),
+        div(class = "dt-table", DTOutput(paste0("report_table_", topic, "_", id_num)),
+            style = "font-size: 75%"),
+        div(class = "dt-footer mt-2",
+            downloadButton(paste0("report_table_", topic, "_", id_num, "_download"), "Download"))
+      ),
+      nav_panel(
+        "Datenquellen",
+        value = paste0("report_sources_tab_", id_num),
+        div(class = "data-source-links", uiOutput(paste0("data_sources_", topic, "_", id_num)))
       )
     )
   )
@@ -195,42 +172,35 @@ ui_single_chart <- function(id_num, title,select_year,topic) {
 #' @param select_year Logical, whether a year selection dropdown should be included.
 #' @param topic The topic associated with the table.
 #' @return A `fluidRow` containing the UI elements.
-ui_indicator_table <- function(id_num, title,select_year,topic) {
+ui_indicator_table <- function(id_num, title, select_year, topic) {
 
-
-  if (select_year){
-    title = div(
-      HTML(paste0("<b>", title, "</b><br>")),  # Title
-      uiOutput(paste0("report_chart_select_", topic,"_", id_num)),  # UI Output for selectInput
-      style = "display: flex; justify-content: space-between; align-items: center;"
+  header_content <- if (select_year) {
+    div(
+      class = "d-flex justify-content-between align-items-center w-100",
+      tags$b(title),
+      uiOutput(paste0("report_chart_select_", topic, "_", id_num))
     )
   } else {
-    title = div(
-      HTML(paste0("<b>", title, "</b><br>"))
-    )
+    tags$b(title)
   }
 
-  fluidRow(
-    box(
-      title = title,
-      width=12,
-      tabBox(collapsible = F,
-             width = 12,
-             tabPanel(
-               "Tabelle",
-               div(class = "dt-table", DTOutput(paste0("report_table_", topic, "_", id_num)), style = "font-size: 75%"),
-               div(class = "dt-footer", downloadButton(paste0("report_table_", topic, "_", id_num, "_download"),"Download"))
-             ),
-             tabPanel(
-               "Datenquellen",  # New Tab for Data Sources
-               value = paste0("report_sources_tab_", id_num),
-               div(class = "data-source-links", uiOutput(paste0("data_sources_", topic, "_", id_num)))
-             )
+  card(
+    card_header(header_content),
+    navset_card_tab(
+      nav_panel(
+        "Tabelle",
+        div(class = "dt-table", DTOutput(paste0("report_table_", topic, "_", id_num)),
+            style = "font-size: 75%"),
+        div(class = "dt-footer mt-2",
+            downloadButton(paste0("report_table_", topic, "_", id_num, "_download"), "Download"))
+      ),
+      nav_panel(
+        "Datenquellen",
+        value = paste0("report_sources_tab_", id_num),
+        div(class = "data-source-links", uiOutput(paste0("data_sources_", topic, "_", id_num)))
       )
-
     )
-
-    )
+  )
 }
 
 

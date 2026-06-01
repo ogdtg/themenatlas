@@ -42,8 +42,8 @@ render_topic_ui <- function(session, output, input,structure_list_reactive,rende
       # Ensure the list is not empty
       req(length(structure_list_reactive()) > 0)
 
-      # Render the full report structure
-      render_generic_report2(output, filtered_list)
+      # Render the full report structure (namespaced for module use)
+      render_generic_report2(output, filtered_list, ns = session$ns)
 
 
       lapply(seq_along(filtered_list), function(i) {
@@ -86,7 +86,7 @@ render_topic_ui <- function(session, output, input,structure_list_reactive,rende
 
 
         output[[id]] <- renderUI({
-          selectizeInput(select_id, "", choices = choices,selected = max(choices))
+          selectizeInput(session$ns(select_id), "", choices = choices,selected = max(choices))
         })
 
       })

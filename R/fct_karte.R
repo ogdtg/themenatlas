@@ -510,7 +510,8 @@ update_year_on_filter <- function(session,input,output,selected_data){
     }
 
     # Update year choices dynamically
-    updateSelectizeInput(session, session$ns("year"),
+    # (update*Input namespaces via `session`, so pass the bare id)
+    updateSelectizeInput(session, "year",
                          choices = unique(df$jahr),
                          selected = max(df$jahr, na.rm = TRUE))  # Select latest year
   })
@@ -814,7 +815,7 @@ update_gemeinde_selection_on_click <- function(session,input){
     clicked_bfsnr <- input$map_shape_click$id  # Get clicked polygon ID
 
     # ✅ Set selected BFS number
-    updateSelectizeInput(session, session$ns("bfs_nr_gemeinde"), selected = clicked_bfsnr)
+    updateSelectizeInput(session, "bfs_nr_gemeinde", selected = clicked_bfsnr)
 
     # ✅ Highlight selected polygon
     leafletProxy(session$ns("map")) %>%
@@ -901,7 +902,7 @@ update_summary_filter <- function(session, input,selected_data) {
       if (input$tab_box=="summary_tab"){
         if (input$bfs_nr_gemeinde == "") {
           updateSelectizeInput(session,
-                               session$ns("summary_select"),
+                               "summary_select",
                                choices = c("Erste 10 Gebiete", "Letzte 10 Gebiete"),
                                selected = "Erste 10 Gebiete"
           )
@@ -909,13 +910,13 @@ update_summary_filter <- function(session, input,selected_data) {
         } else {
           if (length(unique(selected_data()$jahr))>1){
             updateSelectizeInput(session,
-                                 session$ns("summary_select"),
+                               "summary_select",
                                  choices = c("Zeitlicher Verlauf","Erste 10 Gebiete", "Letzte 10 Gebiete"),
                                  selected = "Zeitlicher Verlauf"
             )
           } else {
             updateSelectizeInput(session,
-                                 session$ns("summary_select"),
+                               "summary_select",
                                  choices = c("Erste 10 Gebiete", "Letzte 10 Gebiete"),
                                  selected = "Erste 10 Gebiete"
             )

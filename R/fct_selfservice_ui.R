@@ -106,7 +106,8 @@ update_year_on_filter_self_service <- function(session,input,output,selected_dat
     }
 
     # Update year choices dynamically
-    updateSelectizeInput(session, session$ns("self_service_year"),
+    # (update*Input namespaces via `session`, so pass the bare id)
+    updateSelectizeInput(session, "self_service_year",
                          choices = unique(df$jahr),
                          selected = max(df$jahr, na.rm = TRUE))  # Select latest year
   })

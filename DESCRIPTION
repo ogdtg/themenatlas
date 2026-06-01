@@ -1,0 +1,42 @@
+Package: themenatlas
+Title: Thurgauer Themenatlas Dashboard
+Version: 1.0.0
+Authors@R:
+    person(given = "Felix",
+           family = "Lorenz",
+           role = c("aut", "cre"),
+           email = "felixlorenz18@gmail.com")
+Description: Golem-based Shiny dashboard visualising statistical indicators
+    for the municipalities of the Canton of Thurgau (Themenatlas).
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Depends:
+    R (>= 4.1),
+    shiny,
+    bslib,
+    bsicons,
+    dplyr,
+    tidyr,
+    stringr,
+    purrr,
+    leaflet,
+    sf,
+    DT,
+    highcharter
+Imports:
+    golem,
+    config,
+    htmltools,
+    shinyjs,
+    shinybrowser,
+    thematic,
+    openxlsx,
+    RColorBrewer,
+    zoo,
+    rvest,
+    BFS,
+    tgdashboard
+Suggests:
+    pkgload
+RoxygenNote: 7.3.1

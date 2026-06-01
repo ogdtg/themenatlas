@@ -20,9 +20,15 @@
 
 
 
-data_source_list <- readRDS("data/data_source_list.rds")
-
-
+#' Build the report structure list
+#'
+#' Assembles the metadata describing every chart/table shown in the report
+#' (Berichte) tab. Returned and published as the global `structure_list` by
+#' [load_app_data()]. Relies on `clean_string()` being defined.
+#'
+#' @return A list of report-section metadata.
+#' @noRd
+build_structure_list <- function() {
 
 
 # Bevölkerung -------------------------------------------------------------
@@ -932,4 +938,7 @@ pol_list <- list(
 )
 
 structure_list <- c(finanzen_list,haushalte_list,bauen_wohnen_list,bevölkerung_list,soziales_list,pol_list,raum_list,wua_list)
+
+  structure_list
+}
 

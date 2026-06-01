@@ -83,7 +83,7 @@ add_selection <- function(session, input, output, selected_data_serv, download_d
         div(
           style = "display: inline-block; margin: 5px; padding: 5px; background-color: lightgray; border-radius: 5px; cursor: pointer;",
           span(col, style = "margin-right: 5px;"),
-          actionButton(inputId = paste0("remove_", col), label = "❌", class = "btn btn-danger btn-sm")
+          actionButton(inputId = session$ns(paste0("remove_", col)), label = "❌", class = "btn btn-danger btn-sm")
         )
       })
     )

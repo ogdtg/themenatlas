@@ -37,7 +37,7 @@ update_compare_area <- function(session,input,bezirk_data,bezirk_data_compare,se
         selected_compare_area(bezirk_data_mod$bfs_nr_gemeinde[1])
       }
 
-      updateSelectizeInput(session,session$ns("compare_area"), choices = setNames(bezirk_data_mod$bfs_nr_gemeinde,bezirk_data_mod$name_gemeinde),selected = selected_compare_area())
+      updateSelectizeInput(session, "compare_area", choices = setNames(bezirk_data_mod$bfs_nr_gemeinde,bezirk_data_mod$name_gemeinde),selected = selected_compare_area())
       selected_base_area(input$base_area)
       bezirk_data_compare(bezirk_data_mod)
     }
@@ -67,13 +67,13 @@ update_selected_compare_area <- function(input,selected_compare_area){
 #' @param select_year Logical, whether a year selection dropdown should be included.
 #' @param topic The topic associated with the chart.
 #' @return A `fluidRow` containing the UI elements.
-ui_double_chart <- function(id_num, title, select_year, topic) {
+ui_double_chart <- function(id_num, title, select_year, topic, ns = identity) {
 
   header_content <- if (select_year) {
     div(
       class = "d-flex justify-content-between align-items-center w-100",
       tags$b(title),
-      uiOutput(paste0("report_chart_select_", topic, "_", id_num))
+      uiOutput(ns(paste0("report_chart_select_", topic, "_", id_num)))
     )
   } else {
     tags$b(title)
@@ -88,27 +88,27 @@ ui_double_chart <- function(id_num, title, select_year, topic) {
         layout_columns(
           col_widths = c(6, 6),
           tagList(
-            uiOutput(paste0("report_chart_ba_", topic, "_", id_num, "_title")),
-            div(class = "hc-chart", highchartOutput(paste0("report_chart_ba_", topic, "_", id_num)))
+            uiOutput(ns(paste0("report_chart_ba_", topic, "_", id_num, "_title"))),
+            div(class = "hc-chart", highchartOutput(ns(paste0("report_chart_ba_", topic, "_", id_num))))
           ),
           tagList(
-            uiOutput(paste0("report_chart_ca_", topic, "_", id_num, "_title")),
-            div(class = "hc-chart", highchartOutput(paste0("report_chart_ca_", topic, "_", id_num)))
+            uiOutput(ns(paste0("report_chart_ca_", topic, "_", id_num, "_title"))),
+            div(class = "hc-chart", highchartOutput(ns(paste0("report_chart_ca_", topic, "_", id_num))))
           )
         )
       ),
       nav_panel(
         "Tabelle",
         value = paste0("report_table_tab_", id_num),
-        div(class = "dt-table", DTOutput(paste0("report_table_", topic, "_", id_num)),
+        div(class = "dt-table", DTOutput(ns(paste0("report_table_", topic, "_", id_num))),
             style = "font-size: 75%"),
         div(class = "dt-footer mt-2",
-            downloadButton(paste0("report_table_", topic, "_", id_num, "_download"), "Download"))
+            downloadButton(ns(paste0("report_table_", topic, "_", id_num, "_download")), "Download"))
       ),
       nav_panel(
         "Datenquellen",
         value = paste0("report_sources_tab_", id_num),
-        div(class = "data-source-links", uiOutput(paste0("data_sources_", topic, "_", id_num)))
+        div(class = "data-source-links", uiOutput(ns(paste0("data_sources_", topic, "_", id_num))))
       )
     )
   )
@@ -125,13 +125,13 @@ ui_double_chart <- function(id_num, title, select_year, topic) {
 #' @param select_year Logical, whether a year selection dropdown should be included.
 #' @param topic The topic associated with the chart.
 #' @return A `fluidRow` containing the UI elements.
-ui_single_chart <- function(id_num, title, select_year, topic) {
+ui_single_chart <- function(id_num, title, select_year, topic, ns = identity) {
 
   header_content <- if (select_year) {
     div(
       class = "d-flex justify-content-between align-items-center w-100",
       tags$b(title),
-      uiOutput(paste0("report_chart_select_", topic, "_", id_num))
+      uiOutput(ns(paste0("report_chart_select_", topic, "_", id_num)))
     )
   } else {
     tags$b(title)
@@ -143,20 +143,20 @@ ui_single_chart <- function(id_num, title, select_year, topic) {
       nav_panel(
         "Diagramm",
         value = paste0("report_chart_tab_", id_num),
-        div(class = "hc-chart", highchartOutput(paste0("report_chart_", topic, "_", id_num)))
+        div(class = "hc-chart", highchartOutput(ns(paste0("report_chart_", topic, "_", id_num))))
       ),
       nav_panel(
         "Tabelle",
         value = paste0("report_table_tab_", id_num),
-        div(class = "dt-table", DTOutput(paste0("report_table_", topic, "_", id_num)),
+        div(class = "dt-table", DTOutput(ns(paste0("report_table_", topic, "_", id_num))),
             style = "font-size: 75%"),
         div(class = "dt-footer mt-2",
-            downloadButton(paste0("report_table_", topic, "_", id_num, "_download"), "Download"))
+            downloadButton(ns(paste0("report_table_", topic, "_", id_num, "_download")), "Download"))
       ),
       nav_panel(
         "Datenquellen",
         value = paste0("report_sources_tab_", id_num),
-        div(class = "data-source-links", uiOutput(paste0("data_sources_", topic, "_", id_num)))
+        div(class = "data-source-links", uiOutput(ns(paste0("data_sources_", topic, "_", id_num))))
       )
     )
   )
@@ -172,13 +172,13 @@ ui_single_chart <- function(id_num, title, select_year, topic) {
 #' @param select_year Logical, whether a year selection dropdown should be included.
 #' @param topic The topic associated with the table.
 #' @return A `fluidRow` containing the UI elements.
-ui_indicator_table <- function(id_num, title, select_year, topic) {
+ui_indicator_table <- function(id_num, title, select_year, topic, ns = identity) {
 
   header_content <- if (select_year) {
     div(
       class = "d-flex justify-content-between align-items-center w-100",
       tags$b(title),
-      uiOutput(paste0("report_chart_select_", topic, "_", id_num))
+      uiOutput(ns(paste0("report_chart_select_", topic, "_", id_num)))
     )
   } else {
     tags$b(title)
@@ -189,15 +189,15 @@ ui_indicator_table <- function(id_num, title, select_year, topic) {
     navset_card_tab(
       nav_panel(
         "Tabelle",
-        div(class = "dt-table", DTOutput(paste0("report_table_", topic, "_", id_num)),
+        div(class = "dt-table", DTOutput(ns(paste0("report_table_", topic, "_", id_num))),
             style = "font-size: 75%"),
         div(class = "dt-footer mt-2",
-            downloadButton(paste0("report_table_", topic, "_", id_num, "_download"), "Download"))
+            downloadButton(ns(paste0("report_table_", topic, "_", id_num, "_download")), "Download"))
       ),
       nav_panel(
         "Datenquellen",
         value = paste0("report_sources_tab_", id_num),
-        div(class = "data-source-links", uiOutput(paste0("data_sources_", topic, "_", id_num)))
+        div(class = "data-source-links", uiOutput(ns(paste0("data_sources_", topic, "_", id_num))))
       )
     )
   )
@@ -211,13 +211,13 @@ ui_indicator_table <- function(id_num, title, select_year, topic) {
 #'
 #' @param output The Shiny output object.
 #' @param struc_list A list containing metadata for each report section.
-render_generic_report2 <- function(output, struc_list) {
+render_generic_report2 <- function(output, struc_list, ns = identity) {
 
 
 
   output$generic_report_part <- renderUI({
 
-    # ✅ Generate a list of `tabBox()` elements dynamically
+    # ✅ Generate a list of card elements dynamically
     tab_list <- lapply(seq_along(struc_list), function(i) {
 
       topic <- clean_string(struc_list[[i]]$topic)
@@ -229,18 +229,18 @@ render_generic_report2 <- function(output, struc_list) {
       }
 
       if (str_detect(struc_list[[i]]$chart_type,"double")){
-        ui_double_chart(i, title = struc_list[[i]]$title,select_year,topic)
+        ui_double_chart(i, title = struc_list[[i]]$title,select_year,topic, ns = ns)
 
       } else if (str_detect(struc_list[[i]]$chart_type,"single")){
-        ui_single_chart(i, title = struc_list[[i]]$title,select_year,topic)
+        ui_single_chart(i, title = struc_list[[i]]$title,select_year,topic, ns = ns)
 
 
       } else if (struc_list[[i]]$chart_type=="indicator_table"){
-        ui_indicator_table(i,title = struc_list[[i]]$title,select_year,topic)
+        ui_indicator_table(i,title = struc_list[[i]]$title,select_year,topic, ns = ns)
       }
     })
 
-    do.call(tagList, tab_list)  # ✅ Combine all `fluidRow()` elements
+    do.call(tagList, tab_list)  # ✅ Combine all card elements
   })
 }
 

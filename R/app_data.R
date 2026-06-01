@@ -1,0 +1,92 @@
+#' Load and Prepare Data for the Shiny App
+#'
+#' Loads all datasets the application needs and publishes them into the global
+#' environment so that the module UIs (which run when `app_ui()` is called) and
+#' the namespaced server helpers can all reach them.
+#'
+#' This is called once via the `onStart` hook of [run_app()], i.e. before the
+#' first request is served. Keeping the loading in a function (instead of at the
+#' top level of the file) avoids network/file access at package load time and
+#' guarantees the helper functions (e.g. `clean_string()`) are already defined
+#' when `structure_list` is built.
+#'
+#' Loaded objects:
+#' - District-/municipal-level data and derived name vectors.
+#' - Colour palettes and geographic boundaries for mapping.
+#' - Indicator lists fetched from the `prepare_indicators` repository.
+#' - The report `structure_list` (see [build_structure_list()]).
+#'
+#' @note Some datasets are retrieved externally and require an internet connection.
+#' @author Felix Lorenz
+#' @noRd
+load_app_data <- function() {
+
+  # Data with gemeinde and Bezirk
+  bezirk_data <- readRDS("data/bezirk_data.rds")
+
+  # Bezirk and Kanton in addition to the gemeinde
+  bezirk_data2 <- bezirk_data %>%
+    distinct(bfs_nr_bezirk, name_bezirk) %>%
+    mutate(name_bezirk = paste0("Bezirk ", name_bezirk)) %>%
+    bind_rows(data.frame(name_bezirk = "Kanton Thurgau", bfs_nr_bezirk = "20")) %>%
+    setNames(c("bfs_nr_gemeinde", "name_gemeinde")) %>%
+    bind_rows(bezirk_data %>%
+                select(bfs_nr_gemeinde, name_gemeinde))
+
+  # All data without Frauenfeld for the comparison in the reports
+  bezirk_data_mod <- bezirk_data2 %>%
+    filter(name_gemeinde != "Frauenfeld")
+
+  # Data with names for all areas
+  area_names_data <- readRDS("data/area_names_data.rds")
+
+  # Named characters (bfs_nr named with the gemeinde name)
+  bezirk_data_names2 <- setNames(bezirk_data2$bfs_nr_gemeinde, bezirk_data2$name_gemeinde)
+  bezirk_data_names  <- setNames(bezirk_data$bfs_nr_gemeinde,  bezirk_data$name_gemeinde)
+
+  # Colour palettes for the maps
+  palette_ds             <- readRDS("data/farbpalette_karte.rds")
+  palette_ds_alternative <- readRDS("data/farbpalette_karte_mod.rds")
+
+  # Geo data for the map
+  gemeindegrenzen <- readRDS("data/gemeindegrenzen.rds")
+
+  # Data source metadata (used at runtime by the report data-source tabs)
+  data_source_list <- readRDS("data/data_source_list.rds")
+
+  # Data that is updated via GitHub Actions in the prepare_indicators repo
+  base_url <- "https://github.com/ogdtg/prepare_indicators/raw/refs/heads/main/data/"
+  nested_list     <- read_url(paste0(base_url, "nested_list.rds"))
+  additional_data <- read_url(paste0(base_url, "additional_data.rds"))
+  psg_list        <- read_url(paste0(base_url, "psg_list.rds"))
+  vsg_list        <- read_url(paste0(base_url, "vsg_list.rds"))
+  ssg_list        <- read_url(paste0(base_url, "ssg_list.rds"))
+
+  # Report structure metadata (needs clean_string(), defined as a package fn)
+  structure_list <- build_structure_list()
+
+  # Publish everything to the global environment so package functions
+  # (modules + helpers) can reach the objects as free variables.
+  objs <- c(
+    "bezirk_data", "bezirk_data2", "bezirk_data_mod", "area_names_data",
+    "bezirk_data_names2", "bezirk_data_names", "palette_ds",
+    "palette_ds_alternative", "gemeindegrenzen", "nested_list",
+    "additional_data", "psg_list", "vsg_list", "ssg_list",
+    "data_source_list", "structure_list"
+  )
+  for (o in objs) assign(o, get(o), envir = globalenv())
+
+  invisible(TRUE)
+}
+
+
+#' Read an RDS file directly from a (GitHub) URL
+#'
+#' @param gh_url URL pointing to a gzipped RDS file.
+#' @return The deserialised R object.
+#' @noRd
+read_url <- function(gh_url) {
+  con <- gzcon(url(gh_url))
+  on.exit(close(con)) # Ensures the connection is closed when the function exits
+  readRDS(con)
+}

@@ -1,0 +1,8 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^app\.R$
+^dev$
+^data-raw$
+^konzept$
+^README\.md$
+^LICENSE$

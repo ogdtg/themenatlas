@@ -110,7 +110,6 @@ draw_base_map <- function(output,geo_data){
       "<b>", geo_data$name, "</b>"
     )
 
-    leaflet(geo_data) %>%
       leaflet(geo_data) %>%
       addProviderTiles(providers$SwissFederalGeoportal.NationalMapGrey,
                        options = providerTileOptions(minZoom = 9)) %>%  # ✅ Set minZoom to 9

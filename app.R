@@ -2,7 +2,7 @@
 
 
 # Header
-db_header <- init_header(dashboard_title = "Test Dashboard",reference='https://statistik.tg.ch')
+db_header <- init_header(dashboard_title = "Themenatlas",reference='https://statistik.tg.ch')
 
 
 
@@ -16,7 +16,7 @@ db_sidebar <- init_sidebar(sidebar_content)
 
 # Create UI
 ui <- dashboardPage(
-  title = "Test Dashboard",
+  title = "Themenatlas",
   dark = NULL,
   help = TRUE, # show popover
   header = db_header,
@@ -47,17 +47,22 @@ server <- function(input, output, session) {
   ### Reactive Variablen initialisieren ------------------------------------------------------------
 
   previous_gemeinde <- reactiveVal(NULL)
-  prevYear <- reactiveVal("")
-  prevFilter <- reactiveVal(NULL)
-  prevArea <- reactiveVal("")
-  prevIndicator <- reactiveVal("")
-  prevValueType <- reactiveVal(NULL)
-  prevTab <- reactiveVal(NULL)
+  # prevYear <- reactiveVal("")
+  # prevFilter <- reactiveVal(NULL)
+  # prevArea <- reactiveVal("")
+  # prevIndicator <- reactiveVal("")
+  # prevValueType <- reactiveVal(NULL)
+  # prevTab <- reactiveVal(NULL)
   bezirk_data_compare <- reactiveVal(bezirk_data_mod)
   selected_base_area <- reactiveVal("4566")
   selected_compare_area <- reactiveVal("4671")
   geo_data <- reactiveVal(gemeindegrenzen)
   area_data <- reactiveVal(nested_list)
+  final_state <- reactiveVal(FALSE)
+  selected_data <- reactiveVal(NULL)
+
+  area_names <- reactiveVal(NULL)
+  counter <- reactiveVal(0)
 
 
 
@@ -72,12 +77,22 @@ server <- function(input, output, session) {
   })
 
 
+  # observeEvent( list(input$year, input$filter1,input$value_type,input$area,input$topic,input$subtopic,input$indicator),{
+  #   temp <- check_conditions_func(input, selected_data,prevYear,prevValueType,prevIndicator,prevFilter,prevArea)
+  #   final_state(temp)
+  # })
+  #
+  # observeEvent( list(input$year, input$filter1,input$value_type,input$area,input$topic,input$subtopic,input$indicator),{
+  #   print(final_state())
+  # })
+
   observeEvent(input$area,{
     if (input$area == "Gemeinde") {
 
       geo_data(gemeindegrenzen)
 
-      updateSelectizeInput(session, "topic", choices = names(nested_list), selected = NULL)
+      area_data(nested_list)
+      # updateSelectizeInput(session, "topic", choices = names(nested_list), selected = names(nested_list)[1])
 
 
     } else if (input$area == "Bezirk") {
@@ -87,8 +102,9 @@ server <- function(input, output, session) {
       } else {
         geo_data(bezirksgrenzen)
       }
-      updateSelectizeInput(session, "topic", choices = names(nested_list), selected = NULL)
       area_data(nested_list)
+
+      # updateSelectizeInput(session, "topic", choices = names(nested_list), selected = names(nested_list)[1])
 
 
     } else if (input$area == "Primarschulgemeinde") {
@@ -98,7 +114,7 @@ server <- function(input, output, session) {
       } else {
         geo_data(psg)
       }
-      updateSelectizeInput(session, "topic", choices = names(psg_list), selected = NULL)
+      # updateSelectizeInput(session, "topic", choices = names(psg_list), selected =  names(psg_list)[1])
       area_data(psg_list)
 
 
@@ -110,7 +126,7 @@ server <- function(input, output, session) {
       } else {
         geo_data(ssg)
       }
-      updateSelectizeInput(session, "topic", choices = names(ssg_list), selected = NULL)
+      # updateSelectizeInput(session, "topic", choices = names(ssg_list), selected = names(ssg_list)[1])
       area_data(ssg_list)
 
     } else if (input$area == "Volksschulgemeinde") {
@@ -120,27 +136,37 @@ server <- function(input, output, session) {
       } else {
         geo_data(vsg)
       }
-      updateSelectizeInput(session, "topic", choices = names(vsg_list), selected = NULL)
+      # updateSelectizeInput(session, "topic", choices = names(vsg_list), selected = names(vsg_list)[1])
       area_data(vsg_list)
 
     }
+    area_names_temp <- area_names_data %>%
+      filter(area_type==input$area)
+
+    area_names(area_names_temp)
+    topic_temp <-  names(area_data())[1]
+    updateSelectizeInput(session, "topic", choices = names(area_data()), selected = NULL)
+
+    subtopic_temp <- names(area_data()[[topic_temp]])[1]
+    updateSelectizeInput(session, "subtopic", choices = names(area_data()[[topic_temp]]), selected = subtopic_temp)
+
+
+    indicator_temp <- names(area_data()[[topic_temp]][[subtopic_temp]])[1]
+
+    updateSelectizeInput(session, "indicator", choices = names(area_data()[[topic_temp]][[subtopic_temp]]), selected = indicator_temp)
+    #
+    # print(paste0("Topic: ",names(area_data())[1]))
+    # print(paste0("Subtopic: ",subtopic_temp))
+    # print(paste0("Indicator: ",indicator_temp))
   },ignoreInit = FALSE)
-  ### Screen width ------------------------------------------------------------
 
-
-
-  # output$test <- renderText({
-  #   input$screen_width
-  # })
 
 
   ### selected_data auswählen ------------------------------------------------------------
 
   # Reactive object for selected dataset
-  selected_data <- reactive({
-    req(input$topic, input$subtopic, input$indicator)
-    area_data()[[input$topic]][[input$subtopic]][[input$indicator]]
-  })
+  init_selected_data(input,area_data,selected_data)
+
 
 
 
@@ -148,8 +174,11 @@ server <- function(input, output, session) {
 
   # Update Subtopics when Topic changes
   observeEvent(input$topic, {
-    updateSelectizeInput(session, "subtopic", choices = names(area_data()[[input$topic]]), selected = NULL)
-
+    req(input$topic, area_data())
+    topic_data <- area_data()[[input$topic]]
+    if (!is.null(topic_data)) {
+      updateSelectizeInput(session, "subtopic", choices = names(topic_data), selected = names(topic_data)[1])
+    }
   })
 
   ### Indicator updaten ------------------------------------------------------------
@@ -157,14 +186,17 @@ server <- function(input, output, session) {
 
   # Update Indicators when Subtopic changes
   observeEvent(input$subtopic, {
-    updateSelectizeInput(session, "indicator", choices = names(area_data()[[input$topic]][[input$subtopic]]), selected = NULL)
-
+    req(input$topic, input$subtopic, area_data())
+    subtopic_data <- area_data()[[input$topic]][[input$subtopic]]
+    if (!is.null(subtopic_data)) {
+      updateSelectizeInput(session, "indicator", choices = names(subtopic_data), selected = names(subtopic_data)[1])
+    }
   })
 
 
   ### Jahr, Filter und gemeinde updaten ------------------------------------------------------------
 
-  render_selections_dynamic(session,input,output,selected_data)
+  render_selections_dynamic(session,input,output,selected_data,area_names)
 
   render_filter_ui(session,input,output,selected_data)
 
@@ -189,21 +221,49 @@ server <- function(input, output, session) {
 
   ### Tabelle und Karte updaten -----------------------------------------------
 
+  # Problem: beim Wechsel auf Gemeinde wird zweimal neu gezeichnet (einmal mit alten und einmal mit neuen Angaben)
+  all_inputs_ready <- reactive({
+    if (check_all_filters(input,selected_data)){
+      list(
+        data = selected_data(),
+        year = input$year,
+        filter1 = input$filter1,
+        value_type = input$value_type ,
+        area = input$area
+      )
+    }
 
-  # modify_map("map",color_map,geo_data)
-  modify_map(
+
+  })
+  debounced_inputs <- debounce(all_inputs_ready, millis = 300)  # Delay execution by 300 ms
+
+
+  modify_map_and_table(
     session=session,
     input=input,
+    output=output,
     selected_data = selected_data,
     geo_data = geo_data,
     palette_ds = palette_ds,
     palette_ds_alternative = palette_ds_alternative,
-    check_conditions = check_conditions
+    check_all_filters = check_all_filters,
+    debounced_inputs = debounced_inputs,
+    counter=counter,
+    area_names = area_names
   )
+  # modify_map(
+  #   session=session,
+  #   input=input,
+  #   selected_data = selected_data,
+  #   geo_data = geo_data,
+  #   palette_ds = palette_ds,
+  #   palette_ds_alternative = palette_ds_alternative,
+  #   check_conditions = check_conditions
+  # )
+  #
+  # modify_table(session,input,output,selected_data,check_conditions)
 
-  modify_table(session,input,output,selected_data,check_conditions)
-
-  render_hc_summary(session,input,output,check_conditions,selected_data)
+  # render_hc_summary(session,input,output,check_conditions,selected_data)
 
 
   ### Ausgewählte Gemeinde per Klick updaten ----------------------------------
@@ -214,7 +274,7 @@ server <- function(input, output, session) {
 
   ### Zoom auf Gemeinde ----------------------------------
 
-  zoom_and_zoom_reset(session,input,previous_gemeinde,geo_data())
+  zoom_and_zoom_reset(session,input,previous_gemeinde,geo_data)
 
 
 
